@@ -22,7 +22,7 @@
 
   /* 🔵 GÓRNY BANER */
   header {
-    background-color: #cce5ff;   /* jasny niebieski */
+    background-color: #cce5ff;
     color: #000033;              
     padding: 40px 20px;
     text-align: center;
@@ -49,13 +49,13 @@
     margin-top: .35rem;
   }
 
-  /* ⚫ DOLNY BANER */
+  /* ⚫ DOLNE BANERY */
   .bottom-banner {
     background-color: #000;
     color: #fff;
     text-align: center;
     padding: 30px 20px;
-    margin-top: 40px;
+    margin-top: 20px;
   }
   .bottom-banner h2 {
     margin: 0 0 20px;
@@ -79,6 +79,14 @@
     background: #8c142f;
     transform: translateY(-2px);
   }
+
+  /* 📝 WYŚRODKOWANY NAPIS */
+  .center-title {
+    text-align: center;
+    font-size: 1.6rem;
+    margin: 40px 0 20px;
+    color: #000;
+  }
   </style>
 </head>
 <body>
@@ -94,16 +102,18 @@
     <figcaption>Candy – wojowniczka</figcaption>
   </figure>
 
-  <!-- ⚫ DOLNY BANER Z PRZYCISKIEM -->
+  <!-- 📝 NAPIS PRZED BANERAMI -->
+  <h2 class="center-title">Odwiedź nasze strony</h2>
+
+  <!-- ⚫ DOLNE BANERY Z PRZYCISKAMI -->
   <div class="bottom-banner">
     <h2>Szkoły sztuk wojennych</h2>
-    <a href="https://katorishintoryu.pl/artykuly/kenjutsu/?utm_source=chatgpt.com">Przejdź</a>
+    <a href="https://katorishintoryu.pl/artykuly/kenjutsu/?utm_source=chatgpt.com" class="btn">Przejdź</a>
   </div>
 
-  <!-- ⚫ DOLNY BANER Z PRZYCISKIEM -->
   <div class="bottom-banner">
     <h2>Sztuka walki dwoma mieczami</h2>
-    <a href="https://katorishintoryu.pl/artykuly/sztuka-walki-dwoma-mieczami/?utm_source=chatgpt.com">Przejdź</a>
+    <a href="https://katorishintoryu.pl/artykuly/sztuka-walki-dwoma-mieczami/?utm_source=chatgpt.com" class="btn">Przejdź</a>
   </div>
 
 </body>
