@@ -5,22 +5,63 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Candy</title>
   <style>
-    /* ...twój CSS bez zmian... */
+  :root{
+    --text: #222;
+    --accent: #b11a3b;
+    --maxw: 780px;
+    --muted: #666;
+  }
+  body{
+    color:var(--text);
+    font: 12.5pt/1.6 "Georgia","Times New Roman",serif;
+    margin:0 auto; padding:24px;
+    max-width: var(--maxw);
+    background:#f5f5f5;
+    text-align: justify;
+  }
+
+  /* 🔵 BANER */
+  header {
+    background-color: #cce5ff;   /* jasny niebieski */
+    color: #000033;              /* ciemny granat */
+    padding: 40px 20px;
+    text-align: center;
+    text-shadow: 2px 2px 4px #00000033;
+  }
+  header h1 {
+    font-size: 42px;
+    margin: 0;
+  }
+
+  figure {
+    margin: 40px auto;
+    text-align: center;
+  }
+  figure img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.15);
+  }
+  figure figcaption {
+    font-size: .9rem;
+    color: var(--muted);
+    margin-top: .35rem;
+  }
   </style>
 </head>
 <body>
+
+  <!-- 🔵 BANER -->
   <header>
-    <h1>Candy „miecze”</h1>
+    <h1>Candy „wojowniczka”</h1>
   </header>
 
-  <!-- OKŁADKA – POPRAWNY SRC -->
-  <div style="text-align:center; margin-top:30px;">
-    <img src="candy.png" alt="Candy – wojowniczka"
-         style="max-width:100%; height:auto;" />
-  </div>
+  <!-- OKŁADKA – ZDJĘCIE -->
+  <figure>
+    <img src="candy.png" alt="Candy – wojowniczka">
+    <figcaption>Candy – wojowniczka</figcaption>
+  </figure>
 
-  <div style="text-align:center; margin:20px 0;">
-    <img src="ornament1.png" alt="ornament" style="height:25px; width:auto;">
-  </div>
 </body>
 </html>
