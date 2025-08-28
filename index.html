@@ -20,10 +20,10 @@
     text-align: justify;
   }
 
-  /* 🔵 BANER */
+  /* 🔵 GÓRNY BANER */
   header {
     background-color: #cce5ff;   /* jasny niebieski */
-    color: #000033;              /* ciemny granat */
+    color: #000033;              
     padding: 40px 20px;
     text-align: center;
     text-shadow: 2px 2px 4px #00000033;
@@ -48,20 +48,57 @@
     color: var(--muted);
     margin-top: .35rem;
   }
+
+  /* ⚫ DOLNY BANER */
+  .bottom-banner {
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    padding: 30px 20px;
+    margin-top: 40px;
+  }
+  .bottom-banner h2 {
+    margin: 0 0 20px;
+    font-size: 1.4rem;
+  }
+
+  /* 🔘 PRZYCISK */
+  .btn {
+    display: inline-block;
+    background: #b11a3b;
+    color: #fff;
+    padding: 12px 28px;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 3px 6px rgba(0,0,0,.25);
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  .btn:hover {
+    background: #8c142f;
+    transform: translateY(-2px);
+  }
   </style>
 </head>
 <body>
 
-  <!-- 🔵 BANER -->
+  <!-- 🔵 GÓRNY BANER -->
   <header>
     <h1>Candy „wojowniczka”</h1>
   </header>
 
-  <!-- OKŁADKA – ZDJĘCIE -->
+  <!-- 📸 ZDJĘCIE -->
   <figure>
     <img src="candy.png" alt="Candy – wojowniczka">
     <figcaption>Candy – wojowniczka</figcaption>
   </figure>
+
+  <!-- ⚫ DOLNY BANER Z PRZYCISKIEM -->
+  <div class="bottom-banner">
+    <h2>Odwiedź nasze strony</h2>
+    <a href="https://example.com" class="btn">Przejdź</a>
+  </div>
 
 </body>
 </html>
