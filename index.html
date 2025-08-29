@@ -2,135 +2,125 @@
 <html lang="pl">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Candy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nasze Siedliszcze — strona demo</title>
   <style>
-  :root{
-    --text: #222;
-    --accent: #b11a3b;
-    --maxw: 780px;
-    --muted: #666;
-  }
-  body{
-    color:var(--text);
-    font: 12.5pt/1.6 "Georgia","Times New Roman",serif;
-    margin:0 auto; padding:24px;
-    max-width: var(--maxw);
-    background:#f5f5f5;
-    text-align: justify;
-  }
+    :root{
+      --bg:#f5f5f5;
+      --text:#222;
+      --muted:#666;
+      --card:#ffffff;
+      --border:#e5e5e5;
+      --shadow:0 2px 12px rgba(0,0,0,.08);
+      --radius:14px;
+      --maxw:1100px;
+      --blue:#cce5ff;     /* baner tła */
+      --blueText:#000033; /* kolor tekstu banera */
+      --sand:#fff7dc;     /* piaskowe akcenty */
+    }
 
-  /* 🔵 GÓRNY BANER */
-  header {
-    background-color: #cce5ff;
-    color: #000033;              
-    padding: 40px 20px;
-    text-align: center;
-    text-shadow: 2px 2px 4px #00000033;
-  }
-  header h1 {
-    font-size: 42px;
-    margin: 0;
-  }
+    html,body{height:100%}
+    body{
+      margin:0; padding:0;
+      font-family: Georgia, serif;
+      color:var(--text);
+      background:var(--bg);
+      line-height:1.75;
+    }
 
-  figure {
-    margin: 40px auto;
-    text-align: center;
-  }
-  figure img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0,0,0,.15);
-  }
-  figure figcaption {
-    font-size: .9rem;
-    color: var(--muted);
-    margin-top: .35rem;
-  }
+    .wrap{max-width:var(--maxw); margin:0 auto; padding:22px}
 
-  /* ⚫ DOLNE BANERY */
-  .bottom-banner {
-    background-color: #000;
-    color: #fff;
-    text-align: center;
-    padding: 30px 20px;
-    margin-top: 20px;
-  }
-  .bottom-banner h2 {
-    margin: 0 0 20px;
-    font-size: 1.4rem;
-  }
+    /* ====== BANER ====== */
+    .banner{
+      background:var(--blue);
+      color:var(--blueText);
+      border:1px solid #b7d7ff;
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      padding:28px 22px; margin:22px;
+    }
+    .title{margin:0; font-size:clamp(28px,4.5vw,46px); letter-spacing:.3px}
+    .subtitle{margin:8px 0 0; color:#123; font-size:clamp(15px,2.2vw,18px)}
 
-  /* 🔘 PRZYCISK */
-  .btn {
-    display: inline-block;
-    background: #b11a3b;
-    color: #fff;
-    padding: 12px 28px;
-    font-size: 1.1rem;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: bold;
-    box-shadow: 0 3px 6px rgba(0,0,0,.25);
-    transition: background 0.3s ease, transform 0.2s ease;
-  }
-  .btn:hover {
-    background: #8c142f;
-    transform: translateY(-2px);
-  }
+    /* ====== NAV / PRZYCISKI ====== */
+    .nav{display:flex; gap:12px; flex-wrap:wrap; margin:18px 22px}
+    .btn{display:inline-block; text-decoration:none; font-weight:700; padding:.65em 1.1em; border-radius:999px; border:1px solid #0f2542; color:#0f2542; background:#fff}
+    .btn:hover{filter:brightness(.96)}
+    .btn.primary{background:#0f2542; color:#fff}
 
-  /* 📝 WYŚRODKOWANY NAPIS */
-  .center-title {
-    text-align: center;
-    font-size: 1.6rem;
-    margin: 40px 0 20px;
-    color: #000;
-  }
+    /* ====== DWA ZDJĘCIA OBOK ====== */
+    .gallery{display:grid; gap:14px; margin:0 22px 22px}
+    .gallery img{width:100%; height:auto; display:block; border-radius:14px; box-shadow:var(--shadow); border:1px solid var(--border)}
+    @media(min-width:780px){
+      .gallery{grid-template-columns:1fr 1fr}
+    }
+
+    /* ====== ARTYKUŁ (ŚRODEK) ====== */
+    .article{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); padding:20px 22px; margin:0 22px 22px}
+    .article h2{margin:0 0 .4em; font-size:clamp(22px,3vw,30px); text-align:center}
+    .article .lead{background:var(--sand); border-left:6px solid #e5c276; border-radius:10px; padding:10px 12px; margin:10px 0 18px}
+
+    /* ====== STOPKA ====== */
+    footer{color:var(--muted); text-align:center; padding:22px}
+
+    /* ====== OBRAZY RESPONSYWNE ====== */
+    img{max-width:100%; height:auto}
   </style>
 </head>
 <body>
 
-  <!-- 🔵 GÓRNY BANER -->
-  <header>
-    <h1>Candy „wojowniczka”</h1>
+  <!-- BANER GÓRNY -->
+  <header class="banner">
+    <h1 class="title">Nasze Siedliszcze</h1>
+    <p class="subtitle">Mała ojczyzna — wielkie serce. Miejsca, historie, ludzie.</p>
   </header>
 
-  <!-- 📸 ZDJĘCIE -->
-  <figure>
-    <img src="candy.png" alt="Candy – wojowniczka">
-    <figcaption>Candy – wojowniczka</figcaption>
-  </figure>
+  <!-- NAWIGACJA / PRZYCISKI DO PODSTRON -->
+  <nav class="nav" aria-label="Główna nawigacja">
+    <a class="btn primary" href="zabytki.html">Zabytki</a>
+    <a class="btn" href="kapliczki.html">Kapliczki</a>
+    <a class="btn" href="dzieje.html">Dzieje Siedliszcza</a>
+    <a class="btn" href="legendy.html">Legendy siedliskie</a>
+  </nav>
 
-  <!-- 📝 NAPIS PRZED BANERAMI -->
-  <h2 class="center-title">Odwiedź nasze strony</h2>
+  <main class="wrap" role="main">
+    <!-- GALERIA: DWIE PROPOZYCJE ZDJĘĆ OBOK SIEBIE -->
+    <section class="gallery" aria-label="Propozycje zdjęć">
+      <!-- Podmień pliki w folderze images/ -->
+      <img src="images/rynek.jpg" alt="Siedliszcze — rynek / centrum miejscowości" />
+      <img src="images/kapliczka.jpg" alt="Siedliszcze — przydrożna kapliczka wśród pól" />
+    </section>
 
-  <!-- ⚫ DOLNE BANERY Z PRZYCISKAMI -->
-  <div class="bottom-banner">
-    <h2>Szkoły sztuk wojennych</h2>
-    <a href="https://katorishintoryu.pl/artykuly/kenjutsu/?utm_source=chatgpt.com" class="btn">Przejdź</a>
-  </div>
+    <!-- ARTYKUŁ W CENTRUM STRONY -->
+    <article class="article">
+      <h2>Siedliszcze — krótka opowieść</h2>
+      <div class="lead">
+        <p>
+          Siedliszcze to miejscowość, której siłą jest prostota: pola, kapliczki, ścieżki między łąkami i ludzie,
+          którzy od pokoleń budują wspólnotę. Ta strona jest małym przewodnikiem po naszych miejscach pamięci,
+          śladach wiary i codzienności.
+        </p>
+      </div>
+      <p>
+        Zapraszamy do działu <strong>„Zabytki”</strong> — znajdziesz tam najważniejsze obiekty i krótkie opisy.
+        W sekcji <strong>„Kapliczki”</strong> zebraliśmy fotografie przydrożnych kapliczek oraz mapkę z lokalizacjami.
+        <strong>„Dzieje Siedliszcza”</strong> to z kolei skrót historii miejscowości — od pierwszych wzmianek po czasy współczesne.
+        A jeśli lubisz opowieści, zajrzyj do <strong>„Legend siedliskich”</strong> — usłyszysz to, co przekazywano szeptem przy piecu.
+      </p>
+      <p>
+        Strona jest prosta i lekka, przystosowana do urządzeń mobilnych. Jeżeli chcesz pomóc — wyślij swoje zdjęcie lub
+        wspomnienie; wspólnie ułożymy album pamięci.
+      </p>
+    </article>
+  </main>
 
-  <div class="bottom-banner">
-    <h2>Sztuka walki dwoma mieczami</h2>
-    <a href="https://katorishintoryu.pl/artykuly/sztuka-walki-dwoma-mieczami/?utm_source=chatgpt.com" class="btn">Przejdź</a>
-  </div>
-  <a href="https://buycoffee.to/ramzi-studio" target="_blank" style="
-    background-color: #6f4e37;
-    color: white;
-    padding: 12px 24px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: bold;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    transition: transform 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-  ">☕ Postaw nam kawę</a>
-
-    <footer>
-    © 2025 Candy Studio – Wszystkie prawa zastrzeżone
+  <footer>
+    © <span id="year"></span> Nasze Siedliszcze • wersja demo (GitHub Pages)
   </footer>
+
+  <script>
+    // Aktualny rok w stopce
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
