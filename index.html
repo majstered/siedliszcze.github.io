@@ -48,14 +48,14 @@
     .btn:hover{filter:brightness(.96)}
     .btn.primary{background:#0f2542; color:#fff}
 
-    /* ====== DWA ZDJĘCIA OBOK ====== */
+    /* ====== GALERIA ====== */
     .gallery{display:grid; gap:14px; margin:0 22px 22px}
     .gallery img{width:100%; height:auto; display:block; border-radius:14px; box-shadow:var(--shadow); border:1px solid var(--border)}
     @media(min-width:780px){
       .gallery{grid-template-columns:1fr 1fr}
     }
 
-    /* ====== ARTYKUŁ (ŚRODEK) ====== */
+    /* ====== ARTYKUŁ ====== */
     .article{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); padding:20px 22px; margin:0 22px 22px}
     .article h2{margin:0 0 .4em; font-size:clamp(22px,3vw,30px); text-align:center}
     .article .lead{background:var(--sand); border-left:6px solid #e5c276; border-radius:10px; padding:10px 12px; margin:10px 0 18px}
@@ -63,8 +63,8 @@
     /* ====== STOPKA ====== */
     footer{color:var(--muted); text-align:center; padding:22px}
 
-    /* ====== OBRAZY RESPONSYWNE ====== */
-    img{max-width:100%; height:auto}
+    /* ====== OBRAZY ====== */
+    img{max-width:100%; height:auto; border-radius:14px; box-shadow:var(--shadow); border:1px solid var(--border)}
   </style>
 </head>
 <body>
@@ -75,7 +75,12 @@
     <p class="subtitle">Mała ojczyzna — wielkie serce. Miejsca, historie, ludzie.</p>
   </header>
 
-  <!-- NAWIGACJA / PRZYCISKI DO PODSTRON -->
+  <!-- POJEDYNCZE ZDJĘCIE PO BANERZE -->
+  <section class="wrap">
+    <img src="3.png" alt="Widok Sokolec" />
+  </section>
+
+  <!-- NAWIGACJA -->
   <nav class="nav" aria-label="Główna nawigacja">
     <a class="btn primary" href="zabytki.html">Zabytki</a>
     <a class="btn" href="kapliczki.html">Kapliczki</a>
@@ -83,7 +88,7 @@
     <a class="btn" href="legendy.html">Legendy siedliskie</a>
   </nav>
 
-
+  <main class="wrap" role="main">
 
     <!-- ARTYKUŁ W CENTRUM STRONY -->
     <article class="article">
@@ -95,7 +100,7 @@
         </p>
       </div>
       <p>
-        Jedyny wschodni wjazd prowadzi przez wąski przesmyk, gdzie źródełka nigdy nie zamarzają, nawet w srogie zimy.
+        Jedyny wjazd prowadzi przez wąski przesmyk, gdzie źródełka nigdy nie zamarzają, nawet w srogie zimy.
         Dawniej biegł tędy szlak handlowy od Rusi przez Chełm, mijając wieże wartownicze w Stołpiu i cudowne źródło,
         które według podań dawało siłę podróżnym.
       </p>
@@ -119,21 +124,12 @@
       </p>
     </article>
 
-      </div>
-      <p>
-        Zapraszamy do działu <strong>„Zabytki”</strong> — znajdziesz tam najważniejsze obiekty i krótkie opisy.
-        W sekcji <strong>„Kapliczki”</strong> zebraliśmy fotografie przydrożnych kapliczek oraz mapkę z lokalizacjami.
-        <strong>„Dzieje Siedliszcza”</strong> to z kolei skrót historii miejscowości — od pierwszych wzmianek po czasy współczesne.
-        A jeśli lubisz opowieści, zajrzyj do <strong>„Legend siedliskich”</strong> — usłyszysz to, co przekazywano szeptem przy piecu.
-      </p>
-  <main class="wrap" role="main">
-    <!-- GALERIA: DWIE PROPOZYCJE ZDJĘĆ OBOK SIEBIE -->
-    <section class="gallery" aria-label="Propozycje zdjęć">
-      <!-- Podmień pliki w folderze images/ -->
-      <img src="1.jpg" alt="Siedliszcze — rynek / centrum miejscowości" />
-      <img src="2.jpg" alt="Siedliszcze — przydrożna kapliczka wśród pól" />
+    <!-- DWA ZDJĘCIA OBOK SIEBIE PO ARTYKULE -->
+    <section class="gallery" aria-label="Zdjęcia Sokolec">
+      <img src="1.jpg" alt="Widok Sokolec 1" />
+      <img src="2.png" alt="Widok Sokolec 2" />
     </section>
-    </article>
+
   </main>
 
   <footer>
