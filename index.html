@@ -1,208 +1,127 @@
-html,body{
-  height:100%;
-}
-body{
-  margin:0;
-  font-family: Georgia, "Times New Roman", serif;
-  color:var(--ink);
-  background:
-    radial-gradient(1200px 600px at 20% -10%, #ffffff 0%, transparent 60%),
-    radial-gradient(900px 500px at 110% 10%, #ffffff 0%, transparent 60%),
-    linear-gradient(#faf8f0, var(--bg));
-}
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tajemnice Radosne Różańca</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: #f9f7f2;
+      color: #2a2a2a;
+      line-height: 1.6;
+    }
 
-/* baner */
-.banner{
-  background: linear-gradient(180deg, #dbe6ff, #cfe0ff 55%, #c6dafd);
-  color:#0f1b3d;
-  border-bottom:1px solid #b5c8f6;
-  padding:28px 20px 26px;
-  text-align:center;
-  box-shadow: inset 0 -2px 0 rgba(255,255,255,.7);
-}
-.banner h1{
-  margin:0 0 6px;
-  font-size:clamp(26px, 4.2vw, 42px);
-  letter-spacing:.5px;
-}
-.banner p{
-  margin:0;
-  opacity:.9;
-  font-size:clamp(14px, 2.2vw, 18px);
-}
+    header {
+      background: linear-gradient(180deg, #d8e6ff, #f0f6ff);
+      text-align: center;
+      padding: 30px 15px;
+      border-bottom: 2px solid #b5c8f6;
+    }
 
-/* karta */
-.page{
-  max-width:var(--maxw);
-  margin:28px auto 70px;
-  background:var(--card);
-  border:1px solid var(--ring);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  position:relative;
-  overflow:hidden;
-}
-.page-inner{
-  padding:38px 26px 42px;
-}
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+      color: #001a44;
+    }
+    header p {
+      margin: 6px 0 0;
+      color: #333;
+    }
 
-/* dekor – „różaniec” przy krawędzi */
-.page::before{
-  content:"";
-  position:absolute;
-  left:18px;
-  top:22px;
-  bottom:22px;
-  width:10px;
-  background:
-    radial-gradient(circle at 50% 6px, var(--accent) 0 5px, transparent 5px) repeat-y;
-  background-size:10px 30px;
-  opacity:.35;
-}
-.page::after{
-  content:"";
-  position:absolute;
-  right:18px;
-  top:22px;
-  bottom:22px;
-  width:10px;
-  background:
-    radial-gradient(circle at 50% 6px, var(--accent) 0 5px, transparent 5px) repeat-y;
-  background-size:10px 30px;
-  opacity:.2;
-  filter:saturate(.7);
-}
+    .container {
+      max-width: 850px;
+      margin: 20px auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
 
-.subtitle{
-  margin:0 0 22px;
-  text-align:center;
-  color:#5b6ba6;
-  font-style:italic;
-}
+    .intro-img {
+      display: block;
+      margin: 0 auto 20px;
+      max-width: 300px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,.15);
+    }
 
-/* lista tajemnic */
-ol.rosary{
-  counter-reset: rom;
-  margin:0 auto;
-  padding:0;
-  list-style:none;
-  max-width:760px;
-}
-.rosary li{
-  counter-increment: rom;
-  display:grid;
-  grid-template-columns: 72px 1fr;
-  gap:18px;
-  align-items:center;
-  padding:18px 18px;
-  margin:0 0 14px;
-  border:1px solid #efe8d5;
-  border-radius:14px;
-  background:
-    linear-gradient(180deg, #fff, #fffdf6 60%, #fffaf0);
-  box-shadow: 0 2px 0 #efe8d5;
-}
-.badge{
-  width:72px; height:72px;
-  display:grid; place-items:center;
-  border-radius:50%;
-  color:#122150;
-  background:
-    radial-gradient(circle at 30% 30%, #ffffff 0 30%, transparent 31%),
-    radial-gradient(circle at 70% 70%, #ffffff 0 28%, transparent 29%),
-    radial-gradient(circle at 50% 50%, #cfd8ff 0 62%, #b9c7ff 63% 100%);
-  border:2px solid #a9b9f3;
-  box-shadow: inset 0 0 0 3px rgba(255,255,255,.8), 0 6px 14px rgba(0,0,0,.05);
-  font-variant: small-caps;
-  font-weight:bold;
-  letter-spacing:.5px;
-}
-.badge span{
-  font-size:22px;
-}
-.title{
-  margin:0;
-  font-size:22px;
-  line-height:1.35;
-}
-.title small{
-  display:block;
-  color:#8f805e;
-  font-size:13px;
-  letter-spacing:.4px;
-  margin-top:4px;
-}
+    h2 {
+      color: #324d7d;
+      text-align: center;
+      margin: 30px 0 10px;
+      font-size: 1.6em;
+    }
 
-/* pozioma „dziesiątka” z paciorków */
-.dec{
-  height:10px;
-  margin:14px 0 0;
-  background:
-    radial-gradient(circle, var(--gold) 0 4px, transparent 5px) left/28px 10px repeat-x;
-  opacity:.45;
-}
+    .mystery {
+      margin: 25px 0;
+      padding: 20px;
+      border-left: 5px solid #a8b6ff;
+      background: #fafbff;
+      border-radius: 10px;
+    }
+    .mystery h3 {
+      margin-top: 0;
+      color: #001a44;
+    }
+    .mystery p {
+      margin: 6px 0 0;
+      font-size: 15px;
+    }
 
-/* stopka – dyskretna uwaga */
-.note{
-  margin:26px auto 0;
-  max-width:760px;
-  text-align:center;
-  font-size:14px;
-  color:#6b614f;
-  padding:10px 14px;
-  border-radius:10px;
-  background:linear-gradient(180deg,#fffdf6,#fffaf0);
-  border:1px solid #efe6d2;
-}
+    footer {
+      text-align: center;
+      margin: 40px 0 10px;
+      font-size: 14px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Tajemnice Radosne</h1>
+    <p>(odmawiane w poniedziałki i soboty)</p>
+  </header>
 
-/* druk */
-@media print{
-  body{ background:#fff; }
-  .banner{ background:#fff; border:0; box-shadow:none; }
-  .page{ box-shadow:none; border-color:#eee; }
-  .page::before, .page::after{ opacity:.2; }
-}
-  <ol class="rosary">
-    <li>
-      <div class="badge" aria-hidden="true"><span>I</span></div>
-      <h3 class="title">Zwiastowanie Najświętszej Maryi Pannie
-        <small>Prośba o łaskę pokornego „fiat”.</small>
-      </h3>
-      <div class="dec" aria-hidden="true"></div>
-    </li>
+  <div class="container">
+    <img src="maryja.jpg" alt="Maryja z różańcem" class="intro-img">
 
-    <li>
-      <div class="badge" aria-hidden="true"><span>II</span></div>
-      <h3 class="title">Nawiedzenie św. Elżbiety
-        <small>Prośba o miłość, która niesie pomoc.</small>
-      </h3>
-      <div class="dec" aria-hidden="true"></div>
-    </li>
+    <h2>Rozważania</h2>
 
-    <li>
-      <div class="badge" aria-hidden="true"><span>III</span></div>
-      <h3 class="title">Narodzenie Jezusa
-        <small>Prośba o prostotę serca Betlejem.</small>
-      </h3>
-      <div class="dec" aria-hidden="true"></div>
-    </li>
+    <div class="mystery">
+      <h3>I. Zwiastowanie Najświętszej Maryi Pannie</h3>
+      <p>Anioł Gabriel zwiastuje Maryi, że zostanie Matką Syna Bożego. 
+      Uczymy się pokory i gotowości do przyjęcia woli Boga.</p>
+    </div>
 
-    <li>
-      <div class="badge" aria-hidden="true"><span>IV</span></div>
-      <h3 class="title">Ofiarowanie w świątyni
-        <small>Prośba o zawierzenie Bogu każdego dnia.</small>
-      </h3>
-      <div class="dec" aria-hidden="true"></div>
-    </li>
+    <div class="mystery">
+      <h3>II. Nawiedzenie św. Elżbiety</h3>
+      <p>Maryja z pośpiechem niesie pomoc swojej krewnej Elżbiecie. 
+      Rozważamy miłość bliźniego i radość płynącą ze służby.</p>
+    </div>
 
-    <li>
-      <div class="badge" aria-hidden="true"><span>V</span></div>
-      <h3 class="title">Znalezienie w świątyni
-        <small>Prośba, by szukać Jezusa ponad wszystko.</small>
-      </h3>
-      <div class="dec" aria-hidden="true"></div>
-    </li>
-  </ol>
+    <div class="mystery">
+      <h3>III. Narodzenie Jezusa</h3>
+      <p>Syn Boży przychodzi na świat w ubóstwie Betlejem. 
+      Uczymy się prostoty serca i otwartości na dar Bożej miłości.</p>
+    </div>
 
-  <p class="note">Możesz wydrukować tę kartę i dołączyć do różańca. <em>Jezu, Maryjo, prowadźcie.</em></p>
-</div>
+    <div class="mystery">
+      <h3>IV. Ofiarowanie Jezusa w świątyni</h3>
+      <p>Maryja i Józef ofiarują Dzieciątko w świątyni. 
+      Rozważamy zawierzenie i oddanie życia Bogu.</p>
+    </div>
+
+    <div class="mystery">
+      <h3>V. Znalezienie Jezusa w świątyni</h3>
+      <p>Dwunastoletni Jezus pozostaje w świątyni, by uczyć się i nauczać. 
+      Prosimy o łaskę, by zawsze szukać Jezusa ponad wszystko.</p>
+    </div>
+  </div>
+
+  <footer>
+    „Raduj się, pełna łaski, Pan z Tobą.” (Łk 1,28)
+  </footer>
+</body>
+</html>
