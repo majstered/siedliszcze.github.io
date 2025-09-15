@@ -299,7 +299,8 @@
   .radio-vol{width:140px}
   .radio-status{font-size:.92em;color:#666;margin-top:8px}
   .station-line{margin-top:8px;color:#224;font-weight:600}
-  .station-select{min-width:220px;padding:10px 12px;border-radius:10px;border:1px solid #dde3f2}
+  .station-select{min-width:240px;padding:10px 12px;border-radius:10px;border:1px solid #dde3f2}
+  .warn{margin-top:10px;padding:10px 12px;border-radius:10px;background:#fff6e5;color:#7a4b00;border:1px solid #ffd89a;display:none}
 </style>
 
 <div class="radio-card" id="radioPlayer">
@@ -308,19 +309,26 @@
       <span class="live-dot" aria-hidden="true"></span>
       <span id="nowPlaying">Słuchasz: —</span>
     </div>
+
+    <!-- WYBÓR STACJI: 2 pewniaki -->
     <select id="stationSelect" class="station-select" aria-label="Wybierz stację">
-      <option value="https://stream.rcs.revma.com/ypqt40u0x1zuv" data-name="Radio Niepokalanów" selected>Radio Niepokalanów</option>
-      <option value="https://stream.radiomaryja.pl:8000/live" data-name="Radio Maryja">Radio Maryja</option>
-      <option value="https://profeto.pl:8443/live.mp3" data-name="Radio Profeto">Radio Profeto</option>
-      <!-- Możesz dodać kolejne -->
+      <option value="https://stream.rcs.revma.com/ypqt40u0x1zuv" data-name="Radio Niepokalanów" selected>
+        Radio Niepokalanów
+      </option>
+      <option value="http://online.radiojasnagora.pl:8004/stream" data-name="Radio Jasna Góra">
+        Radio Jasna Góra
+      </option>
+      <!-- Możesz dodać kolejne po podaniu bezpośrednich URL-i mp3/aac/m3u8 -->
     </select>
+
     <button class="radio-btn" id="playPause">▶︎ Odtwórz</button>
     <button class="radio-btn radio-muted" id="muteBtn" title="Wycisz / Włącz dźwięk">🔇</button>
     <input type="range" id="volume" class="radio-vol" min="0" max="1" step="0.01" value="0.9" aria-label="Głośność">
   </div>
 
   <div class="radio-status" id="status">Status: gotowe do odtworzenia</div>
-  <div class="station-line" id="streamInfo">Strumień: MP3 • 128 kb/s (typowe)</div>
+  <div class="station-line" id="streamInfo">Strumień: MP3/AAC • odtwarzanie bez przekierowań</div>
+  <div class="warn" id="mixedWarn">⚠️ Ta stacja używa <strong>HTTP</strong>. Jeśli Twoja strona ma <strong>HTTPS</strong>, przeglądarka może to zablokować (mixed content). Rozwiązanie: uruchom stronę tymczasowo przez http:// albo użyj proxy HTTPS dla strumienia.</div>
 
   <audio id="radioAudio" preload="none" crossOrigin="anonymous">
     <source id="radioSource" src="https://stream.rcs.revma.com/ypqt40u0x1zuv" type="audio/mpeg">
@@ -339,6 +347,7 @@
   const select  = document.getElementById('stationSelect');
   const nowTxt  = document.getElementById('nowPlaying');
   const info    = document.getElementById('streamInfo');
+  const mixed   = document.getElementById('mixedWarn');
 
   // Przywróć ostatnio wybraną stację
   const saved = localStorage.getItem('radio.station');
@@ -356,8 +365,16 @@
 
   function setStatus(txt){ status.textContent = 'Status: ' + txt; }
 
+  function checkMixedContent(url){
+    // Pokaż ostrzeżenie, jeżeli strona jest HTTPS, a strumień HTTP
+    const isPageHttps = location.protocol === 'https:';
+    const isStreamHttp = /^http:\/\//i.test(url);
+    mixed.style.display = (isPageHttps && isStreamHttp) ? 'block' : 'none';
+  }
+
   function setStation(url, name, autoplay = true) {
     audio.pause();
+    checkMixedContent(url);
     source.src = url;
     audio.load();
     nowTxt.textContent = 'Słuchasz: ' + (name || '—');
@@ -367,7 +384,10 @@
       audio.play().then(()=> {
         playBtn.textContent='⏸ Pauza';
         setStatus('odtwarzanie');
-      }).catch(()=> setStatus('błąd odtwarzania (CORS/HTTPS/autoplay)'));
+      }).catch((e)=> {
+        console.error(e);
+        setStatus('błąd odtwarzania (CORS/HTTPS/autoplay)');
+      });
     } else {
       setStatus('gotowe – kliknij odtwórz');
     }
@@ -386,8 +406,8 @@
         playBtn.textContent = '⏸ Pauza';
         setStatus('odtwarzanie');
       } catch (e) {
-        setStatus('błąd odtwarzania (CORS/HTTPS/autoplay)');
         console.error(e);
+        setStatus('błąd odtwarzania (CORS/HTTPS/autoplay)');
       }
     } else {
       audio.pause();
@@ -409,7 +429,7 @@
   audio.addEventListener('stalled', () => setStatus('buforowanie…'));
   audio.addEventListener('error', () => setStatus('błąd strumienia (adres/HTTPS/CORS)'));
 
-  // (opcjonalnie) prosty odczyt MIME i bitrate z obiektu przeglądarki – bywa niedostępne
+  // Prosty opis MIME
   try {
     const mime = audio.currentSrc?.endsWith('.m3u8') ? 'HLS' : 'MP3/AAC';
     info.textContent = 'Strumień: ' + mime + ' • odtwarzanie bez przekierowań';
