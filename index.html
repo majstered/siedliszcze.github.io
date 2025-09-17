@@ -279,29 +279,113 @@
   <p class="prayer-amen">Amen.</p>
 </div>
 
-<!-- 📻 Radio Niepokalanów – Player w iframe (bez problemów CORS) -->
+<!-- 📻 Radio Niepokalanów – nasze przyciski + fallback do iframe -->
 <style>
-  .radio-card{
-    max-width:850px;margin:24px auto;padding:18px 20px;background:#fff;border-radius:14px;
-    box-shadow:0 6px 20px rgba(0,0,0,.08);border-left:5px solid #98c6ff;
-    font-family:system-ui,Segoe UI,Roboto,Arial
-  }
-  .radio-title{
-    font-weight:700;color:#224;margin-bottom:10px;font-size:1.1em
-  }
-  .radio-frame{
-    width:100%;max-width:400px;height:184px;border:0;border-radius:12px;
-    box-shadow:0 4px 14px rgba(0,0,0,.1);
-  }
+  .radio-card{max-width:850px;margin:24px auto;padding:18px 20px;background:#fff;border-radius:14px;
+    box-shadow:0 6px 20px rgba(0,0,0,.08);border-left:5px solid #98c6ff;font-family:system-ui,Segoe UI,Roboto,Arial}
+  .radio-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .radio-title{font-weight:700;color:#224;flex:1 1 auto;font-size:1.15rem}
+  .radio-btn{appearance:none;border:0;border-radius:999px;padding:12px 18px;cursor:pointer;
+    background:#2b6cff;color:#fff;font-weight:700;box-shadow:0 4px 14px rgba(43,108,255,.25)}
+  .radio-btn[disabled]{opacity:.6;cursor:not-allowed}
+  .radio-muted{background:#3d3f4b}
+  .radio-vol{width:160px}
+  .radio-status{font-size:.92em;color:#555;margin-top:8px}
+  .hide{display:none}
+  .radio-frame{width:100%;max-width:420px;height:184px;border:0;border-radius:12px;
+    box-shadow:0 4px 14px rgba(0,0,0,.1);margin-top:10px}
 </style>
 
-<div class="radio-card">
-  <div class="radio-title">📻 Radio Niepokalanów – słuchaj na stronie</div>
-  <iframe class="radio-frame"
-    src="https://www.revma.com/widget/radio/gg1s5wrph72vv/player/?trackinfo"
-    allow="autoplay">
-  </iframe>
+<div class="radio-card" id="radioWrap">
+  <div class="radio-row">
+    <div class="radio-title">📻 Radio Niepokalanów – słuchaj na stronie</div>
+    <button class="radio-btn" id="playPause">▶︎ Odtwórz</button>
+    <button class="radio-btn radio-muted" id="muteBtn" title="Wycisz / Włącz dźwięk">🔇</button>
+    <input type="range" id="volume" class="radio-vol" min="0" max="1" step="0.01" value="0.9" aria-label="Głośność">
+  </div>
+  <div class="radio-status" id="status">Status: gotowe do odtworzenia</div>
+
+  <!-- Nasz <audio> -->
+  <audio id="radioAudio" preload="none"></audio>
+
+  <!-- Fallback: oficjalny player Revma (działa zawsze) -->
+  <div id="revmaBox" class="hide">
+    <iframe class="radio-frame"
+      src="https://www.revma.com/widget/radio/gg1s5wrph72vv/player/?trackinfo"
+      allow="autoplay"></iframe>
+    <div class="radio-status">Tryb awaryjny: player Revma (CORS ominięty).</div>
+  </div>
 </div>
+
+<script>
+(function(){
+  // 🔧 USTAW TO NA SWÓJ ADRES PROXY (poniżej daję gotowy plik PHP)
+  const PROXY_URL = '/revma-proxy.php'; 
+  // Strumień źródłowy u Revma (bez tokenów – proxy go pobierze)
+  const REVMA_SOURCE = 'https://stream.revma.com/gg1s5wrph72vv.m4a';
+
+  const audio  = document.getElementById('radioAudio');
+  const playBt = document.getElementById('playPause');
+  const muteBt = document.getElementById('muteBtn');
+  const vol    = document.getElementById('volume');
+  const status = document.getElementById('status');
+  const revmaBox = document.getElementById('revmaBox');
+
+  function setStatus(t){ status.textContent = 'Status: ' + t; }
+
+  // Spróbuj odtwarzać przez nasze <audio> via proxy (usuwa CORS)
+  function prepareAudio(){
+    if (!audio.src){
+      const url = PROXY_URL + '?url=' + encodeURIComponent(REVMA_SOURCE);
+      audio.src = url;
+    }
+  }
+
+  async function tryPlay(){
+    try{
+      prepareAudio();
+      setStatus('łączę ze stacją…');
+      await audio.play();
+      playBt.textContent = '⏸ Pauza';
+      setStatus('odtwarzanie');
+    }catch(e){
+      console.warn('Direct play failed:', e);
+      // Fallback do iframe Revma
+      document.getElementById('revmaBox').classList.remove('hide');
+      // Schowaj nasze sterowanie (opcjonalnie – możesz zostawić)
+      setStatus('błąd bezpośredniego odtwarzania → przełączam na player Revma');
+    }
+  }
+
+  playBt.addEventListener('click', () => {
+    if (revmaBox && !revmaBox.classList.contains('hide')){
+      // w trybie iframe steruje się już w środku playera Revma
+      return;
+    }
+    if (audio.paused){ tryPlay(); }
+    else{
+      audio.pause();
+      playBt.textContent = '▶︎ Odtwórz';
+      setStatus('wstrzymane');
+    }
+  });
+
+  muteBt.addEventListener('click', () => {
+    if (revmaBox && !revmaBox.classList.contains('hide')) return;
+    audio.muted = !audio.muted;
+    muteBt.textContent = audio.muted ? '🔈' : '🔇';
+  });
+
+  vol.addEventListener('input', () => { if (revmaBox.classList.contains('hide')) audio.volume = parseFloat(vol.value); });
+
+  audio.addEventListener('canplay', () => setStatus('gotowe – kliknij odtwórz'));
+  audio.addEventListener('playing', () => setStatus('odtwarzanie'));
+  audio.addEventListener('pause', () => setStatus('wstrzymane'));
+  audio.addEventListener('stalled', () => setStatus('buforowanie…'));
+  audio.addEventListener('error', () => setStatus('błąd strumienia (spróbuję fallback)'));
+})();
+</script>
+
 
 
   
