@@ -279,40 +279,26 @@
   <p class="prayer-amen">Amen.</p>
 </div>
 
-<!-- 📻 Radio Niepokalanów – stabilny player Revma (iframe only) -->
+<!-- 📻 Radio Niepokalanów – Player w iframe (bez problemów CORS) -->
 <style>
   .radio-card{
-    max-width:900px;margin:24px auto;padding:18px 20px;background:#fff;border-radius:14px;
+    max-width:850px;margin:24px auto;padding:18px 20px;background:#fff;border-radius:14px;
     box-shadow:0 6px 20px rgba(0,0,0,.08);border-left:5px solid #98c6ff;
     font-family:system-ui,Segoe UI,Roboto,Arial
   }
-  .radio-title{font-weight:700;color:#224;margin-bottom:12px;font-size:1.2rem}
+  .radio-title{
+    font-weight:700;color:#224;margin-bottom:10px;font-size:1.1em
+  }
   .radio-frame{
-    width:100%; height:260px; /* wyższa ramka = wygodny dostęp do przycisków */
-    border:0; border-radius:12px; box-shadow:0 4px 14px rgba(0,0,0,.1);
+    width:100%;max-width:400px;height:184px;border:0;border-radius:12px;
+    box-shadow:0 4px 14px rgba(0,0,0,.1);
   }
 </style>
 
 <div class="radio-card">
   <div class="radio-title">📻 Radio Niepokalanów – słuchaj na stronie</div>
-  <iframe
-    class="radio-frame"
+  <iframe class="radio-frame"
     src="https://www.revma.com/widget/radio/gg1s5wrph72vv/player/?trackinfo"
-    allow="autoplay"
-    loading="lazy"
-  ></iframe>
-  <div style="font-size:.92em;color:#556;margin-top:8px">
-    Jeśli nie słychać – kliknij zielony <strong>Play</strong> w ramce, otwórz stronę przez <strong>https://</strong> i wyłącz blokery treści dla tej podstrony.
-  </div>
+    allow="autoplay">
+  </iframe>
 </div>
-
-
-
-  
-  <footer>
-    „Zdrowaś Maryjo, łaski pełna, Pan z Tobą.”
-  </footer>
-
-  
-</body>
-</html>
