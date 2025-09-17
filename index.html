@@ -279,17 +279,15 @@
   <p class="prayer-amen">Amen.</p>
 </div>
 
-
-<!-- Mini Radio Player (z nazwą stacji, wyborem i zapisem wyboru) -->
+<!-- Mini Radio Player – Radio Niepokalanów -->
 <style>
   .radio-card{
     max-width:850px;margin:24px auto;padding:18px 20px;background:#fff;border-radius:14px;
-    box-shadow:0 6px 20px rgba(0,0,0,.08);border-left:5px solid #98c6ff
+    box-shadow:0 6px 20px rgba(0,0,0,.08);border-left:5px solid #98c6ff;
+    font-family:system-ui,Segoe UI,Roboto,Arial
   }
   .radio-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-  .radio-title{font-weight:700;color:#224;flex:1 1 auto;display:flex;align-items:center;gap:8px}
-  .live-dot{width:10px;height:10px;border-radius:50%;background:#ff3b30;box-shadow:0 0 0 0 rgba(255,59,48,.6);animation:pulse 2s infinite}
-  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,59,48,.6)}70%{box-shadow:0 0 0 10px rgba(255,59,48,0)}100%{box-shadow:0 0 0 0 rgba(255,59,48,0)}}
+  .radio-title{font-weight:700;color:#224;flex:1 1 auto}
   .radio-btn{
     appearance:none;border:0;border-radius:999px;padding:12px 18px;cursor:pointer;
     background:#2b6cff;color:#fff;font-weight:700;box-shadow:0 4px 14px rgba(43,108,255,.25)
@@ -298,127 +296,56 @@
   .radio-muted{background:#556}
   .radio-vol{width:140px}
   .radio-status{font-size:.92em;color:#666;margin-top:8px}
-  .station-line{margin-top:8px;color:#224;font-weight:600}
-  .station-select{min-width:240px;padding:10px 12px;border-radius:10px;border:1px solid #dde3f2}
-  .warn{margin-top:10px;padding:10px 12px;border-radius:10px;background:#fff6e5;color:#7a4b00;border:1px solid #ffd89a;display:none}
 </style>
 
 <div class="radio-card" id="radioPlayer">
   <div class="radio-row">
-    <div class="radio-title">
-      <span class="live-dot" aria-hidden="true"></span>
-      <span id="nowPlaying">Słuchasz: —</span>
-    </div>
-
-    <!-- WYBÓR STACJI: 2 pewniaki -->
-    <select id="stationSelect" class="station-select" aria-label="Wybierz stację">
-      <option value="https://stream.rcs.revma.com/ypqt40u0x1zuv" data-name="Radio Niepokalanów" selected>
-        Radio Niepokalanów
-      </option>
-      <option value="http://online.radiojasnagora.pl:8004/stream" data-name="Radio Jasna Góra">
-        Radio Jasna Góra
-      </option>
-      <!-- Możesz dodać kolejne po podaniu bezpośrednich URL-i mp3/aac/m3u8 -->
-    </select>
-
+    <div class="radio-title">📻 Radio Niepokalanów – słuchaj na stronie</div>
     <button class="radio-btn" id="playPause">▶︎ Odtwórz</button>
-    <button class="radio-btn radio-muted" id="muteBtn" title="Wycisz / Włącz dźwięk">🔇</button>
+    <button class="radio-btn radio-muted" id="muteBtn">🔇</button>
     <input type="range" id="volume" class="radio-vol" min="0" max="1" step="0.01" value="0.9" aria-label="Głośność">
   </div>
-
   <div class="radio-status" id="status">Status: gotowe do odtworzenia</div>
-  <div class="station-line" id="streamInfo">Strumień: MP3/AAC • odtwarzanie bez przekierowań</div>
-  <div class="warn" id="mixedWarn">⚠️ Ta stacja używa <strong>HTTP</strong>. Jeśli Twoja strona ma <strong>HTTPS</strong>, przeglądarka może to zablokować (mixed content). Rozwiązanie: uruchom stronę tymczasowo przez http:// albo użyj proxy HTTPS dla strumienia.</div>
 
-  <audio id="radioAudio" preload="none" crossOrigin="anonymous">
-    <source id="radioSource" src="https://stream.rcs.revma.com/ypqt40u0x1zuv" type="audio/mpeg">
-    Twój browser nie obsługuje elementu audio.
-  </audio>
+  <audio id="radioAudio" preload="none" crossorigin="anonymous"></audio>
 </div>
 
 <script>
 (function(){
-  const audio   = document.getElementById('radioAudio');
-  const source  = document.getElementById('radioSource');
-  const playBtn = document.getElementById('playPause');
-  const muteBtn = document.getElementById('muteBtn');
-  const vol     = document.getElementById('volume');
-  const status  = document.getElementById('status');
-  const select  = document.getElementById('stationSelect');
-  const nowTxt  = document.getElementById('nowPlaying');
-  const info    = document.getElementById('streamInfo');
-  const mixed   = document.getElementById('mixedWarn');
+  const STREAM_URL = "https://stream.revma.com/gg1s5wrph72vv.m4a"; 
+  // jeśli masz link z tokenem (?rj-ttl=...&rj-tok=...) wklej pełny adres tutaj
 
-  // Przywróć ostatnio wybraną stację
-  const saved = localStorage.getItem('radio.station');
-  if (saved) {
-    try {
-      const obj = JSON.parse(saved);
-      for (const opt of select.options) {
-        if (opt.value === obj.url) { opt.selected = true; break; }
-      }
-      setStation(obj.url, obj.name, false);
-    } catch(e){}
-  } else {
-    setStation(select.value, select.selectedOptions[0]?.dataset.name || select.selectedOptions[0]?.text, false);
-  }
+  const audio  = document.getElementById('radioAudio');
+  const playBt = document.getElementById('playPause');
+  const muteBt = document.getElementById('muteBtn');
+  const vol    = document.getElementById('volume');
+  const status = document.getElementById('status');
 
   function setStatus(txt){ status.textContent = 'Status: ' + txt; }
 
-  function checkMixedContent(url){
-    // Pokaż ostrzeżenie, jeżeli strona jest HTTPS, a strumień HTTP
-    const isPageHttps = location.protocol === 'https:';
-    const isStreamHttp = /^http:\/\//i.test(url);
-    mixed.style.display = (isPageHttps && isStreamHttp) ? 'block' : 'none';
-  }
+  audio.src = STREAM_URL;
 
-  function setStation(url, name, autoplay = true) {
-    audio.pause();
-    checkMixedContent(url);
-    source.src = url;
-    audio.load();
-    nowTxt.textContent = 'Słuchasz: ' + (name || '—');
-    localStorage.setItem('radio.station', JSON.stringify({url, name}));
-    if (autoplay) {
-      setStatus('łączę ze stacją…');
-      audio.play().then(()=> {
-        playBtn.textContent='⏸ Pauza';
-        setStatus('odtwarzanie');
-      }).catch((e)=> {
-        console.error(e);
-        setStatus('błąd odtwarzania (CORS/HTTPS/autoplay)');
-      });
-    } else {
-      setStatus('gotowe – kliknij odtwórz');
-    }
-  }
-
-  select.addEventListener('change', () => {
-    const opt = select.selectedOptions[0];
-    setStation(opt.value, opt.dataset.name || opt.text, true);
-  });
-
-  playBtn.addEventListener('click', async () => {
+  playBt.addEventListener('click', async () => {
     if (audio.paused) {
       setStatus('łączę ze stacją…');
       try {
         await audio.play();
-        playBtn.textContent = '⏸ Pauza';
+        playBt.textContent = '⏸ Pauza';
         setStatus('odtwarzanie');
       } catch (e) {
-        console.error(e);
         setStatus('błąd odtwarzania (CORS/HTTPS/autoplay)');
+        console.error(e);
       }
     } else {
       audio.pause();
-      playBtn.textContent = '▶︎ Odtwórz';
+      playBt.textContent = '▶︎ Odtwórz';
       setStatus('wstrzymane');
     }
   });
 
-  muteBtn.addEventListener('click', () => {
+  muteBt.addEventListener('click', () => {
     audio.muted = !audio.muted;
-    muteBtn.textContent = audio.muted ? '🔈' : '🔇';
+    muteBt.textContent = audio.muted ? '🔈' : '🔇';
   });
 
   vol.addEventListener('input', () => { audio.volume = parseFloat(vol.value); });
@@ -428,12 +355,6 @@
   audio.addEventListener('pause', () => setStatus('wstrzymane'));
   audio.addEventListener('stalled', () => setStatus('buforowanie…'));
   audio.addEventListener('error', () => setStatus('błąd strumienia (adres/HTTPS/CORS)'));
-
-  // Prosty opis MIME
-  try {
-    const mime = audio.currentSrc?.endsWith('.m3u8') ? 'HLS' : 'MP3/AAC';
-    info.textContent = 'Strumień: ' + mime + ' • odtwarzanie bez przekierowań';
-  } catch(e){}
 })();
 </script>
 
