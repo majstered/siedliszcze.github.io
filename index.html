@@ -279,84 +279,30 @@
   <p class="prayer-amen">Amen.</p>
 </div>
 
-<!-- Mini Radio Player – Radio Niepokalanów -->
+<!-- 📻 Radio Niepokalanów – Player w iframe (bez problemów CORS) -->
 <style>
   .radio-card{
     max-width:850px;margin:24px auto;padding:18px 20px;background:#fff;border-radius:14px;
     box-shadow:0 6px 20px rgba(0,0,0,.08);border-left:5px solid #98c6ff;
     font-family:system-ui,Segoe UI,Roboto,Arial
   }
-  .radio-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-  .radio-title{font-weight:700;color:#224;flex:1 1 auto}
-  .radio-btn{
-    appearance:none;border:0;border-radius:999px;padding:12px 18px;cursor:pointer;
-    background:#2b6cff;color:#fff;font-weight:700;box-shadow:0 4px 14px rgba(43,108,255,.25)
+  .radio-title{
+    font-weight:700;color:#224;margin-bottom:10px;font-size:1.1em
   }
-  .radio-btn[disabled]{opacity:.6;cursor:not-allowed}
-  .radio-muted{background:#556}
-  .radio-vol{width:140px}
-  .radio-status{font-size:.92em;color:#666;margin-top:8px}
+  .radio-frame{
+    width:100%;max-width:400px;height:184px;border:0;border-radius:12px;
+    box-shadow:0 4px 14px rgba(0,0,0,.1);
+  }
 </style>
 
-<div class="radio-card" id="radioPlayer">
-  <div class="radio-row">
-    <div class="radio-title">📻 Radio Niepokalanów – słuchaj na stronie</div>
-    <button class="radio-btn" id="playPause">▶︎ Odtwórz</button>
-    <button class="radio-btn radio-muted" id="muteBtn">🔇</button>
-    <input type="range" id="volume" class="radio-vol" min="0" max="1" step="0.01" value="0.9" aria-label="Głośność">
-  </div>
-  <div class="radio-status" id="status">Status: gotowe do odtworzenia</div>
-
-  <audio id="radioAudio" preload="none" crossorigin="anonymous"></audio>
+<div class="radio-card">
+  <div class="radio-title">📻 Radio Niepokalanów – słuchaj na stronie</div>
+  <iframe class="radio-frame"
+    src="https://www.revma.com/widget/radio/gg1s5wrph72vv/player/?trackinfo"
+    allow="autoplay">
+  </iframe>
 </div>
 
-<script>
-(function(){
-  const STREAM_URL = "https://stream.revma.com/gg1s5wrph72vv.m4a"; 
-  // jeśli masz link z tokenem (?rj-ttl=...&rj-tok=...) wklej pełny adres tutaj
-
-  const audio  = document.getElementById('radioAudio');
-  const playBt = document.getElementById('playPause');
-  const muteBt = document.getElementById('muteBtn');
-  const vol    = document.getElementById('volume');
-  const status = document.getElementById('status');
-
-  function setStatus(txt){ status.textContent = 'Status: ' + txt; }
-
-  audio.src = STREAM_URL;
-
-  playBt.addEventListener('click', async () => {
-    if (audio.paused) {
-      setStatus('łączę ze stacją…');
-      try {
-        await audio.play();
-        playBt.textContent = '⏸ Pauza';
-        setStatus('odtwarzanie');
-      } catch (e) {
-        setStatus('błąd odtwarzania (CORS/HTTPS/autoplay)');
-        console.error(e);
-      }
-    } else {
-      audio.pause();
-      playBt.textContent = '▶︎ Odtwórz';
-      setStatus('wstrzymane');
-    }
-  });
-
-  muteBt.addEventListener('click', () => {
-    audio.muted = !audio.muted;
-    muteBt.textContent = audio.muted ? '🔈' : '🔇';
-  });
-
-  vol.addEventListener('input', () => { audio.volume = parseFloat(vol.value); });
-
-  audio.addEventListener('canplay', () => setStatus('gotowe – kliknij odtwórz'));
-  audio.addEventListener('playing', () => setStatus('odtwarzanie'));
-  audio.addEventListener('pause', () => setStatus('wstrzymane'));
-  audio.addEventListener('stalled', () => setStatus('buforowanie…'));
-  audio.addEventListener('error', () => setStatus('błąd strumienia (adres/HTTPS/CORS)'));
-})();
-</script>
 
   
   <footer>
