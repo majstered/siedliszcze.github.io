@@ -1,6 +1,21 @@
 <!doctype html>
 <html lang="pl">
 <head>
+  <header>
+  <h1>Rozważanie tajemnic Różańca</h1>
+  <p>Szablon z miejscem na cytat, rysunek i tekst rozważania (do własnej podmiany).</p>
+
+  <!-- PRZYCISKI TRYBU -->
+  <div style="margin-top:15px;">
+    <button id="lightBtn" style="padding:6px 14px;margin:0 4px;border-radius:8px;border:1px solid #ccc;cursor:pointer;">
+      ☀️ Jasny
+    </button>
+    <button id="darkBtn" style="padding:6px 14px;margin:0 4px;border-radius:8px;border:1px solid #ccc;cursor:pointer;">
+      🌙 Ciemny
+    </button>
+  </div>
+</header>
+
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Rozważanie tajemnic Różańca</title>
@@ -50,12 +65,19 @@
     .body{margin:0}
     footer{max-width:var(--maxw);margin:30px auto 60px;padding:0 18px;color:var(--muted);font-size:.95rem}
     .note{background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px}
-    @media (prefers-color-scheme: dark){
-      :root{--bg:#0f1220;--ink:#e9ecf5;--muted:#b7c0d9;--card:#151935;--border:#283056;--brand:#cfe0ff;--accent:#203055}
-      header{border-bottom:1px solid #2a3760}
-      .toc a{background:#101735;border-color:#2b3b6a}
-      .figure{border-color:#38519e}
-    }
+body.dark {
+  --bg:#0f1220;
+  --ink:#e9ecf5;
+  --muted:#b7c0d9;
+  --card:#151935;
+  --border:#283056;
+  --brand:#cfe0ff;
+  --accent:#203055;
+}
+body.dark header{border-bottom:1px solid #2a3760}
+body.dark .toc a{background:#101735;border-color:#2b3b6a}
+body.dark .figure{border-color:#38519e}
+
   </style>
 </head>
 <body>
@@ -401,6 +423,19 @@
 " alt="opis" style="width:100%;height:auto;border-radius:14px;" /&gt;</code>
   </div>
 </footer>
+<script>
+  const body = document.body;
+  const lightBtn = document.getElementById('lightBtn');
+  const darkBtn = document.getElementById('darkBtn');
+
+  lightBtn.addEventListener('click', () => {
+    body.classList.remove('dark');
+  });
+
+  darkBtn.addEventListener('click', () => {
+    body.classList.add('dark');
+  });
+</script>
 
 </body>
 </html>
