@@ -39,7 +39,7 @@
       line-height:1.6;
     }
 
-    /* Pasek nagłówka – JEDEN (usunięto duplikat) */
+    /* Pasek nagłówka */
     .topbar{
       position:sticky; top:0; z-index:10;
       background:var(--card);
@@ -92,18 +92,24 @@
       padding: clamp(12px, 3vw, 22px);
       display:flex;
       justify-content:center;
-      gap: clamp(10px, 2.8vw, 24px);
-      overflow:hidden;
+      gap: clamp(6px, 2vw, 14px);   /* ciaśniejsze odstępy */
+      flex-wrap: wrap;              /* pozwala się zawinąć */
     }
     .kolaz img{
-      width: clamp(84px, 11.5vw, 140px);
-      height: clamp(84px, 11.5vw, 140px);
+      width: clamp(70px, 10vw, 120px);
+      height: clamp(70px, 10vw, 120px);
       object-fit: cover;
       border-radius:50%;
       border:3px solid #fff;
       box-shadow: 0 6px 16px rgba(0,0,0,.25);
       background:#fff;
       display:block;
+      transition: transform 0.3s ease;
+    }
+    /* przesunięcie w dół dla 2 i 4 obrazka */
+    .kolaz img:nth-child(2),
+    .kolaz img:nth-child(4){
+      transform: translateY(12%);
     }
 
     /* Obraz pełnej szerokości (Światła: tylko 1) */
@@ -122,10 +128,20 @@
     /* Drobna typografia */
     figure{margin:0}
     figcaption{color:var(--muted); font-size:.95rem; margin-top:8px}
+
+    /* =======================
+       Responsywność
+       ======================= */
+    @media(max-width:400px){
+      .kolaz img{
+        width:60px;
+        height:60px;
+      }
+    }
   </style>
 </head>
 <body>
-  <!-- JEDEN nagłówek -->
+  <!-- Nagłówek -->
   <header class="topbar">
     <h1>Różaniec — tajemnice radosne i światła</h1>
     <button class="mode-btn" id="modeBtn" aria-label="Przełącz tryb">🌓 Dzień / Noc</button>
@@ -139,7 +155,7 @@
     <section class="card" id="radosne">
       <h2 class="section-title">Różaniec — tajemnice radosne</h2>
 
-      <!-- Kolaż 5 zdjęć w jednej linii, na niebieskim tle -->
+      <!-- Kolaż 5 zdjęć w jednej linii -->
       <div class="kolaz" aria-label="Kolaż tajemnic radosnych">
         <img src="tajemnica_rozanca_radosna_1.jpg" alt="Zwiastowanie Najświętszej Maryi Pannie">
         <img src="tajemnica_rozanca_radosna_2.jpg" alt="Nawiedzenie św. Elżbiety">
@@ -164,8 +180,6 @@
         <img class="hero-img" src="tajemnica_swiatla_1.jpg" alt="Chrzest Pana Jezusa w Jordanie">
         <figcaption>Chrzest Pana Jezusa w Jordanie</figcaption>
       </figure>
-
-      <!-- Pozostałe cztery obrazki i bloki – USUNIĘTE zgodnie z prośbą -->
     </section>
 
   </main>
@@ -187,7 +201,6 @@
       const saved = localStorage.getItem(key);
       if(saved){ applyTheme(saved); }
       else{
-        // jeśli systemowy dark — włącz
         if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
           applyTheme('dark');
         }
