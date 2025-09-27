@@ -1,441 +1,204 @@
 <!doctype html>
 <html lang="pl">
 <head>
-  <header>
-  <h1>Rozważanie tajemnic Różańca</h1>
-  <p>Szablon z miejscem na cytat, rysunek i tekst rozważania (do własnej podmiany).</p>
-
-  <!-- PRZYCISKI TRYBU -->
-  <div style="margin-top:15px;">
-    <button id="lightBtn" style="padding:6px 14px;margin:0 4px;border-radius:8px;border:1px solid #ccc;cursor:pointer;">
-      ☀️ Jasny
-    </button>
-    <button id="darkBtn" style="padding:6px 14px;margin:0 4px;border-radius:8px;border:1px solid #ccc;cursor:pointer;">
-      🌙 Ciemny
-    </button>
-  </div>
-</header>
-
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rozważanie tajemnic Różańca</title>
+  <title>Różaniec — tajemnice radosne i światła</title>
   <style>
+    /* =======================
+       Zmiennie i bazowe style
+       ======================= */
     :root{
-      --bg:#f9f7f2;
-      --ink:#222;
-      --muted:#555;
-      --brand:#001a44;
-      --accent:#cde0ff;
+      --bg:#fbfaf7;
       --card:#ffffff;
-      --border:#e6e6e6;
-      --maxw:1000px;
+      --ink:#1f2430;
+      --muted:#667085;
+      --blue:#0a4fa3;        /* tło kolażu */
+      --border:#e6e6ea;
       --radius:16px;
-      --shadow:0 6px 20px rgba(0,0,0,.06);
+      --shadow:0 8px 28px rgba(0,0,0,.08);
+      --accent:#1f5fbf;
     }
-    *{box-sizing:border-box}
-    html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,"Times New Roman",serif;line-height:1.65}
-    header{
-      background:linear-gradient(180deg,#d8e6ff,#f0f6ff);
-      border-bottom:2px solid #b5c8f6;
-      padding:28px 18px;
-      text-align:center;
+    .dark{
+      --bg:#10131a;
+      --card:#141824;
+      --ink:#e7ecf6;
+      --muted:#aab3c6;
+      --blue:#0b3d7a;
+      --border:#263049;
+      --shadow:0 8px 28px rgba(0,0,0,.45);
+      --accent:#7fb0ff;
     }
-    header h1{margin:0 0 6px;color:var(--brand);font-size:clamp(1.6rem,2.2vw,2.2rem)}
-    header p{margin:0;color:#2a3b66}
-    main{max-width:var(--maxw);margin:28px auto;padding:0 18px}
-    .toc{
-      background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
-      padding:18px;box-shadow:var(--shadow);margin-bottom:24px
-    }
-    .toc h2{margin:0 0 10px;color:var(--brand);font-size:1.2rem}
-    .toc-columns{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
-    .toc a{display:block;padding:8px 10px;border-radius:12px;border:1px dashed #cbd6ef;background:#fff}
-    h2.section{margin:34px 0 14px;color:var(--brand);font-size:1.35rem;border-left:6px solid #bcd0ff;padding-left:10px}
-    .mystery{
-      background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
-      padding:18px;box-shadow:var(--shadow);margin:16px 0
-    }
-    .m-title{margin:0 0 10px;font-size:1.15rem;color:#0a255c}
-    .figure{
-      width:100%;aspect-ratio:16/9;background:var(--accent);
-      border-radius:14px;border:2px dashed #9fb4e8;display:flex;align-items:center;justify-content:center;margin:12px 0
-    }
-    .figure svg{width:92%;height:92%}
-    .quote{font-style:italic;color:var(--muted);margin:6px 0 10px}
-    .body{margin:0}
-    footer{max-width:var(--maxw);margin:30px auto 60px;padding:0 18px;color:var(--muted);font-size:.95rem}
-    .note{background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px}
-body.dark {
-  --bg:#0f1220;
-  --ink:#e9ecf5;
-  --muted:#b7c0d9;
-  --card:#151935;
-  --border:#283056;
-  --brand:#cfe0ff;
-  --accent:#203055;
-}
-body.dark header{border-bottom:1px solid #2a3760}
-body.dark .toc a{background:#101735;border-color:#2b3b6a}
-body.dark .figure{border-color:#38519e}
 
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-serif, Georgia, "Times New Roman", serif;
+      background:var(--bg);
+      color:var(--ink);
+      line-height:1.6;
+    }
+
+    /* Pasek nagłówka – JEDEN (usunięto duplikat) */
+    .topbar{
+      position:sticky; top:0; z-index:10;
+      background:var(--card);
+      border-bottom:1px solid var(--border);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 18px;
+    }
+    .topbar h1{
+      font-size: clamp(18px, 2.6vw, 28px);
+      margin:0;
+      letter-spacing:.2px;
+    }
+    .mode-btn{
+      border:1px solid var(--border);
+      background:transparent;
+      color:var(--ink);
+      border-radius:999px;
+      padding:8px 12px;
+      cursor:pointer;
+    }
+
+    .wrap{
+      max-width: 1050px;
+      margin: 28px auto;
+      padding: 0 16px 56px;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding: 18px;
+      margin: 18px 0 28px;
+    }
+
+    .section-title{
+      font-size: clamp(18px, 2.2vw, 24px);
+      margin: 0 0 14px;
+      border-left:6px solid var(--accent);
+      padding-left:10px;
+    }
+
+    /* =======================
+       Kolaż 5 obrazków (Radosne)
+       ======================= */
+    .kolaz{
+      background: var(--blue);
+      border-radius: calc(var(--radius) - 4px);
+      padding: clamp(12px, 3vw, 22px);
+      display:flex;
+      justify-content:center;
+      gap: clamp(10px, 2.8vw, 24px);
+      overflow:hidden;
+    }
+    .kolaz img{
+      width: clamp(84px, 11.5vw, 140px);
+      height: clamp(84px, 11.5vw, 140px);
+      object-fit: cover;
+      border-radius:50%;
+      border:3px solid #fff;
+      box-shadow: 0 6px 16px rgba(0,0,0,.25);
+      background:#fff;
+      display:block;
+    }
+
+    /* Obraz pełnej szerokości (Światła: tylko 1) */
+    .hero-img{
+      display:block;
+      width:100%;
+      height:auto;
+      border-radius: calc(var(--radius) - 4px);
+      background:#dfeafc1a;
+      border:1px dashed var(--border);
+    }
+
+    /* Tekst akapitów */
+    .lead{color:var(--muted); margin:.6rem 0 0}
+
+    /* Drobna typografia */
+    figure{margin:0}
+    figcaption{color:var(--muted); font-size:.95rem; margin-top:8px}
   </style>
 </head>
 <body>
+  <!-- JEDEN nagłówek -->
+  <header class="topbar">
+    <h1>Różaniec — tajemnice radosne i światła</h1>
+    <button class="mode-btn" id="modeBtn" aria-label="Przełącz tryb">🌓 Dzień / Noc</button>
+  </header>
 
-<header>
-  <h1>Rozważanie tajemnic Różańca</h1>
-  <p>Szablon z miejscem na cytat, rysunek i tekst rozważania (do własnej podmiany).</p>
-</header>
+  <main class="wrap">
 
-<main>
-  <!-- SPIS TREŚCI -->
-  <nav class="toc" aria-label="Spis treści">
-    <h2>Spis treści</h2>
-    <div class="toc-columns">
-      <a href="#radosne">Tajemnice radosne</a>
-      <a href="#swiatla">Tajemnice światła</a>
-      <a href="#bolesne">Tajemnice bolesne</a>
-      <a href="#chwale">Tajemnice chwalebne</a>
-    </div>
-  </nav>
+    <!-- =========================
+         TAJEMNICE RADOSNE (kolaż)
+         ========================= -->
+    <section class="card" id="radosne">
+      <h2 class="section-title">Różaniec — tajemnice radosne</h2>
 
-  <!-- RADOSNE -->
-  <h2 id="radosne" class="section">Różaniec — tajemnice radosne</h2>
+      <!-- Kolaż 5 zdjęć w jednej linii, na niebieskim tle -->
+      <div class="kolaz" aria-label="Kolaż tajemnic radosnych">
+        <img src="tajemnica_rozanca_radosna_1.jpg" alt="Zwiastowanie Najświętszej Maryi Pannie">
+        <img src="tajemnica_rozanca_radosna_2.jpg" alt="Nawiedzenie św. Elżbiety">
+        <img src="tajemnica_rozanca_radosna_3.jpg" alt="Narodzenie Pana Jezusa">
+        <img src="tajemnica_rozanca_radosna_4.jpg" alt="Ofiarowanie Pana Jezusa w świątyni">
+        <img src="tajemnica_rozanca_radosna_5.jpg" alt="Znalezienie Pana Jezusa w świątyni">
+      </div>
 
-  <section class="mystery" id="zwiastowanie">
-    <h3 class="m-title">Zwiastowanie Najświętszej Maryi Pannie</h3>
-    <div class="figure" aria-label="rysunek — różaniec i krzyż">
-      <!-- proste „moje” rysunki SVG -->
-      <svg viewBox="0 0 600 338" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Różaniec – paciorki i krzyż">
-        <rect x="6" y="6" width="588" height="326" rx="18" fill="#ffffff" opacity=".35"/>
-        <!-- paciorki -->
-        <g fill="none" stroke="#2a3b66" stroke-width="10" stroke-linecap="round">
-          <path d="M80 90 C170 30, 260 30, 350 90 S530 180, 520 240" />
-        </g>
-        <g fill="#2a3b66">
-          <!-- kropki (paciorki) -->
-          <circle cx="100" cy="88" r="8"/><circle cx="130" cy="72" r="8"/><circle cx="160" cy="62" r="8"/>
-          <circle cx="190" cy="58" r="8"/><circle cx="220" cy="60" r="8"/><circle cx="250" cy="66" r="8"/>
-          <circle cx="280" cy="76" r="8"/><circle cx="310" cy="90" r="8"/><circle cx="340" cy="108" r="8"/>
-          <circle cx="370" cy="128" r="8"/><circle cx="400" cy="150" r="8"/><circle cx="430" cy="170" r="8"/>
-          <circle cx="460" cy="192" r="8"/><circle cx="490" cy="214" r="8"/><circle cx="510" cy="238" r="8"/>
-        </g>
-        <!-- krzyżyk -->
-        <g stroke="#2a3b66" stroke-width="12" stroke-linecap="round">
-          <line x1="520" y1="240" x2="520" y2="300"/>
-          <line x1="495" y1="270" x2="545" y2="270"/>
-        </g>
-      </svg>
-    </div>
-    <p class="quote">„Oto ja Służebnica Pańska, niech mi się stanie według twego słowa” (Łk 1,38).</p>
-    <p class="body">[Tu wstawisz własny tekst rozważania…]</p>
-  </section>
+      <p class="lead">
+        Powyżej — pięć tajemnic radosnych w jednym, prostym kolażu (bez napisów).
+      </p>
+    </section>
 
-  <section class="mystery" id="nawiedzenie">
-    <h3 class="m-title">Nawiedzenie świętej Elżbiety</h3>
-    <div class="figure">
-      <svg viewBox="0 0 600 338" xmlns="http://www.w3.org/2000/svg">
-        <rect x="6" y="6" width="588" height="326" rx="18" fill="#ffffff" opacity=".35"/>
-        <circle cx="120" cy="100" r="12" fill="#2a3b66"/>
-        <circle cx="170" cy="120" r="12" fill="#2a3b66"/>
-        <circle cx="220" cy="140" r="12" fill="#2a3b66"/>
-        <circle cx="270" cy="160" r="12" fill="#2a3b66"/>
-        <circle cx="320" cy="180" r="12" fill="#2a3b66"/>
-        <circle cx="370" cy="200" r="12" fill="#2a3b66"/>
-        <circle cx="420" cy="220" r="12" fill="#2a3b66"/>
-        <line x1="450" y1="230" x2="450" y2="300" stroke="#2a3b66" stroke-width="12" stroke-linecap="round"/>
-        <line x1="425" y1="265" x2="475" y2="265" stroke="#2a3b66" stroke-width="12" stroke-linecap="round"/>
-      </svg>
-    </div>
-    <p class="quote">„A skądże mi to, że Matka mojego Pana przychodzi do mnie?” (Łk 1,43).</p>
-    <p class="body">[Tu wstawisz własny tekst rozważania…]</p>
-  </section>
+    <!-- ======================================
+         TAJEMNICE ŚWIATŁA (zostawiono tylko 1)
+         ====================================== -->
+    <section class="card" id="swiatla">
+      <h2 class="section-title">Różaniec — tajemnice światła</h2>
 
-  <section class="mystery" id="narodzenie">
-    <h3 class="m-title">Narodzenie Pana Jezusa</h3>
-    <div class="figure">
-      <svg viewBox="0 0 600 338" xmlns="http://www.w3.org/2000/svg">
-        <rect x="6" y="6" width="588" height="326" rx="18" fill="#ffffff" opacity=".35"/>
-        <polygon points="90,220 510,220 300,120" fill="none" stroke="#2a3b66" stroke-width="10"/>
-        <circle cx="300" cy="170" r="16" fill="#2a3b66"/>
-        <line x1="520" y1="230" x2="520" y2="300" stroke="#2a3b66" stroke-width="12" stroke-linecap="round"/>
-        <line x1="495" y1="265" x2="545" y2="265" stroke="#2a3b66" stroke-width="12" stroke-linecap="round"/>
-      </svg>
-    </div>
-    <p class="quote">„Dziś narodził się wam Zbawiciel, którym jest Mesjasz, Pan” (Łk 2,11).</p>
-    <p class="body">[Tu wstawisz własny tekst rozważania…]</p>
-  </section>
+      <figure>
+        <!-- PODMIEŃ src NA SWÓJ PLIK pierwszej tajemnicy światła -->
+        <img class="hero-img" src="tajemnica_swiatla_1.jpg" alt="Chrzest Pana Jezusa w Jordanie">
+        <figcaption>Chrzest Pana Jezusa w Jordanie</figcaption>
+      </figure>
 
-  <section class="mystery" id="ofiarowanie">
-    <h3 class="m-title">Ofiarowanie Jezusa w Świątyni</h3>
-    <div class="figure">
-      <svg viewBox="0 0 600 338" xmlns="http://www.w3.org/2000/svg">
-        <rect x="6" y="6" width="588" height="326" rx="18" fill="#ffffff" opacity=".35"/>
-        <rect x="120" y="120" width="360" height="120" fill="none" stroke="#2a3b66" stroke-width="10"/>
-        <line x1="300" y1="90" x2="300" y2="120" stroke="#2a3b66" stroke-width="10"/>
-        <line x1="520" y1="230" x2="520" y2="300" stroke="#2a3b66" stroke-width="12" stroke-linecap="round"/>
-        <line x1="495" y1="265" x2="545" y2="265" stroke="#2a3b66" stroke-width="12" stroke-linecap="round"/>
-      </svg>
-    </div>
-    <p class="quote">„Oto Ten przeznaczony jest… na znak, któremu sprzeciwiać się będą” (Łk 2,34).</p>
-    <p class="body">[Tu wstawisz własny tekst rozważania…]</p>
-  </section>
+      <!-- Pozostałe cztery obrazki i bloki – USUNIĘTE zgodnie z prośbą -->
+    </section>
 
-  <section class="mystery" id="odnalezienie">
-    <h3 class="m-title">Odnalezienie Jezusa w Świątyni</h3>
-    <div class="figure">
-      <svg viewBox="0 0 600 338" xmlns="http://www.w3.org/2000/svg">
-        <rect x="6" y="6" width="588" height="326" rx="18" fill="#ffffff" opacity=".35"/>
-        <rect x="160" y="100" width="280" height="140" fill="none" stroke="#2a3b66" stroke-width="10"/>
-        <circle cx="300" cy="170" r="14" fill="#2a3b66"/>
-        <line x1="520" y1="230" x2="520" y2="300" stroke="#2a3b66" stroke-width="12" stroke-linecap="round"/>
-        <line x1="495" y1="265" x2="545" y2="265" stroke="#2a3b66" stroke-width="12" stroke-linecap="round"/>
-      </svg>
-    </div>
-    <p class="quote">„Dopiero po trzech dniach odnaleźli Go w świątyni” (Łk 2,46).</p>
-    <p class="body">[Tu wstawisz własny tekst rozważania…]</p>
-  </section>
+  </main>
 
-  <!-- ŚWIATŁA -->
-  <h2 id="swiatla" class="section">Różaniec — tajemnice światła</h2>
+  <script>
+    // Tryb Dzień/Noc z pamięcią w localStorage
+    (function(){
+      const key = 'theme-preference';
+      const btn = document.getElementById('modeBtn');
 
-  <section class="mystery" id="chrzest">
-    <h3 class="m-title">Chrzest Pana Jezusa w Jordanie</h3>
-    <div class="figure">
-      <svg viewBox="0 0 600 338" xmlns="http://www.w3.org/2000/svg">
-        <rect x="6" y="6" width="588" height="326" rx="18" fill="#ffffff" opacity=".35"/>
-        <path d="M60 260 Q120 220 180 260 T300 260 T420 260 T540 260" fill="none" stroke="#2a3b66" stroke-width="10"/>
-        <line x1="520" y1="230" x2="520" y2="300" stroke="#2a3b66" stroke-width="12" stroke-linecap="round"/>
-        <line x1="495" y1="265" x2="545" y2="265" stroke="#2a3b66" stroke-width="12" stroke-linecap="round"/>
-      </svg>
-    </div>
-    <p class="quote">„Ten jest mój Syn umiłowany, w którym mam upodobanie” (Mt 3,16–17).</p>
-    <p class="body">[Tu wstawisz własny tekst rozważania…]</p>
-  </section>
+      function applyTheme(val){
+        document.documentElement.classList.toggle('dark', val === 'dark');
+      }
+      function currentTheme(){
+        return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+      }
 
-  <section class="mystery" id="kana">
-    <h3 class="m-title">Objawienie się Jezusa w Kanie Galilejskiej</h3>
-    <div class="figure">
-      <svg viewBox="0 0 600 338" xmlns="http://www.w3.org/2000/svg">
-        <rect x="6" y="6" width="588" height="326" rx="18" fill="#ffffff" opacity=".35"/>
-        <rect x="150" y="160" width="60" height="60" rx="8" stroke="#2a3b66" stroke-width="10" fill="none"/>
-        <rect x="270" y="150" width="60" height="70" rx="8" stroke="#2a3b66" stroke-width="10" fill="none"/>
-        <rect x="390" y="140" width="60" height="80" rx="8" stroke="#2a3b66" stroke-width="10" fill="none"/>
-        <line x1="520" y1="230" x2="520" y2="300" stroke="#2a3b66" stroke-width="12" stroke-linecap="round"/>
-        <line x1="495" y1="265" x2="545" y2="265" stroke="#2a3b66" stroke-width="12" stroke-linecap="round"/>
-      </svg>
-    </div>
-    <p class="quote">„Zróbcie wszystko, cokolwiek wam powie” (J 2,5).</p>
-    <p class="body">[Tu wstawisz własny tekst rozważania…]</p>
-  </section>
+      // start
+      const saved = localStorage.getItem(key);
+      if(saved){ applyTheme(saved); }
+      else{
+        // jeśli systemowy dark — włącz
+        if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+          applyTheme('dark');
+        }
+      }
 
-  <section class="mystery" id="krolestwo">
-    <h3 class="m-title">Głoszenie królestwa Bożego i wzywanie do nawrócenia</h3>
-    <div class="figure">
-      <svg viewBox="0 0 600 338" xmlns="http://www.w3.org/2000/svg">
-        <rect x="6" y="6" width="588" height="326" rx="18" fill="#ffffff" opacity=".35"/>
-        <path d="M80 260 L520 80" stroke="#2a3b66" stroke-width="10" fill="none"/>
-        <line x1="520" y1="230" x2="520" y2="300" stroke="#2a3b66" stroke-width="12" stroke-linecap="round"/>
-        <line x1="495" y1="265" x2="545" y2="265" stroke="#2a3b66" stroke-width="12" stroke-linecap="round"/>
-      </svg>
-    </div>
-    <p class="quote">„Nawracajcie się i wierzcie w Ewangelię” (Mk 1,15).</p>
-    <p class="body">[Tu wstawisz własny tekst rozważania…]</p>
-  </section>
-
-  <section class="mystery" id="tabor">
-    <h3 class="m-title">Przemienienie Pańskie na górze Tabor</h3>
-    <div class="figure">
-      <svg viewBox="0 0 600 338" xmlns="http://www.w3.org/2000/svg">
-        <rect x="6" y="6" width="588" height="326" rx="18" fill="#ffffff" opacity=".35"/>
-        <polygon points="100,240 260,160 420,240" fill="none" stroke="#2a3b66" stroke-width="10"/>
-        <circle cx="260" cy="140" r="16" fill="#2a3b66"/>
-        <line x1="520" y1="230" x2="520" y2="300" stroke="#2a3b66" stroke-width="12" stroke-linecap="round"/>
-        <line x1="495" y1="265" x2="545" y2="265" stroke="#2a3b66" stroke-width="12" stroke-linecap="round"/>
-      </svg>
-    </div>
-    <p class="quote">„To jest Syn mój, Wybrany, Jego słuchajcie” (Łk 9,35).</p>
-    <p class="body">[Tu wstawisz własny tekst rozważania…]</p>
-  </section>
-
-  <section class="mystery" id="eucharystia">
-    <h3 class="m-title">Ustanowienie Eucharystii</h3>
-    <div class="figure">
-      <svg viewBox="0 0 600 338" xmlns="http://www.w3.org/2000/svg">
-        <rect x="6" y="6" width="588" height="326" rx="18" fill="#ffffff" opacity=".35"/>
-        <circle cx="240" cy="180" r="24" fill="none" stroke="#2a3b66" stroke-width="10"/>
-        <rect x="330" y="160" width="60" height="40" rx="6" fill="none" stroke="#2a3b66" stroke-width="10"/>
-        <line x1="520" y1="230" x2="520" y2="300" stroke="#2a3b66" stroke-width="12" stroke-linecap="round"/>
-        <line x1="495" y1="265" x2="545" y2="265" stroke="#2a3b66" stroke-width="12" stroke-linecap="round"/>
-      </svg>
-    </div>
-    <p class="quote">„To jest Ciało moje… to czyńcie na moją pamiątkę” (Łk 22,19).</p>
-    <p class="body">[Tu wstawisz własny tekst rozważania…]</p>
-  </section>
-
-  <!-- BOLESNE -->
-  <h2 id="bolesne" class="section">Różaniec — tajemnice bolesne</h2>
-
-  <section class="mystery" id="ogrojec">
-    <h3 class="m-title">Modlitwa Jezusa w Ogrojcu</h3>
-    <div class="figure">
-      <svg viewBox="0 0 600 338" xmlns="http://www.w3.org/2000/svg">
-        <rect x="6" y="6" width="588" height="326" rx="18" fill="#ffffff" opacity=".35"/>
-        <path d="M90 250 Q180 190 270 250 T450 250" fill="none" stroke="#2a3b66" stroke-width="10"/>
-        <circle cx="300" cy="180" r="14" fill="#2a3b66"/>
-      </svg>
-    </div>
-    <p class="quote">„Ojcze mój, jeśli to możliwe, niech Mnie ominie ten kielich” (Mt 26,39).</p>
-    <p class="body">[Tu wstawisz własny tekst rozważania…]</p>
-  </section>
-
-  <section class="mystery" id="biczowanie">
-    <h3 class="m-title">Biczowanie Pana Jezusa</h3>
-    <div class="figure">
-      <svg viewBox="0 0 600 338" xmlns="http://www.w3.org/2000/svg">
-        <rect x="6" y="6" width="588" height="326" rx="18" fill="#ffffff" opacity=".35"/>
-        <line x1="180" y1="100" x2="420" y2="240" stroke="#2a3b66" stroke-width="10"/>
-        <line x1="180" y1="130" x2="420" y2="270" stroke="#2a3b66" stroke-width="10"/>
-        <line x1="520" y1="230" x2="520" y2="300" stroke="#2a3b66" stroke-width="12" stroke-linecap="round"/>
-        <line x1="495" y1="265" x2="545" y2="265" stroke="#2a3b66" stroke-width="12" stroke-linecap="round"/>
-      </svg>
-    </div>
-    <p class="quote">„Piłat… kazał Go ubiczować” (J 19,1).</p>
-    <p class="body">[Tu wstawisz własny tekst rozważania…]</p>
-  </section>
-
-  <section class="mystery" id="cierniem">
-    <h3 class="m-title">Cierniem ukoronowanie</h3>
-    <div class="figure">
-      <svg viewBox="0 0 600 338" xmlns="http://www.w3.org/2000/svg">
-        <rect x="6" y="6" width="588" height="326" rx="18" fill="#ffffff" opacity=".35"/>
-        <ellipse cx="300" cy="170" rx="150" ry="40" fill="none" stroke="#2a3b66" stroke-width="10"/>
-        <path d="M160 160 l20 -20 M190 150 l20 -20 M220 145 l20 -20 M380 150 l20 -20 M410 160 l20 -20" stroke="#2a3b66" stroke-width="10"/>
-      </svg>
-    </div>
-    <p class="quote">„…aby dać świadectwo prawdzie” (J 18,37).</p>
-    <p class="body">[Tu wstawisz własny tekst rozważania…]</p>
-  </section>
-
-  <section class="mystery" id="krzyz">
-    <h3 class="m-title">Dźwiganie krzyża na Kalwarię</h3>
-    <div class="figure">
-      <svg viewBox="0 0 600 338" xmlns="http://www.w3.org/2000/svg">
-        <rect x="6" y="6" width="588" height="326" rx="18" fill="#ffffff" opacity=".35"/>
-        <line x1="200" y1="220" x2="420" y2="120" stroke="#2a3b66" stroke-width="12"/>
-        <line x1="310" y1="80" x2="310" y2="260" stroke="#2a3b66" stroke-width="12"/>
-      </svg>
-    </div>
-    <p class="quote">„Jeśli kto chce pójść za Mną… niech weźmie krzyż swój” (Mk 8,34).</p>
-    <p class="body">[Tu wstawisz własny tekst rozważania…]</p>
-  </section>
-
-  <section class="mystery" id="ukrzyzowanie">
-    <h3 class="m-title">Ukrzyżowanie i śmierć na krzyżu</h3>
-    <div class="figure">
-      <svg viewBox="0 0 600 338" xmlns="http://www.w3.org/2000/svg">
-        <rect x="6" y="6" width="588" height="326" rx="18" fill="#ffffff" opacity=".35"/>
-        <line x1="300" y1="80" x2="300" y2="270" stroke="#2a3b66" stroke-width="14" stroke-linecap="round"/>
-        <line x1="220" y1="150" x2="380" y2="150" stroke="#2a3b66" stroke-width="14" stroke-linecap="round"/>
-      </svg>
-    </div>
-    <p class="quote">„Ojcze, przebacz im, bo nie wiedzą, co czynią…” (Łk 23,34).</p>
-    <p class="body">[Tu wstawisz własny tekst rozważania…]</p>
-  </section>
-
-  <!-- CHWALEBNE -->
-  <h2 id="chwale" class="section">Różaniec — tajemnice chwalebne</h2>
-
-  <section class="mystery" id="zmartwychwstanie">
-    <h3 class="m-title">Zmartwychwstanie Jezusa Chrystusa</h3>
-    <div class="figure">
-      <svg viewBox="0 0 600 338" xmlns="http://www.w3.org/2000/svg">
-        <rect x="6" y="6" width="588" height="326" rx="18" fill="#ffffff" opacity=".35"/>
-        <circle cx="220" cy="200" r="40" fill="none" stroke="#2a3b66" stroke-width="10"/>
-        <path d="M260 200 L420 200" stroke="#2a3b66" stroke-width="10"/>
-      </svg>
-    </div>
-    <p class="quote">„Mesjasz… trzeciego dnia zmartwychwstanie” (Łk 24,46).</p>
-    <p class="body">[Tu wstawisz własny tekst rozważania…]</p>
-  </section>
-
-  <section class="mystery" id="wniebowstapienie">
-    <h3 class="m-title">Wniebowstąpienie Pana Jezusa</h3>
-    <div class="figure">
-      <svg viewBox="0 0 600 338" xmlns="http://www.w3.org/2000/svg">
-        <rect x="6" y="6" width="588" height="326" rx="18" fill="#ffffff" opacity=".35"/>
-        <path d="M300 240 Q300 180 300 120" stroke="#2a3b66" stroke-width="10" fill="none"/>
-        <path d="M100 250 Q200 210 300 250 T500 250" stroke="#2a3b66" stroke-width="10" fill="none"/>
-      </svg>
-    </div>
-    <p class="quote">„W domu Ojca mego jest mieszkań wiele…” (J 14,2).</p>
-    <p class="body">[Tu wstawisz własny tekst rozważania…]</p>
-  </section>
-
-  <section class="mystery" id="zeslanie">
-    <h3 class="m-title">Zesłanie Ducha Świętego</h3>
-    <div class="figure">
-      <svg viewBox="0 0 600 338" xmlns="http://www.w3.org/2000/svg">
-        <rect x="6" y="6" width="588" height="326" rx="18" fill="#ffffff" opacity=".35"/>
-        <path d="M300 80 C280 120, 260 160, 300 200 C340 160, 320 120, 300 80" fill="none" stroke="#2a3b66" stroke-width="10"/>
-        <circle cx="300" cy="210" r="10" fill="#2a3b66"/>
-      </svg>
-    </div>
-    <p class="quote">„I wszyscy zostali napełnieni Duchem Świętym” (Dz 2,4).</p>
-    <p class="body">[Tu wstawisz własny tekst rozważania…]</p>
-  </section>
-
-  <section class="mystery" id="wniebowziecie">
-    <h3 class="m-title">Wniebowzięcie Najświętszej Maryi Panny</h3>
-    <div class="figure">
-      <svg viewBox="0 0 600 338" xmlns="http://www.w3.org/2000/svg">
-        <rect x="6" y="6" width="588" height="326" rx="18" fill="#ffffff" opacity=".35"/>
-        <path d="M160 240 Q300 120 440 240" fill="none" stroke="#2a3b66" stroke-width="10"/>
-        <circle cx="300" cy="120" r="12" fill="#2a3b66"/>
-      </svg>
-    </div>
-    <p class="quote">„Aby byli ze Mną tam, gdzie Ja jestem” (J 17,24).</p>
-    <p class="body">[Tu wstawisz własny tekst rozważania…]</p>
-  </section>
-
-<section class="mystery" id="ukoronowanie">
-  <h3 class="m-title">Ukoronowanie Maryi na Królową nieba i ziemi</h3>
-<div class="figure" style="display:inline-block;margin:12px 0;">
-  <img src="tajemnica_rozanca_chwalebna_5.jpg"
-       alt="Ukoronowanie Maryi na Królową nieba i ziemi"
-       style="max-width:100%;height:auto;display:block;margin:0 auto;border-radius:10px;" />
-</div>
-
-
-  </div>
-  <p class="quote">„Zwycięzcy dam zasiąść ze Mną na moim tronie” (Ap 3,21).</p>
-  <p class="body">[Tu wstawisz własny tekst rozważania…]</p>
-</section>
-
-
-</main>
-
-<footer>
-  <div class="note">
-    <strong>Jak podmienić rysunek na zdjęcie?</strong><br>
-    W każdym bloku usuń całe <code>&lt;svg&gt;…&lt;/svg&gt;</code> i wstaw:<br>
-    <code>&lt;img src="tajemnica_rozanca_chwalebna_5.jpg
-" alt="opis" style="width:100%;height:auto;border-radius:14px;" /&gt;</code>
-  </div>
-</footer>
-<script>
-  const body = document.body;
-  const lightBtn = document.getElementById('lightBtn');
-  const darkBtn = document.getElementById('darkBtn');
-
-  lightBtn.addEventListener('click', () => {
-    body.classList.remove('dark');
-  });
-
-  darkBtn.addEventListener('click', () => {
-    body.classList.add('dark');
-  });
-</script>
-
+      btn.addEventListener('click', ()=>{
+        const next = currentTheme() === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+        localStorage.setItem(key, next);
+      });
+    })();
+  </script>
 </body>
 </html>
