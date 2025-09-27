@@ -27,17 +27,6 @@
       --shadow:0 8px 28px rgba(0,0,0,.45);
       --accent:#7fb0ff;
     }
-.prayer-box{
-  background: var(--blue);
-  color: #fff;
-  border-radius: calc(var(--radius) - 4px);
-  padding: 18px 22px;
-  max-width: 700px;       /* szerokość maksymalna */
-  margin: 0 auto;         /* wyśrodkowanie */
-  font-size: 1.15rem;
-  line-height: 1.7;
-  text-align: center;     /* modlitewny układ */
-}
 
     html,body{height:100%}
     body{
@@ -92,7 +81,7 @@
       padding-left:10px;
     }
 
-    /* Niebieski blok z samymi napisami (Radosne) */
+    /* Niebieski blok z listą */
     .list-box{
       background: var(--blue);
       color: #fff;
@@ -101,33 +90,31 @@
     }
     .list-box ul{
       margin:0;
-      padding-left: 1.2rem; /* widoczne punktor y */
-      list-style: disc;
+      padding-left: 1.2rem;
+      list-style: disc inside;   /* punktor w środku pola */
     }
     .list-box li{
       font-size: clamp(16px, 2.1vw, 20px);
       margin: .35rem 0;
     }
     .list-box p{
-  margin: .35rem 0;
-  font-size: clamp(16px, 2.1vw, 20px);
-}
-
-    .list-box li::marker{ color:#fff; } /* białe punktor y */
-
-    /* Obraz pełnej szerokości (Światła: tylko 1) */
-    .hero-img{
-      display:block;
-      width:100%;
-      height:auto;
-      border-radius: calc(var(--radius) - 4px);
-      background:#dfeafc1a;
-      border:1px dashed var(--border);
+      margin: .35rem 0;
+      font-size: clamp(16px, 2.1vw, 20px);
     }
+    .list-box li::marker{ color:#fff; }
 
-    .lead{color:var(--muted); margin:.6rem 0 0}
-    figure{margin:0}
-    figcaption{color:var(--muted); font-size:.95rem; margin-top:8px}
+    /* Modlitwa – węższa, wyśrodkowana */
+    .prayer-box{
+      background: var(--blue);
+      color: #fff;
+      border-radius: calc(var(--radius) - 4px);
+      padding: 18px 22px;
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 1.15rem;
+      line-height: 1.7;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -139,10 +126,9 @@
 
   <main class="wrap">
 
-    <!-- RADOSNE: niebieskie tło + same napisy -->
+    <!-- RADOSNE -->
     <section class="card" id="radosne">
       <h2 class="section-title">Tajemnice radosne (poniedziałki i soboty)</h2>
-
       <div class="list-box" aria-label="Tajemnice radosne — lista">
         <ul>
           <li>Zwiastowanie Najświętszej Maryi Pannie</li>
@@ -154,10 +140,9 @@
       </div>
     </section>
 
-    <!-- ŚWIATŁA: zostawiony tylko pierwszy obrazek -->
+    <!-- ŚWIATŁA -->
     <section class="card" id="swiatla">
       <h2 class="section-title">Tajemnice światła (czwartki)</h2>
-
       <div class="list-box" aria-label="Tajemnice światła — lista">
         <ul>
           <li>Chrzest Pana Jezusa w Jordanie</li>
@@ -168,9 +153,10 @@
         </ul>
       </div>
     </section>
+
+    <!-- BOLESNE -->
     <section class="card" id="bolesne">
       <h2 class="section-title">Tajemnice bolesne (wtorki i piątki)</h2>
-
       <div class="list-box" aria-label="Tajemnice bolesne — lista">
         <ul>
           <li>Modlitwa w Ogrójcu</li>
@@ -182,9 +168,9 @@
       </div>
     </section>
 
+    <!-- CHWALEBNE -->
     <section class="card" id="chwalebne">
       <h2 class="section-title">Tajemnice chwalebne (środy i niedziele)</h2>
-
       <div class="list-box" aria-label="Tajemnice chwalebne — lista">
         <ul>
           <li>Zmartwychwstanie Pana Jezusa</li>
@@ -195,18 +181,18 @@
         </ul>
       </div>
     </section>
+
+    <!-- MODLITWA FATIMSKA -->
+    <section class="card" id="modlitwa-fatimska">
+      <h2 class="section-title">Modlitwa fatimska „O mój Jezu” (1917)</h2>
+      <div class="prayer-box" aria-label="Modlitwa fatimska">
+        O mój Jezu, przebacz nam nasze grzechy, zachowaj nas od ognia piekielnego;
+        zaprowadź wszystkie dusze do nieba i dopomóż szczególnie tym,
+        którzy najbardziej potrzebują Twojego miłosierdzia.
+      </div>
+    </section>
+
   </main>
-<section class="card" id="modlitwa-fatimska">
-  <h2 class="section-title">Modlitwa fatimska „O mój Jezu” (1917)</h2>
-
-  <div class="prayer-box" aria-label="Modlitwa fatimska">
-    O mój Jezu, przebacz nam nasze grzechy, zachowaj nas od ognia piekielnego; 
-    zaprowadź wszystkie dusze do nieba i dopomóż szczególnie tym, 
-    którzy najbardziej potrzebują Twojego miłosierdzia.
-  </div>
-
-</section>
-
 
   <script>
     // Tryb Dzień/Noc z pamięcią
