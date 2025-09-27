@@ -1,180 +1,76 @@
 <!doctype html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Różaniec — baner 5 ilustracji</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rozważanie tajemnic Różańca</title>
   <style>
-    /* =====================
-       Design tokens (Marian blue)
-       ===================== */
-    :root{
-      --bg:#f7f7f7;
-      --text:#1f2430;
-      --muted:#657289;
-      --card:#ffffff;
-      --shadow:0 6px 22px rgba(0,0,0,.08);
-      --radius:18px;
-      --maxw:1100px;
-      --blue:#cce5ff;      /* maryjny baner */
-      --blueText:#000033;  /* podpisy na banerze */
-      --accent:#2b66ff;
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      background: #f9f7f2;
+      color: #222;
+      line-height: 1.6;
+      margin: 0;
+      padding: 20px;
     }
-
-    html,body{height:100%}
-    body{
-      margin:0;
-      background:var(--bg);
-      color:var(--text);
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
-      line-height:1.6;
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
+    h1, h2 {
+      text-align: center;
+      margin-top: 30px;
+      color: #001a44;
     }
-    .wrap{ max-width:var(--maxw); margin:0 auto; padding:clamp(12px,3vw,28px) }
-    h1{ font-size:clamp(1.6rem, 2.4vw + 1rem, 2.4rem); margin:0 0 10px }
-    p{ color:var(--muted); font-size:clamp(1rem, .3vw + .95rem, 1.1rem) }
-
-    /* =====================
-       Baner z 5 ilustracjami
-       ===================== */
-    .mystery-banner{
-      background:var(--blue);
-      color:var(--blueText);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      overflow:hidden;
+    .mystery {
+      margin: 40px auto;
+      max-width: 700px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 30px;
     }
-    .mystery-header{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px; padding:clamp(14px,2.5vw,18px) clamp(14px,3vw,22px);
-      border-bottom:2px solid rgba(0,0,0,.06);
+    .image-placeholder {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #dde5f5;
+      border: 2px dashed #99a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #445;
+      font-size: 1.1em;
+      margin: 15px 0;
     }
-    .mystery-header h2{ margin:0; font-size:clamp(1.1rem, 1.2vw + 1rem, 1.6rem) }
-    .mystery-header .meta{ font-weight:600; opacity:.75 }
-
-    /* Lista 5 kafelków wstępnie jako rząd przewijalny (scroll-snap) */
-    .mystery-strip{
-      display:grid;
-      grid-auto-flow: column;
-      grid-auto-columns: minmax(240px, 1fr);
-      gap:clamp(10px,1.8vw,16px);
-      padding:clamp(12px,2vw,16px);
-      overflow-x:auto;
-      scroll-snap-type:x mandatory;
-      -webkit-overflow-scrolling:touch;
-    }
-    .tile{ scroll-snap-align:start; background:var(--card); border-radius:16px; overflow:hidden; box-shadow:var(--shadow) }
-    .tile figure{ margin:0 }
-    .tile img{ width:100%; height:auto; aspect-ratio: 4/3; object-fit:cover; display:block }
-    .tile figcaption{
-      background:var(--blue);
-      color:var(--blueText);
-      padding:12px 14px;
-      font-weight:700;
-      text-align:center;
-      border-top:1px solid rgba(0,0,0,.06);
-    }
-
-    /* =====================
-       Sekcja treści pod banerem
-       ===================== */
-    .section{
-      margin-top:clamp(16px, 3vw, 28px);
-      background:var(--card);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:clamp(16px, 3vw, 26px);
-    }
-
-    /* =====================
-       Responsywność i obrona przed poziomym paskiem
-       ===================== */
-    html, body { max-width:100%; overflow-x:hidden }
-    img, svg, video, canvas, iframe { display:block; max-width:100%; height:auto }
-    * { box-sizing:border-box }
-
-    /* W poziomie (landscape) – układ na 5 równych kolumn, bez przewijania */
-    @media (orientation: landscape) and (min-width: 900px){
-      .mystery-strip{
-        display:grid;
-        grid-auto-flow: initial;
-        grid-template-columns: repeat(5, 1fr);
-        overflow-x:hidden;
-      }
-    }
-
-    /* Drobna korekta na bardzo wąskich telefonach */
-    @media (max-width:380px){
-      .mystery-header{ flex-direction:column; align-items:flex-start }
-    }
-
-    /* Szacunek preferencji użytkownika */
-    @media (prefers-reduced-motion: reduce){
-      .mystery-strip{ scroll-behavior:auto }
+    .quote {
+      font-style: italic;
+      margin: 10px 0;
+      color: #444;
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header style="margin-bottom:12px">
-      <h1>Różaniec — Tajemnice (baner 5 ilustracji)</h1>
-      <p>Baner w stylu maryjnym: pięć ilustracji z podpisami na niebieskim tle. Działa płynnie w pionie i poziomie, bez poziomego paska przewijania na dużych ekranach.</p>
-    </header>
 
-    <!-- BANER: 5 ilustracji -->
-    <section class="mystery-banner" aria-label="Tajemnice radosne — 5 scen">
-      <div class="mystery-header">
-        <h2>Tajemnice radosne</h2>
-        <div class="meta">Poniedziałek • Sobota</div>
-      </div>
+<h1>Rozważanie tajemnic Różańca</h1>
 
-      <div class="mystery-strip">
-        <!-- Podmień src na swoje pliki w folderze /img/ -->
-        <article class="tile">
-          <figure>
-            <img src="img/radosne-1.jpg" alt="Zwiastowanie Najświętszej Maryi Pannie" loading="lazy"/>
-            <figcaption>1. Zwiastowanie</figcaption>
-          </figure>
-        </article>
-        <article class="tile">
-          <figure>
-            <img src="img/radosne-2.jpg" alt="Nawiedzenie św. Elżbiety" loading="lazy"/>
-            <figcaption>2. Nawiedzenie</figcaption>
-          </figure>
-        </article>
-        <article class="tile">
-          <figure>
-            <img src="img/radosne-3.jpg" alt="Narodzenie Pana Jezusa" loading="lazy"/>
-            <figcaption>3. Narodzenie</figcaption>
-          </figure>
-        </article>
-        <article class="tile">
-          <figure>
-            <img src="img/radosne-4.jpg" alt="Ofiarowanie w świątyni" loading="lazy"/>
-            <figcaption>4. Ofiarowanie</figcaption>
-          </figure>
-        </article>
-        <article class="tile">
-          <figure>
-            <img src="img/radosne-5.jpg" alt="Znalezienie Jezusa w świątyni" loading="lazy"/>
-            <figcaption>5. Znalezienie w świątyni</figcaption>
-          </figure>
-        </article>
-      </div>
-    </section>
+<h2>Tajemnice radosne</h2>
 
-    <!-- Sekcja opcjonalna: kolejne zestawy tajemnic jako oddzielne banery -->
-    <section class="section">
-      <h2 style="margin-top:0">Jak używać i rozszerzać</h2>
-      <ol>
-        <li>Podmień obrazki w <code>/img/</code> na swoje pliki (nazwy możesz zachować jak w przykładzie).</li>
-        <li>Skopiuj cały blok <code>.mystery-banner</code> i zmień nagłówek na <em>Światła</em>, <em>Bolesne</em>, <em>Chwalebne</em> — w każdym wstaw 5 ilustracji i podpisy.</li>
-        <li>Kolory banera masz w zmiennych <code>--blue</code> i <code>--blueText</code> — dopasuj do swojego „maryjnego” stylu.</li>
-        <li>Na telefonie działa poziomy <em>scroll-snap</em> (przeciągnij palcem). Na szerokim ekranie kafelki układają się w pięć kolumn.</li>
-      </ol>
-      <p>Cały układ jest odporny na poziomy pasek przewijania dzięki <code>max-width:100%</code> i braku <code>100vw</code> w szerokościach elementów.</p>
-    </section>
-  </div>
+<div class="mystery">
+  <h3>Zwiastowanie Najświętszej Maryi Pannie</h3>
+  <div class="image-placeholder">[Obrazek]</div>
+  <p class="quote">Oto ja Służebnica Pańska, niech mi się stanie według twego słowa (Łk 1,38).</p>
+  <p>Tekst rozważania... (do podmiany)</p>
+</div>
+
+<div class="mystery">
+  <h3>Nawiedzenie świętej Elżbiety</h3>
+  <div class="image-placeholder">[Obrazek]</div>
+  <p class="quote">A skądże mi to, że Matka mojego Pana przychodzi do mnie? (Łk 1,43).</p>
+  <p>Tekst rozważania... (do podmiany)</p>
+</div>
+
+<div class="mystery">
+  <h3>Narodzenie Pana Jezusa</h3>
+  <div class="image-placeholder">[Obrazek]</div>
+  <p class="quote">Dziś narodził się wam Zbawiciel, którym jest Mesjasz, Pan (Łk 2,11).</p>
+  <p>Tekst rozważania... (do podmiany)</p>
+</div>
+
+<!-- Możesz dalej powtarzać ten sam wzór dla kolejnych tajemnic -->
+
 </body>
 </html>
