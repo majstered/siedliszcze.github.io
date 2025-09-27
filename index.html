@@ -5,15 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Różaniec — tajemnice radosne i światła</title>
   <style>
-    /* =======================
-       Zmiennie i bazowe style
-       ======================= */
+    /* Zmiennie i bazowe style */
     :root{
       --bg:#fbfaf7;
       --card:#ffffff;
       --ink:#1f2430;
       --muted:#667085;
-      --blue:#0a4fa3;        /* tło kolażu */
+      --blue:#0a4fa3;          /* tło niebieskiego bloku */
       --border:#e6e6ea;
       --radius:16px;
       --shadow:0 8px 28px rgba(0,0,0,.08);
@@ -39,7 +37,7 @@
       line-height:1.6;
     }
 
-    /* Pasek nagłówka */
+    /* Jedyny nagłówek */
     .topbar{
       position:sticky; top:0; z-index:10;
       background:var(--card);
@@ -83,36 +81,23 @@
       padding-left:10px;
     }
 
-    /* =======================
-       Kolaż rombikowy (2+1+2)
-       ======================= */
-    .kolaz{
+    /* Niebieski blok z samymi napisami (Radosne) */
+    .list-box{
       background: var(--blue);
+      color: #fff;
       border-radius: calc(var(--radius) - 4px);
-      padding: 20px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: auto auto auto;
-      gap: 16px;
-      justify-items: center;
-      align-items: center;
+      padding: clamp(14px, 3vw, 24px);
     }
-    .kolaz img{
-      width: clamp(80px, 12vw, 140px);
-      height: clamp(80px, 12vw, 140px);
-      object-fit: cover;
-      border-radius: 50%;
-      border:3px solid #fff;
-      box-shadow: 0 6px 16px rgba(0,0,0,.25);
-      background:#fff;
-      display:block;
+    .list-box ul{
+      margin:0;
+      padding-left: 1.2rem; /* widoczne punktor y */
+      list-style: disc;
     }
-    /* pozycje w rombie */
-    .kolaz img:nth-child(1){ grid-column:1; grid-row:1; }
-    .kolaz img:nth-child(2){ grid-column:3; grid-row:1; }
-    .kolaz img:nth-child(3){ grid-column:2; grid-row:2; }
-    .kolaz img:nth-child(4){ grid-column:1; grid-row:3; }
-    .kolaz img:nth-child(5){ grid-column:3; grid-row:3; }
+    .list-box li{
+      font-size: clamp(16px, 2.1vw, 20px);
+      margin: .35rem 0;
+    }
+    .list-box li::marker{ color:#fff; } /* białe punktor y */
 
     /* Obraz pełnej szerokości (Światła: tylko 1) */
     .hero-img{
@@ -124,10 +109,7 @@
       border:1px dashed var(--border);
     }
 
-    /* Tekst akapitów */
     .lead{color:var(--muted); margin:.6rem 0 0}
-
-    /* Drobna typografia */
     figure{margin:0}
     figcaption{color:var(--muted); font-size:.95rem; margin-top:8px}
   </style>
@@ -141,29 +123,22 @@
 
   <main class="wrap">
 
-    <!-- =========================
-         TAJEMNICE RADOSNE (kolaż)
-         ========================= -->
+    <!-- RADOSNE: niebieskie tło + same napisy -->
     <section class="card" id="radosne">
       <h2 class="section-title">Różaniec — tajemnice radosne</h2>
 
-      <!-- Kolaż 2+1+2 -->
-      <div class="kolaz" aria-label="Kolaż tajemnic radosnych">
-        <img src="tajemnica_rozanca_radosna_1.jpg" alt="Zwiastowanie Najświętszej Maryi Pannie">
-        <img src="tajemnica_rozanca_radosna_2.jpg" alt="Nawiedzenie św. Elżbiety">
-        <img src="tajemnica_rozanca_radosna_3.jpg" alt="Narodzenie Pana Jezusa">
-        <img src="tajemnica_rozanca_radosna_4.jpg" alt="Ofiarowanie Pana Jezusa w świątyni">
-        <img src="tajemnica_rozanca_radosna_5.jpg" alt="Znalezienie Pana Jezusa w świątyni">
+      <div class="list-box" aria-label="Tajemnice radosne — lista">
+        <ul>
+          <li>Zwiastowanie Najświętszej Maryi Pannie</li>
+          <li>Nawiedzenie świętej Elżbiety</li>
+          <li>Narodzenie Pana Jezusa</li>
+          <li>Ofiarowanie Jezusa w Świątyni</li>
+          <li>Odnalezienie Jezusa w Świątyni</li>
+        </ul>
       </div>
-
-      <p class="lead">
-        Powyżej — pięć tajemnic radosnych w układzie rombu (środkowe zdjęcie w centrum).
-      </p>
     </section>
 
-    <!-- ======================================
-         TAJEMNICE ŚWIATŁA (zostawiono tylko 1)
-         ====================================== -->
+    <!-- ŚWIATŁA: zostawiony tylko pierwszy obrazek -->
     <section class="card" id="swiatla">
       <h2 class="section-title">Różaniec — tajemnice światła</h2>
 
@@ -177,7 +152,7 @@
   </main>
 
   <script>
-    // Tryb Dzień/Noc z pamięcią w localStorage
+    // Tryb Dzień/Noc z pamięcią
     (function(){
       const key = 'theme-preference';
       const btn = document.getElementById('modeBtn');
@@ -189,13 +164,10 @@
         return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
       }
 
-      // start
       const saved = localStorage.getItem(key);
       if(saved){ applyTheme(saved); }
-      else{
-        if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
-          applyTheme('dark');
-        }
+      else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+        applyTheme('dark');
       }
 
       btn.addEventListener('click', ()=>{
