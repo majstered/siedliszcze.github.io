@@ -3,181 +3,178 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Różaniec – responsywna strona demo</title>
+  <title>Różaniec — baner 5 ilustracji</title>
   <style>
-    /* ===== Design tokens ===== */
+    /* =====================
+       Design tokens (Marian blue)
+       ===================== */
     :root{
-      --bg: #f7f7fb;
-      --text: #1f2430;
-      --muted:#6a7280;
+      --bg:#f7f7f7;
+      --text:#1f2430;
+      --muted:#657289;
       --card:#ffffff;
-      --accent:#2b66ff;
+      --shadow:0 6px 22px rgba(0,0,0,.08);
       --radius:18px;
-      --shadow: 0 6px 20px rgba(0,0,0,.08);
-      --maxw: 1100px;
+      --maxw:1100px;
+      --blue:#cce5ff;      /* maryjny baner */
+      --blueText:#000033;  /* podpisy na banerze */
+      --accent:#2b66ff;
     }
 
-    /* ===== Global ===== */
     html,body{height:100%}
     body{
       margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
-      color:var(--text);
       background:var(--bg);
+      color:var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
       line-height:1.6;
       -webkit-font-smoothing:antialiased;
       text-rendering:optimizeLegibility;
     }
-    .wrap{
-      max-width: var(--maxw);
-      margin: 0 auto;
-      padding: clamp(12px, 3vw, 28px);
-    }
+    .wrap{ max-width:var(--maxw); margin:0 auto; padding:clamp(12px,3vw,28px) }
+    h1{ font-size:clamp(1.6rem, 2.4vw + 1rem, 2.4rem); margin:0 0 10px }
+    p{ color:var(--muted); font-size:clamp(1rem, .3vw + .95rem, 1.1rem) }
 
-    /* Fluid typografia */
-    h1{ font-size: clamp(1.6rem, 2.5vw + 1rem, 2.6rem); margin:0 0 8px }
-    h2{ font-size: clamp(1.2rem, 1.4vw + 1rem, 1.6rem); margin:6px 0 14px; color:#0d1a42 }
-    p{ font-size: clamp(1rem, .4vw + .9rem, 1.1rem); color:var(--text) }
-
-    /* ===== Baner ===== */
-    .banner{
-      border-radius: var(--radius);
-      background: linear-gradient(135deg,#dbe7ff,#eef3ff 45%, #ffffff);
-      box-shadow: var(--shadow);
+    /* =====================
+       Baner z 5 ilustracjami
+       ===================== */
+    .mystery-banner{
+      background:var(--blue);
+      color:var(--blueText);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
       overflow:hidden;
-      display:grid;
-      grid-template-columns: 1fr minmax(220px, 38%);
-      gap: 0;
     }
-    .banner .txt{ padding: clamp(18px, 3vw, 28px); }
-    .banner .txt p{ color: var(--muted); margin-top:6px }
-    .banner img{
-      width:100%; height:100%; object-fit:cover; display:block;
-      aspect-ratio: 16/9; /* utrzymuje proporcje gdy brak wysokości */
+    .mystery-header{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; padding:clamp(14px,2.5vw,18px) clamp(14px,3vw,22px);
+      border-bottom:2px solid rgba(0,0,0,.06);
+    }
+    .mystery-header h2{ margin:0; font-size:clamp(1.1rem, 1.2vw + 1rem, 1.6rem) }
+    .mystery-header .meta{ font-weight:600; opacity:.75 }
+
+    /* Lista 5 kafelków wstępnie jako rząd przewijalny (scroll-snap) */
+    .mystery-strip{
+      display:grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(240px, 1fr);
+      gap:clamp(10px,1.8vw,16px);
+      padding:clamp(12px,2vw,16px);
+      overflow-x:auto;
+      scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;
+    }
+    .tile{ scroll-snap-align:start; background:var(--card); border-radius:16px; overflow:hidden; box-shadow:var(--shadow) }
+    .tile figure{ margin:0 }
+    .tile img{ width:100%; height:auto; aspect-ratio: 4/3; object-fit:cover; display:block }
+    .tile figcaption{
+      background:var(--blue);
+      color:var(--blueText);
+      padding:12px 14px;
+      font-weight:700;
+      text-align:center;
+      border-top:1px solid rgba(0,0,0,.06);
     }
 
-    /* ===== Kafelki (siatka responsywna) ===== */
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: clamp(12px, 1.6vw, 20px);
-      margin-top: clamp(16px, 2.5vw, 26px);
-    }
-    .card{
+    /* =====================
+       Sekcja treści pod banerem
+       ===================== */
+    .section{
+      margin-top:clamp(16px, 3vw, 28px);
       background:var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      display:flex;
-      flex-direction:column;
-    }
-    .card img{
-      width:100%; height:auto; display:block; aspect-ratio: 4/3; object-fit:cover;
-    }
-    .card .body{ padding:16px 16px 18px }
-    .btn{
-      display:inline-block; text-decoration:none; text-align:center;
-      padding:12px 16px; border-radius:14px; font-weight:600;
-      background:var(--accent); color:#fff; box-shadow: var(--shadow);
-      transition: transform .15s ease;
-    }
-    .btn:active{ transform: scale(.98) }
-
-    /* ===== Sekcja obrazka pełnej szerokości ===== */
-    .hero-img{
-      margin-top: clamp(16px, 2.2vw, 24px);
-      border-radius: var(--radius);
-      overflow:hidden; box-shadow: var(--shadow);
-    }
-    .hero-img img{ width:100%; height:auto; display:block; aspect-ratio: 21/9; object-fit:cover }
-
-    /* ===== Media queries wg ORIENTACJI ===== */
-    @media (orientation: portrait){
-      .banner{ grid-template-columns: 1fr }  /* obraz pod tekstem w pionie */
-      .banner img{ aspect-ratio: 3/2 }
-      .hero-img img{ aspect-ratio: 4/3 }
-    }
-    @media (orientation: landscape){
-      .banner img{ aspect-ratio: auto } /* pozwól zająć wysokość kontenera */
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:clamp(16px, 3vw, 26px);
     }
 
-    /* Drobne dostosowania na bardzo wąskich ekranach */
-    @media (max-width: 380px){
-      .btn{ padding:10px 12px; font-size:.95rem }
+    /* =====================
+       Responsywność i obrona przed poziomym paskiem
+       ===================== */
+    html, body { max-width:100%; overflow-x:hidden }
+    img, svg, video, canvas, iframe { display:block; max-width:100%; height:auto }
+    * { box-sizing:border-box }
+
+    /* W poziomie (landscape) – układ na 5 równych kolumn, bez przewijania */
+    @media (orientation: landscape) and (min-width: 900px){
+      .mystery-strip{
+        display:grid;
+        grid-auto-flow: initial;
+        grid-template-columns: repeat(5, 1fr);
+        overflow-x:hidden;
+      }
     }
 
-    /* Szacunek dla osób z ograniczeniem animacji */
+    /* Drobna korekta na bardzo wąskich telefonach */
+    @media (max-width:380px){
+      .mystery-header{ flex-direction:column; align-items:flex-start }
+    }
+
+    /* Szacunek preferencji użytkownika */
     @media (prefers-reduced-motion: reduce){
-      .btn{ transition:none }
+      .mystery-strip{ scroll-behavior:auto }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
+    <header style="margin-bottom:12px">
+      <h1>Różaniec — Tajemnice (baner 5 ilustracji)</h1>
+      <p>Baner w stylu maryjnym: pięć ilustracji z podpisami na niebieskim tle. Działa płynnie w pionie i poziomie, bez poziomego paska przewijania na dużych ekranach.</p>
+    </header>
 
-    <!-- Baner -->
-    <section class="banner">
-      <div class="txt">
-        <h1>Różaniec – modlitwa serca</h1>
-        <p>Prosty, responsywny układ który dopasowuje się do szerokości okna i orientacji urządzenia.</p>
-        <a class="btn" href="#tajemnice">Przejdź do tajemnic</a>
+    <!-- BANER: 5 ilustracji -->
+    <section class="mystery-banner" aria-label="Tajemnice radosne — 5 scen">
+      <div class="mystery-header">
+        <h2>Tajemnice radosne</h2>
+        <div class="meta">Poniedziałek • Sobota</div>
       </div>
-      <!-- Podmień na własne: /img/baner.jpg -->
-      <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1600&auto=format&fit=crop" alt="Baner" loading="lazy">
+
+      <div class="mystery-strip">
+        <!-- Podmień src na swoje pliki w folderze /img/ -->
+        <article class="tile">
+          <figure>
+            <img src="img/radosne-1.jpg" alt="Zwiastowanie Najświętszej Maryi Pannie" loading="lazy"/>
+            <figcaption>1. Zwiastowanie</figcaption>
+          </figure>
+        </article>
+        <article class="tile">
+          <figure>
+            <img src="img/radosne-2.jpg" alt="Nawiedzenie św. Elżbiety" loading="lazy"/>
+            <figcaption>2. Nawiedzenie</figcaption>
+          </figure>
+        </article>
+        <article class="tile">
+          <figure>
+            <img src="img/radosne-3.jpg" alt="Narodzenie Pana Jezusa" loading="lazy"/>
+            <figcaption>3. Narodzenie</figcaption>
+          </figure>
+        </article>
+        <article class="tile">
+          <figure>
+            <img src="img/radosne-4.jpg" alt="Ofiarowanie w świątyni" loading="lazy"/>
+            <figcaption>4. Ofiarowanie</figcaption>
+          </figure>
+        </article>
+        <article class="tile">
+          <figure>
+            <img src="img/radosne-5.jpg" alt="Znalezienie Jezusa w świątyni" loading="lazy"/>
+            <figcaption>5. Znalezienie w świątyni</figcaption>
+          </figure>
+        </article>
+      </div>
     </section>
 
-    <!-- Obraz szeroki (np. grafika jak w aplikacji) -->
-    <figure class="hero-img">
-      <!-- Podmień na własne: /img/duze.jpg -->
-      <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=2400&auto=format&fit=crop" alt="Pełna szerokość" loading="lazy">
-    </figure>
-
-    <!-- Siatka kart -->
-    <section id="tajemnice" class="grid">
-      <!-- KARTA 1 -->
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop" alt="Radosne" loading="lazy">
-        <div class="body">
-          <h2>Tajemnice radosne</h2>
-          <p>Odmawiane w poniedziałek i sobotę.</p>
-          <a class="btn" href="#">Otwórz</a>
-        </div>
-      </article>
-
-      <!-- KARTA 2 -->
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1497290756760-23ac55edf36f?q=80&w=1200&auto=format&fit=crop" alt="Światła" loading="lazy">
-        <div class="body">
-          <h2>Tajemnice światła</h2>
-          <p>Czwartek.</p>
-          <a class="btn" href="#">Otwórz</a>
-        </div>
-      </article>
-
-      <!-- KARTA 3 -->
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1526318472351-c75fcf070305?q=80&w=1200&auto=format&fit=crop" alt="Bolesne" loading="lazy">
-        <div class="body">
-          <h2>Tajemnice bolesne</h2>
-          <p>Wtorek i piątek.</p>
-          <a class="btn" href="#">Otwórz</a>
-        </div>
-      </article>
-
-      <!-- KARTA 4 -->
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1200&auto=format&fit=crop" alt="Chwalebne" loading="lazy">
-        <div class="body">
-          <h2>Tajemnice chwalebne</h2>
-          <p>Środa i niedziela.</p>
-          <a class="btn" href="#">Otwórz</a>
-        </div>
-      </article>
+    <!-- Sekcja opcjonalna: kolejne zestawy tajemnic jako oddzielne banery -->
+    <section class="section">
+      <h2 style="margin-top:0">Jak używać i rozszerzać</h2>
+      <ol>
+        <li>Podmień obrazki w <code>/img/</code> na swoje pliki (nazwy możesz zachować jak w przykładzie).</li>
+        <li>Skopiuj cały blok <code>.mystery-banner</code> i zmień nagłówek na <em>Światła</em>, <em>Bolesne</em>, <em>Chwalebne</em> — w każdym wstaw 5 ilustracji i podpisy.</li>
+        <li>Kolory banera masz w zmiennych <code>--blue</code> i <code>--blueText</code> — dopasuj do swojego „maryjnego” stylu.</li>
+        <li>Na telefonie działa poziomy <em>scroll-snap</em> (przeciągnij palcem). Na szerokim ekranie kafelki układają się w pięć kolumn.</li>
+      </ol>
+      <p>Cały układ jest odporny na poziomy pasek przewijania dzięki <code>max-width:100%</code> i braku <code>100vw</code> w szerokościach elementów.</p>
     </section>
-
-    <p style="color:var(--muted); margin-top:22px">
-      Podmień obrazki na własne (np. <code>/img/1.jpg</code>, <code>/img/2.jpg</code>), a treści w nagłówkach na swoje.
-    </p>
   </div>
 </body>
 </html>
