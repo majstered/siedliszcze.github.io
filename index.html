@@ -86,26 +86,27 @@
     /* =======================
        Kolaż 5 obrazków (Radosne)
        ======================= */
-    .kolaz{
-      background: var(--blue);
-      border-radius: calc(var(--radius) - 4px);
-      padding: clamp(12px, 3vw, 22px);
-      display:flex;
-      justify-content:center;
-      gap: clamp(6px, 2vw, 14px);   /* ciaśniejsze odstępy */
-      flex-wrap: wrap;              /* pozwala się zawinąć */
-    }
-    .kolaz img{
-      width: clamp(70px, 10vw, 120px);
-      height: clamp(70px, 10vw, 120px);
-      object-fit: cover;
-      border-radius:50%;
-      border:3px solid #fff;
-      box-shadow: 0 6px 16px rgba(0,0,0,.25);
-      background:#fff;
-      display:block;
-      transition: transform 0.3s ease;
-    }
+.kolaz{
+  background: var(--blue);
+  border-radius: calc(var(--radius) - 4px);
+  padding: clamp(12px, 3vw, 22px);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 16px;
+  justify-items: center;
+}
+
+.kolaz img{
+  width: clamp(70px, 10vw, 120px);
+  height: clamp(70px, 10vw, 120px);
+  object-fit: cover;
+  border-radius: 50%;
+  border:3px solid #fff;
+  box-shadow: 0 6px 16px rgba(0,0,0,.25);
+  background:#fff;
+  display:block;
+}
+
     /* przesunięcie w dół dla 2 i 4 obrazka */
     .kolaz img:nth-child(2),
     .kolaz img:nth-child(4){
