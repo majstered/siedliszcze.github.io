@@ -1,43 +1,304 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <title>barbarairek</title>
-    <style>
-        body {
-            background-color: #fef4d1;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: black;
-            color: white;
-            padding: 20px;
-            font-size: 28px;
-        }
-        main {
-            padding: 40px 20px;
-        }
-        footer {
-            margin-top: 40px;
-            padding: 10px;
-            color: gray;
-        }
-        img.qr {
-            margin-top: 30px;
-            width: 200px;
-            height: 200px;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tajemnice Różańca Świętego</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: #f9f7f2;
+      color: #2a2a2a;
+      line-height: 1.6;
+    }
+
+    .banner {
+      background: linear-gradient(180deg, #d8e6ff, #f0f6ff);
+      text-align: center;
+      padding: 30px 15px;
+      border-bottom: 2px solid #b5c8f6;
+      margin-top: 40px;
+    }
+
+    .banner h1 {
+      margin: 0;
+      font-size: 2em;
+      color: #001a44;
+    }
+    .banner p {
+      margin: 6px 0 0;
+      color: #333;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 20px auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+
+    .intro-img {
+      display: block;
+      margin: 0 auto 20px;
+      max-width: 300px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,.15);
+    }
+
+    h2 {
+      color: #324d7d;
+      text-align: center;
+      margin: 20px 0 10px;
+      font-size: 1.5em;
+    }
+
+    .mystery {
+      margin: 25px 0 10px;
+      padding: 20px;
+      border-left: 5px solid #a8b6ff;
+      background: #fafbff;
+      border-radius: 10px;
+    }
+    .mystery h3 {
+      margin-top: 0;
+      color: #001a44;
+    }
+    .mystery p {
+      margin: 6px 0 0;
+      font-size: 15px;
+    }
+
+    .ornament {
+      text-align: center;
+      margin: 12px 0 25px;
+    }
+    .ornament img {
+      height: 15px;
+      width: auto;
+      opacity: 0.8;
+    }
+
+    footer {
+      text-align: center;
+      margin: 40px 0 10px;
+      font-size: 14px;
+      color: #666;
+    }
+  </style>
 </head>
 <body>
-    <header>Hejka 👋</header>
-    <main>
-        <h2>Tutaj pojawi się Twoja wiadomość od Ramziego</h2>
-        <img class="qr" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcIAAAHCAQAAAABUY/ToAAADsklEQVR4nO2czW3jPBCGn1kJ8FECUkBKkTpbpKTtQCrFBQQQjwEovN+BpER7fVrYieVv5mDEsR5QBAbzT5r4N5l//SMITjrppJNOOumkk89HWpaW/NEDsJqNwYy5BwjlqfGH39bJpyQHSdICDIownM0gtOijBxsBG2kkSbokf+JtnXxKMmz2JbTo4z1iYxfTb5qCGUCyUndb08nXINur7yKsJsJJNveLjO6zNbrP6+eOtk8nv4+0kSZ5K2lZTRONGM6nv8tIz/C2Tj4DWexLJyCACGCDVhNJfQzm9+LV7rKmky9JzmZm1uf4GcJJNoYWG5MitQBrSsvutaaTL0KiK5k6SRONNAEpV7v53LH26eTjyKQbKaMHYFgaQbepCo0YFoBO+a/BdcjJSlI8JMKbgLUVfJkIbbThz1uEbiE/wtoy91tQdKx9Ovlwcu5Xg3AScw82shqpTs1q0EVsqzHa+NNv6+RTkSXOSR4sIimS/BZdTGXr7O6WHCO5L3PyBmkjq5X0C6SzWY6MaGRjMNOULJL3Opy8lroFVqLm0jmTNHWR3foUU+V2yMlKKl82LJDSeikmRSrJGWR3B+7LnLySi9JQ3HL7zdyUSDopUkr1XYecrGWvLF5EzZG90JhVamlU26Zj7dPJx5GVuamqiFTWp8lBUfZv2w/H2qeTjyNLTJ1mhZqS5ZfqdNYclV+TvXIdcvIvcjc3qRKd8njAxnASs7UlOVvutqaTr0JuBUQoHzlqLlFQ3XitG2nH2qeT30R2MY3BAqtpCmW4aO43XTv7LKyT17I3Msp/9iC65PsAObf3eMjJa9n69ls/PvSl6xHeog3LCrmD/9kalBG0g+3TyceT3dfFWTIaMb9/GbOdBKWbVjdGjrlPJ+9P1rl9qix2ueSYwukJ2OuOVIWjY+3TyceRmw5lpcnBDnvnbOvDVrrmOuRkJRdass0KKc/H7s20qv/hdsjJC6nysmFvZGzTaHmUOtaI2yEnL0SXQmpzpGHGPNGYG/pF19wOOXmD3O/9AEg3NWgKbTrsar+XRhBaymT1z76tk09JDtpi6mVNY7D2WxGzvpE+zKw4tNXPKDp5m9zu/Zj7Rvk4ayin7IeFdBQW9pmiY+7TyW8gkx2SlDpnwznXHfeRNBvvvaaThyZv3B0DzNZEhnMbBbG1YelhENgw3WFNJ1+T7HJlkfldgu5r63oAqfVh7ebQ7rOmk69BXrTAaKqJxnyr3p70d9H79k7eEPM7zp100kknnXTSyf85+R/Qtjz9JDMZggAAAABJRU5ErkJggg==" alt="Kod QR do tej strony">
-    </main>
-    <footer>Ramzi – przyjaciele</footer>
-</body>
-</html>
+
+  <!-- Tajemnice Radosne -->
+  <div class="banner">
+    <h1>Tajemnice Radosne</h1>
+    <p>(poniedziałki i soboty)</p>
+  </div>
+  <div class="container">
+    <div class="mystery">
+      <h3>I. Zwiastowanie Najświętszej Maryi Pannie</h3>
+      <p>Anioł Gabriel zwiastuje Maryi, że zostanie Matką Syna Bożego. Uczymy się pokory i gotowości do przyjęcia woli Boga.</p>
+    </div>
+
+    <div class="mystery">
+      <h3>II. Nawiedzenie św. Elżbiety</h3>
+      <p>Maryja z pośpiechem niesie pomoc swojej krewnej Elżbiecie. Rozważamy miłość bliźniego i radość płynącą ze służby.</p>
+    </div>
+
+    <div class="mystery">
+      <h3>III. Narodzenie Jezusa</h3>
+      <p>Syn Boży przychodzi na świat w ubóstwie Betlejem. Uczymy się prostoty serca i otwartości na dar Bożej miłości.</p>
+    </div>
+
+    <div class="mystery">
+      <h3>IV. Ofiarowanie Jezusa w świątyni</h3>
+      <p>Maryja i Józef ofiarują Dzieciątko w świątyni. Rozważamy zawierzenie i oddanie życia Bogu.</p>
+    </div>
+
+    <div class="mystery">
+      <h3>V. Znalezienie Jezusa w świątyni</h3>
+      <p>Dwunastoletni Jezus pozostaje w świątyni, by uczyć się i nauczać. Prosimy o łaskę, by zawsze szukać Jezusa ponad wszystko.</p>
+    </div>
+  </div>
+    <div class="ornament"><img src="ornament.png" alt="ornament"></div>
+
+  <!-- Tajemnice Światła -->
+  <div class="banner">
+    <h1>Tajemnice Światła</h1>
+    <p>(czwartki)</p>
+  </div>
+  <div class="container">
+    <img src="jezus-swiatlo.jpg" alt="Jezus Światłość świata" class="intro-img">
+
+    <div class="mystery">
+      <h3>I. Chrzest Jezusa w Jordanie</h3>
+      <p>Jezus przyjmuje chrzest od Jana. Uczymy się wdzięczności za dar chrztu i bycia dzieckiem Bożym.</p>
+    </div>
+
+    <div class="mystery">
+      <h3>II. Wesele w Kanie Galilejskiej</h3>
+      <p>Maryja wskazuje na Jezusa: „Zróbcie wszystko, cokolwiek wam powie”. Rozważamy ufność wobec słowa Chrystusa.</p>
+    </div>
+
+    <div class="mystery">
+      <h3>III. Głoszenie Królestwa Bożego</h3>
+      <p>Jezus wzywa do nawrócenia i ogłasza Królestwo. Prosimy o serce otwarte na Ewangelię.</p>
+    </div>
+
+    <div class="mystery">
+      <h3>IV. Przemienienie na górze Tabor</h3>
+      <p>Jezus objawia swoje Bóstwo. Rozważamy wiarę, która daje siłę w chwilach ciemności.</p>
+    </div>
+
+    <div class="mystery">
+      <h3>V. Ustanowienie Eucharystii</h3>
+      <p>Jezus daje nam swoje Ciało i Krew. Rozważamy dar obecności Chrystusa w sakramencie ołtarza.</p>
+    </div>
+  </div>
+    <div class="ornament"><img src="ornament.png" alt="ornament"></div>
+
+  <!-- Tajemnice Bolesne -->
+  <div class="banner">
+    <h1>Tajemnice Bolesne</h1>
+    <p>(wtorki i piątki)</p>
+  </div>
+  <div class="container">
+    <img src="krzyz.jpg" alt="Jezus cierpiący" class="intro-img">
+
+    <div class="mystery">
+      <h3>I. Modlitwa Jezusa w Ogrójcu</h3>
+      <p>Jezus w udręce modli się do Ojca. Rozważamy ufność wobec woli Bożej.</p>
+    </div>
+
+    <div class="mystery">
+      <h3>II. Biczowanie Pana Jezusa</h3>
+      <p>Jezus cierpi za nasze grzechy. Prosimy o skruchę i nawrócenie serca.</p>
+    </div>
+
+    <div class="mystery">
+      <h3>III. Cierniem ukoronowanie</h3>
+      <p>Jezus znosi zniewagi i szyderstwa. Rozważamy cierpliwość wobec niesprawiedliwości.</p>
+    </div>
+
+    <div class="mystery">
+      <h3>IV. Droga krzyżowa</h3>
+      <p>Jezus bierze krzyż na swoje ramiona. Prosimy o siłę do dźwigania naszych krzyży.</p>
+    </div>
+
+    <div class="mystery">
+      <h3>V. Ukrzyżowanie i śmierć Jezusa</h3>
+      <p>Jezus oddaje życie za zbawienie świata. Rozważamy miłość, która daje siebie do końca.</p>
+    </div>
+  </div>
+    <div class="ornament"><img src="ornament.png" alt="ornament"></div>
+
+  <!-- Tajemnice Chwalebne -->
+  <div class="banner">
+    <h1>Tajemnice Chwalebne</h1>
+    <p>(środy i niedziele)</p>
+  </div>
+  <div class="container">
+    <img src="zmartwychwstanie.jpg" alt="Zmartwychwstanie" class="intro-img">
+
+    <div class="mystery">
+      <h3>I. Zmartwychwstanie Jezusa</h3>
+      <p>Chrystus zwycięża śmierć. Rozważamy radość życia wiecznego.</p>
+    </div>
+
+    <div class="mystery">
+      <h3>II. Wniebowstąpienie Jezusa</h3>
+      <p>Jezus wraca do Ojca. Rozważamy nadzieję na nasze zmartwychwstanie.</p>
+    </div>
+
+    <div class="mystery">
+      <h3>III. Zesłanie Ducha Świętego</h3>
+      <p>Duch Święty napełnia Apostołów. Prosimy o Jego dary w codziennym życiu.</p>
+    </div>
+
+    <div class="mystery">
+      <h3>IV. Wniebowzięcie Maryi</h3>
+      <p>Maryja zostaje wzięta do nieba. Rozważamy chwałę życia wiecznego w Bogu.</p>
+    </div>
+
+    <div class="mystery">
+      <h3>V. Ukoronowanie Maryi w niebie</h3>
+      <p>Maryja staje się Królową nieba i ziemi. Rozważamy Jej wstawiennictwo za nami.</p>
+    </div>
+  </div>
+    <div class="ornament"><img src="ornament.png" alt="ornament"></div>
+<!-- Modlitwa Zawierzenia -->
+<style>
+  .prayer-card{
+    max-width:850px; margin:20px auto 40px; background:#fff;
+    padding:28px; border-radius:14px; box-shadow:0 6px 20px rgba(0,0,0,.08);
+    border-left:5px solid #b9c7ff;
+  }
+  .prayer-card h2{
+    margin:0 0 12px; text-align:center; color:#324d7d; font-size:1.5em;
+  }
+  .prayer-card .subtitle{
+    text-align:center; color:#666; margin:-4px 0 18px; font-size:.95em;
+  }
+  .prayer-card p{ margin:8px 0; }
+  .prayer-amen{ margin-top:14px; font-weight:bold; text-align:center; }
+</style>
+
+<div class="prayer-card" id="modlitwa-zawierzenia">
+  <h2>🙏 Modlitwa Zawierzenia Bożemu Prowadzeniu</h2>
+  <div class="subtitle">Do odmówienia po tajemnicach różańcowych</div>
+
+  <p><strong>Ojcze mój,</strong><br>
+  Ty widzisz całe moje życie – przeszłość, teraźniejszość i przyszłość.
+  Wiesz, co jest dla mnie dobre, nawet gdy ja tego nie rozumiem.</p>
+
+  <p><strong>Jezu, mój Pasterzu,</strong><br>
+  powierzam Ci każdy dzień, każdy wybór i każdy krzyż.
+  Prowadź mnie drogą, która zaprowadzi mnie do nieba,
+  choćby była trudna i wąska.</p>
+
+  <p><strong>Duchu Święty,</strong><br>
+  oświecaj mój umysł, abym rozumiał Twoje znaki,
+  i wlewaj pokój w moje serce, gdy przychodzą próby.</p>
+
+  <p><strong>Maryjo, Matko ufności,</strong><br>
+  ucz mnie mówić jak Ty: „Niech mi się stanie według słowa Twego”.</p>
+
+  <p><strong>Boże,</strong> wierzę, że to, co dopuszczasz w moim życiu,
+  ma mnie oczyścić, uzdrowić i uczynić świętym.
+  Pomóż mi ufać, że wszystko współdziała ku dobremu
+  dla tych, którzy Ciebie miłują.</p>
+
+  <p><strong>Twoje jest moje życie.<br>
+  Twoje są moje lęki.<br>
+  Twoje są moje radości.</strong><br>
+  Prowadź mnie, Panie, aż do dnia,
+  w którym ujrzę Cię twarzą w twarz.</p>
+
+  <p class="prayer-amen">Amen.</p>
+</div>
+
+<!-- 📻 Radio Niepokalanów – Player w iframe (bez problemów CORS) -->
+<style>
+  .radio-card{
+    max-width:850px;margin:24px auto;padding:18px 20px;background:#fff;border-radius:14px;
+    box-shadow:0 6px 20px rgba(0,0,0,.08);border-left:5px solid #98c6ff;
+    font-family:system-ui,Segoe UI,Roboto,Arial
+  }
+  .radio-title{
+    font-weight:700;color:#224;margin-bottom:10px;font-size:1.1em
+  }
+  .radio-frame{
+    width:100%;max-width:400px;height:184px;border:0;border-radius:12px;
+    box-shadow:0 4px 14px rgba(0,0,0,.1);
+  }
+</style>
+
+<div class="radio-card">
+  <div class="radio-title">📻 Radio Niepokalanów – słuchaj na stronie</div>
+  <iframe class="radio-frame"
+    src="https://www.revma.com/widget/radio/gg1s5wrph72vv/player/?trackinfo"
+    allow="autoplay">
+  </iframe>
+</div>
