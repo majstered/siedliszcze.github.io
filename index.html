@@ -104,17 +104,16 @@
     .list-box li::marker{ color:#fff; }
 
     /* Modlitwa – węższa, wyśrodkowana */
-    .prayer-box{
-      background: var(--blue);
-      color: #fff;
-      border-radius: calc(var(--radius) - 4px);
-      padding: 18px 22px;
-      max-width: 700px;
-      margin: 0 auto;
-      font-size: 1.15rem;
-      line-height: 1.7;
-      text-align: center;
-    }
+.prayer-box{
+  background: var(--blue);
+  color: #fff;
+  border-radius: calc(var(--radius) - 4px);
+  padding: clamp(14px, 3vw, 24px);
+  font-size: 1.15rem;
+  line-height: 1.7;
+  text-align: center;
+}
+
   </style>
 </head>
 <body>
