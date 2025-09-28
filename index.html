@@ -1,15 +1,13 @@
 <!doctype html>
 <html lang="pl">
 <head>
+  <link rel="icon" type="image/png" href="aplikacje.png">
+
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TAJEMNICE RÓŻAŃCA ŚWIĘTEGO</title>
-
-  <!-- Favicon (ikona w zakładkach) -->
-  <link rel="icon" href="favicon.ico?v=2" type="image/x-icon">
-  <link rel="icon" type="image/png" sizes="512x512" href="favicon.png?v=2">
-
   <style>
+
     /* Zmiennie i bazowe style */
     :root{
       --bg:#fbfaf7;
@@ -21,11 +19,6 @@
       --radius:16px;
       --shadow:0 8px 28px rgba(0,0,0,.08);
       --accent:#1f5fbf;
-
-      /* kolory nagłówka (jasny) */
-      --hero1:#0a4fa3;
-      --hero2:#1f5fbf;
-      --hero3:#3e8bff;
     }
     .dark{
       --bg:#10131a;
@@ -36,11 +29,6 @@
       --border:#263049;
       --shadow:0 8px 28px rgba(0,0,0,.45);
       --accent:#7fb0ff;
-
-      /* kolory nagłówka (ciemny) */
-      --hero1:#0b3d7a;
-      --hero2:#134a8a;
-      --hero3:#2a67b9;
     }
 
     html,body{height:100%}
@@ -52,70 +40,27 @@
       line-height:1.6;
     }
 
-    /* ——— RUCHOMY NAGŁÓWEK ——— */
+    /* Jedyny nagłówek */
     .topbar{
       position:sticky; top:0; z-index:10;
-      background: linear-gradient(90deg, var(--hero1), var(--hero2), var(--hero3));
-      background-size: 200% 200%;
-      animation: gradientShift 12s ease-in-out infinite;
+      background:var(--card);
       border-bottom:1px solid var(--border);
       display:flex; align-items:center; justify-content:space-between;
-      padding:16px 18px;
-      overflow:hidden;
+      padding:14px 18px;
     }
-    .topbar::before,
-    .topbar::after{
-      content:"";
-      position:absolute; inset:0;
-      pointer-events:none;
-      background:
-        radial-gradient(40vw 40vw at 20% 120%, rgba(255,255,255,.12), transparent 60%),
-        radial-gradient(30vw 30vw at 80% -20%, rgba(255,255,255,.10), transparent 60%);
-      animation: fogMove 35s linear infinite;
-      mix-blend-mode: screen;
-      opacity:.6;
-    }
-    @keyframes gradientShift{
-      0%{background-position:0% 50%}
-      50%{background-position:100% 50%}
-      100%{background-position:0% 50%}
-    }
-    @keyframes fogMove{
-      0%{transform: translateX(0)}
-      100%{transform: translateX(-10%)}
-    }
-    @media (prefers-reduced-motion: reduce){
-      .topbar{ animation:none; }
-      .topbar::before, .topbar::after{ animation:none; }
-    }
-
-    /* Tytuł + ikona w jednej linii */
     .topbar h1{
       font-size: clamp(18px, 2.6vw, 28px);
       margin:0;
       letter-spacing:.2px;
-      display:flex; align-items:center; gap:10px;
-      color:#fff;
-      text-shadow: 0 1px 2px rgba(0,0,0,.25);
     }
-    .brand-icon{
-      width:32px; height:32px; flex:0 0 auto;
-      border-radius:8px;       /* usuń, jeśli chcesz kwadrat */
-      box-shadow: 0 2px 8px rgba(0,0,0,.25);
-    }
-
-    /* Przycisk trybu na tle nagłówka */
     .mode-btn{
-      border:1px solid rgba(255,255,255,.35);
-      background:rgba(255,255,255,.08);
-      color:#fff;
+      border:1px solid var(--border);
+      background:transparent;
+      color:var(--ink);
       border-radius:999px;
       padding:8px 12px;
       cursor:pointer;
-      backdrop-filter: blur(4px);
-      transition: transform .2s ease, background .2s ease;
     }
-    .mode-btn:hover{ transform: translateY(-1px); background:rgba(255,255,255,.14); }
 
     .wrap{
       max-width: 1050px;
@@ -149,7 +94,7 @@
     .list-box ul{
       margin:0;
       padding-left: 1.2rem;
-      list-style: disc inside;
+      list-style: disc inside;   /* punktor w środku pola */
     }
     .list-box li{
       font-size: clamp(16px, 2.1vw, 20px);
@@ -172,33 +117,30 @@
       text-align: center;
     }
 
-    /* ——— PASEK NAWIGACYJNY ——— */
-    .nav-bar{
+    /* Przyciski audio */
+    .audio-controls{
       text-align:center;
-      margin: 36px 0 24px;
+      margin-top:40px;
     }
-    .nav-btn{
-      display:inline-block;
-      margin:8px;
-      padding:10px 20px;
-      background: var(--blue, #0a4fa3);
+    .audio-btn{
+      background: var(--accent);
       color:#fff;
-      font-size:16px;
-      border-radius:12px;
-      text-decoration:none;
-      box-shadow:0 4px 12px rgba(0,0,0,.15);
-      transition: background .3s, transform .2s;
+      border:none;
+      border-radius: var(--radius);
+      padding:12px 24px;
+      font-size:18px;
+      cursor:pointer;
+      box-shadow: var(--shadow);
     }
-    .nav-btn:hover{ background:#083d80; transform: translateY(-2px); }
+    .audio-btn:hover{
+      opacity:0.9;
+    }
   </style>
 </head>
 <body>
   <!-- Nagłówek -->
-  <header class="topbar">
-    <h1>
-      <img src="favicon.png" alt="Ikona strony" class="brand-icon">
-      TAJEMNICE RÓŻAŃCA ŚWIĘTEGO
-    </h1>
+<header class="topbar">
+    <h1>TAJEMNICE RÓŻAŃCA ŚWIĘTEGO</h1>
     <button class="mode-btn" id="modeBtn" aria-label="Przełącz tryb">🌓 Dzień / Noc</button>
   </header>
 
@@ -270,15 +212,45 @@
       </div>
     </section>
 
-    <!-- Pasek nawigacyjny -->
-    <nav class="nav-bar" aria-label="Nawigacja sekcji">
-      <a href="index.html" class="nav-btn">🏠 Strona główna</a>
-      <a href="rozaniec.html" class="nav-btn">📿 Różaniec</a>
-      <a href="modlitwy.html" class="nav-btn">🙏 Modlitwy</a>
-      <a href="kontakt.html" class="nav-btn">📬 Kontakt</a>
-    </nav>
+    <!-- AUDIO BUTTON -->
+    <div class="audio-controls">
+      <button class="audio-btn" id="audioBtn">▶ Start</button>
+      <audio id="myAudio" src="na.mp3"></audio>
+    </div>
 
   </main>
+<!-- Pasek nawigacyjny -->
+<nav class="nav-bar">
+  <a href="index.html" class="nav-btn">🏠 Strona główna</a>
+  <a href="rozaniec.html" class="nav-btn">📿 Różaniec</a>
+  <a href="modlitwy.html" class="nav-btn">🙏 Modlitwy</a>
+  <a href="kontakt.html" class="nav-btn">📬 Kontakt</a>
+</nav>
+
+<style>
+.nav-bar {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.nav-btn {
+  display: inline-block;
+  margin: 8px;
+  padding: 10px 20px;
+  background: var(--blue, #0a4fa3); /* korzysta z Twojej zmiennej koloru */
+  color: #fff;
+  font-size: 16px;
+  border-radius: 12px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: background 0.3s, transform 0.2s;
+}
+
+.nav-btn:hover {
+  background: #083d80;
+  transform: translateY(-2px);
+}
+</style>
 
   <script>
     // Tryb Dzień/Noc z pamięcią
@@ -305,6 +277,24 @@
         localStorage.setItem(key, next);
       });
     })();
+
+    // Audio Start/Stop
+    const audio = document.getElementById("myAudio");
+    const audioBtn = document.getElementById("audioBtn");
+    let playing = false;
+
+    audioBtn.addEventListener("click", ()=>{
+      if(!playing){
+        audio.play();
+        audioBtn.textContent = "⏸ Stop";
+        playing = true;
+      }else{
+        audio.pause();
+        audio.currentTime = 0;
+        audioBtn.textContent = "▶ Start";
+        playing = false;
+      }
+    });
   </script>
 </body>
 </html>
