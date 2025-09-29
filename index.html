@@ -1,13 +1,11 @@
 <!doctype html>
 <html lang="pl">
 <head>
-  <link rel="icon" type="image/png" href="aplikacje.png">
-
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TAJEMNICE RÓŻAŃCA ŚWIĘTEGO</title>
+  <link rel="icon" type="image/png" href="aplikacje.png">
   <style>
-
     /* Zmiennie i bazowe style */
     :root{
       --bg:#fbfaf7;
@@ -40,7 +38,7 @@
       line-height:1.6;
     }
 
-    /* Jedyny nagłówek */
+    /* Topbar */
     .topbar{
       position:sticky; top:0; z-index:10;
       background:var(--card);
@@ -62,12 +60,14 @@
       cursor:pointer;
     }
 
+    /* Wrapper */
     .wrap{
       max-width: 1050px;
       margin: 28px auto;
       padding: 0 16px 56px;
     }
 
+    /* Karty */
     .card{
       background:var(--card);
       border:1px solid var(--border);
@@ -76,7 +76,6 @@
       padding: 18px;
       margin: 18px 0 28px;
     }
-
     .section-title{
       font-size: clamp(18px, 2.2vw, 24px);
       margin: 0 0 14px;
@@ -84,8 +83,9 @@
       padding-left:10px;
     }
 
-    /* Niebieski blok z listą */
-    .list-box{
+    /* Niebieskie pole na treść/listy */
+    .list-box,
+    .prayer-box{
       background: var(--blue);
       color: #fff;
       border-radius: calc(var(--radius) - 4px);
@@ -94,188 +94,201 @@
     .list-box ul{
       margin:0;
       padding-left: 1.2rem;
-      list-style: disc inside;   /* punktor w środku pola */
+      list-style: disc inside;
     }
-    .list-box li{
+    .list-box li,
+    .list-box p,
+    .prayer-box p{
       font-size: clamp(16px, 2.1vw, 20px);
-      margin: .35rem 0;
-    }
-    .list-box p{
-      margin: .35rem 0;
-      font-size: clamp(16px, 2.1vw, 20px);
+      margin:.35rem 0;
     }
     .list-box li::marker{ color:#fff; }
 
-    /* Modlitwa – węższa, wyśrodkowana */
-    .prayer-box{
-      background: var(--blue);
-      color: #fff;
-      border-radius: calc(var(--radius) - 4px);
-      padding: clamp(14px, 3vw, 24px);
-      font-size: 1.15rem;
-      line-height: 1.7;
-      text-align: center;
+    /* Cytat/lead i drobne akcenty */
+    .lead{ font-size: clamp(18px, 2.3vw, 22px); line-height:1.75; }
+    blockquote{
+      margin:12px 0; padding:8px 12px;
+      border-left:4px solid rgba(255,255,255,.6);
+      opacity:.95;
+    }
+    .note{ font-size:.95rem; color:var(--muted); }
+
+    /* Separator – tylko ramka (bez wypełnienia) */
+    #radosne{
+      border: 2px solid #001a44;  /* granatowa ramka */
+      border-radius: 12px;
+      padding: 40px;
+      margin: 28px 0;
+      background: none;
+    }
+    #radosne .list-box{
+      all: unset;
+      display:block;
     }
 
-
+    /* Pasek nawigacyjny (dół i góra) */
+    .nav-bar { text-align:center; margin: 30px 0; }
+    .nav-btn{
+      display:inline-block; margin:8px; padding:10px 20px;
+      background: var(--blue, #0a4fa3); color:#fff; font-size:16px;
+      border-radius: 12px; text-decoration:none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transition: background .3s, transform .2s;
+    }
+    .nav-btn:hover{ background:#083d80; transform: translateY(-2px); }
   </style>
 </head>
 <body>
   <!-- Nagłówek -->
-<header class="topbar">
+  <header class="topbar">
     <h1>Głębokie znaczenie modlitwy „Zdrowaś Maryjo”</h1>
     <button class="mode-btn" id="modeBtn" aria-label="Przełącz tryb">🌓 Dzień / Noc</button>
   </header>
 
-<!-- Pasek nawigacyjny (drugi, u góry) -->
-<nav class="nav-bar">
-  <a href="https://majstered.github.io/strazopis.github.io/" class="nav-btn">📿 Różaniec</a>
-  <a href="nowa2.html" class="nav-btn">Nowenna 2</a>
-</nav>
+  <!-- Pasek nawigacyjny (góra) -->
+  <nav class="nav-bar">
+    <a href="https://majstered.github.io/strazopis.github.io/" class="nav-btn">📿 Różaniec</a>
+    <a href="nowa2.html" class="nav-btn">Nowenna 2</a>
+  </nav>
 
-  
   <main class="wrap">
 
-
-
-
-
-    <!-- MODLITWA FATIMSKA -->
-    <section class="card" id="modlitwa-fatimska">
+    <!-- Wprowadzenie -->
+    <section class="card" id="wprowadzenie">
       <h2 class="section-title">(Pozdrowienie anielskie)</h2>
-      <div class="prayer-box" aria-label="Modlitwa fatimska">
- Wielu ludzi zna na pamięć treść modlitwy „Zdrowaś Maryjo”. Wypowiada ją codziennie, czasem dziesiątki razy. 
-        Ale niewielu do końca rozumie jej głębię i niewyobrażalną moc, która płynie z jej treści i znaczenia.       
+      <div class="prayer-box" aria-label="Wprowadzenie">
+        <p class="lead">
+          Wielu ludzi zna na pamięć treść modlitwy „Zdrowaś Maryjo”. Wypowiada ją codziennie, czasem dziesiątki razy.
+          A jednak niewielu do końca przeczuwa jej głębię i <strong>niewyobrażalną moc</strong>, która płynie z jej treści.
+        </p>
       </div>
     </section>
 
-<section class="card" id="modlitwa-fatimska">
+    <!-- Zdrowaś – frazy -->
+    <section class="card" id="fraza-1">
       <h2 class="section-title">„Zdrowaś, łaski pełna, Pan z Tobą”</h2>
-      <div class="prayer-box" aria-label="Modlitwa fatimska">
-– słowa anioła Gabriela (Łk 1,28)
-Bóg sam posyła swego posłańca, by ogłosił Maryi, że jest pełna łaski i że Jego obecność będzie zawsze przy Niej.
-      </div>
-    </section>  
-
-
-    <section class="card" id="modlitwa-fatimska">
-      <h2 class="section-title">„Błogosławiona jesteś między niewiastami”</h2>
-      <div class="prayer-box" aria-label="Modlitwa fatimska">
-– słowa Elżbiety, napełnionej Duchem Świętym (Łk 1,42)
-To okrzyk radości wobec Tej, która niesie w sobie Boga.
-      </div>
-    </section> 
-
-    <section class="card" id="modlitwa-fatimska">
-      <h2 class="section-title">„Błogosławiony owoc żywota Twojego – Jezus”</h2>
-      <div class="prayer-box" aria-label="Modlitwa fatimska">
-W samym sercu modlitwy wypowiadamy imię Zbawiciela. To jak pocałunek złożony na Jego imieniu w łonie Maryi, 
-        tak jakbyśmy stali obok Elżbiety, która z uniesieniem wołała:
-„A skądże mi to, że Matka mojego Pana przychodzi do mnie?” (Łk 1,43)
+      <div class="prayer-box">
+        <p>— słowa anioła Gabriela (Łk 1,28). Bóg sam posyła swego posłańca, by ogłosił Maryi, że jest pełna łaski i że Jego obecność będzie zawsze przy Niej.</p>
       </div>
     </section>
 
-    
-    <!-- CHWALEBNE -->
-    <section class="card" id="chwalebne">
-      <h2 class="section-title">Tajemnice chwalebne (środy i niedziele)</h2>
-      <div class="list-box" aria-label="Tajemnice chwalebne — lista">
+    <section class="card" id="fraza-2">
+      <h2 class="section-title">„Błogosławiona jesteś między niewiastami”</h2>
+      <div class="prayer-box">
+        <p>— słowa Elżbiety, napełnionej Duchem Świętym (Łk 1,42). To okrzyk radości wobec Tej, która niesie w sobie Boga.</p>
+      </div>
+    </section>
+
+    <section class="card" id="fraza-3">
+      <h2 class="section-title">„Błogosławiony owoc żywota Twojego – Jezus”</h2>
+      <div class="prayer-box">
+        <p>W samym sercu modlitwy wypowiadamy imię Zbawiciela. To jak pocałunek złożony na Jego imieniu w łonie Maryi, tak jakbyśmy stali obok Elżbiety, która wołała: „A skądże mi to, że Matka mojego Pana przychodzi do mnie?” (Łk 1,43).</p>
+      </div>
+    </section>
+
+    <!-- Separator – tylko ramka -->
+    <section class="card" id="radosne">
+      <div class="list-box" aria-hidden="true"><!-- czysta ramka, bez treści --></div>
+    </section>
+
+    <!-- Obietnice Maryi -->
+    <section class="card" id="obietnice">
+      <h2 class="section-title">🌹 Obietnice Maryi dla odmawiających różaniec</h2>
+      <div class="list-box">
+        <blockquote>„Ja was nie opuszczę. Wasza Matka.”</blockquote>
+        <p>Jak powiedziała s. Fernanda z Fatimy: „Różaniec jest jak mleko dla dziecka – pierwszy pokarm dla duszy. Gdy zaczynasz go pić, zaczynasz rosnąć duchowo, a Maryja bierze cię za rękę i prowadzi do Jezusa.”</p>
+        <p>Maryja powtarzała to we wszystkich miejscach objawień: <em>„Odmawiajcie codziennie różaniec.”</em></p>
+        <blockquote>„Różaniec odmawiany z wiarą i pobożnością jest wielkim ratunkiem dla dusz i środkiem do zwycięstwa nad szatanem.”</blockquote>
+        <blockquote>„Jedno Zdrowaś Maryjo świadomie i uważnie odmówione ma większą wartość niż setki mechanicznie wypowiedzianych słów.” — św. Ludwik Maria Grignion de Montfort</blockquote>
+        <blockquote>„Różaniec to modlitwa tych, którzy kochają, ale nie wiedzą, jak mówić.” — św. Jan Paweł II</blockquote>
+        <blockquote>„Różaniec to łańcuch, który łączy nas z Bogiem.” — św. Teresa z Lisieux</blockquote>
+        <blockquote>„Jeśli chcesz nawrócić grzesznika, odmów za niego różaniec.” — św. Jan Maria Vianney</blockquote>
+        <blockquote>„Gdy mówisz różaniec, Maryja jest tuż obok ciebie.” — św. Alfons Maria Liguori</blockquote>
+
+        <p class="lead">Z modlitwy Kościoła, z przekazów objawień oraz świadectw świętych i zwykłych ludzi wyłania się pewna, cicha obietnica Maryi: wytrwały różaniec przynosi wielkie łaski.</p>
+
         <ul>
-          <li>Zmartwychwstanie Pana Jezusa</li>
-          <li>Wniebowstąpienie</li>
-          <li>Zesłanie Ducha Świętego</li>
-          <li>Wniebowzięcie Maryi</li>
-          <li>Ukoronowanie Matki Bożej na Królową nieba i ziemi</li>
+          <li><strong>Szczególna opieka w życiu i przy śmierci.</strong></li>
+          <li><strong>Nawrócenie największych grzeszników</strong> — wytrwała modlitwa kruszy najtwardsze serca.</li>
+          <li><strong>Ochrona przed pokusami i złem</strong> — każde „Zdrowaś” jest ciosem w szatana i tarczą dla duszy.</li>
+          <li><strong>Pokój w rodzinach.</strong></li>
+          <li><strong>Uzdrowienia duszy i ciała</strong> — świadectwa z Lourdes, Fatimy, Gietrzwałdu.</li>
+          <li><strong>Wysłuchanie próśb</strong> zgodnie z wolą Bożą i dla zbawienia.</li>
+          <li><strong>Pomoc w trudnościach</strong> — „Odmawiajcie różaniec, a otrzymacie łaski potrzebne w życiu.”</li>
+          <li><strong>Przygotowanie na trudne czasy</strong> — kto trzyma się różańca, nie zginie.</li>
         </ul>
       </div>
+      <p class="note">Uwaga: poniższe treści mają charakter pobożnej tradycji i świadectw, zgodnej z nauczaniem Kościoła, ale nie stanowią dogmatu.</p>
     </section>
 
-<!-- RADOSNE -->
-<section class="card" id="radosne">
-  <div class="list-box" aria-label="Tajemnice radosne — lista">
-    <!-- puste wnętrze -->
-  </div>
-</section>
+    <!-- Nowenna Pompejańska -->
+    <section class="card" id="nowenna-pompejanska">
+      <h2 class="section-title">🌹 Nowenna Pompejańska — „Modlitwa nie do odparcia”</h2>
+      <div class="list-box">
+        <p>— Bartolo Longo, 1879</p>
+        <p>54 dni modlitwy bez przerwy: trzy nowenny błagalne i trzy dziękczynne. Świadectwa mówią o szczególnych łaskach:</p>
+        <ul>
+          <li>uzdrowienia z chorób uznanych za nieuleczalne,</li>
+          <li>uratowanie małżeństw i rodzin,</li>
+          <li>uwolnienie od nałogów,</li>
+          <li>łaska wiary dla osób niewierzących,</li>
+          <li>pokój serca w sytuacjach bez wyjścia.</li>
+        </ul>
+        <p>Wielu nazywa ją „modlitwą nie do odparcia” — Maryja odpowiada na nią szczególnie hojnie.</p>
+      </div>
+    </section>
 
-<style>
-#radosne {
-  border: 2px solid #001a44; /* granatowa ramka */
-  border-radius: 12px;
-  padding: 40px;             /* odstęp wewnątrz ramki */
-  margin: 20px 0;
-  background: none;
-}
-
-#radosne .list-box {
-  all: unset;                /* usuwa style niebieskiego paska */
-  display: block;
-}
-</style>
-
-
-
+    <!-- 15 obietnic różańcowych -->
+    <section class="card" id="15-obietnic">
+      <h2 class="section-title">🌹 15 obietnic różańcowych — „Różaniec będzie ocaleniem świata.”</h2>
+      <div class="list-box">
+        <p><strong>Wprowadzenie historyczne:</strong> bł. Alan de la Roche (XV w.) odnowił praktykę różańca; tradycja przypisuje mu przekaz 15 obietnic dla wiernie odmawiających różaniec.</p>
+        <p><em>„Te obietnice nie są kontraktem. To odpowiedź Miłości na modlitwę serca.”</em></p>
+        <ol>
+          <li>Tym, którzy wiernie będą odmawiać mój Różaniec, obiecuję szczególną opiekę i wielkie łaski.</li>
+          <li>Otrzymają szczególną ochronę i wielkich orędowników w niebie.</li>
+          <li>Różaniec będzie potężną bronią przeciw piekłu; zniszczy grzech, umniejszy winę i zwycięży herezje.</li>
+          <li>Spowoduje rozkwit cnót i dobrych uczynków; wyprosi wiele miłosierdzia dla dusz.</li>
+          <li>Dusza, która poleca się mnie przez Różaniec, nie zginie.</li>
+          <li>Wierny różańcowi nie zostanie pokonany przez nieszczęścia.</li>
+          <li>Sprawiedliwy — wytrwa w łasce; grzesznik — nawróci się.</li>
+          <li>Miłujący Różaniec otrzymają w życiu i przy śmierci światło Boże i pełnię łaski.</li>
+          <li>Wybawię z czyśćca tych, którzy odmawiali mój Różaniec z miłością.</li>
+          <li>Wierni tej modlitwie osiągną wysoki stopień chwały w niebie.</li>
+          <li>Otrzymacie wszystko, o co prosicie przez Różaniec, jeśli zgodne z wolą Syna.</li>
+          <li>Szerzącym mój Różaniec pomogę we wszystkich potrzebach.</li>
+          <li>Wpiszę odmawiających Różaniec w moje Niepokalane Serce.</li>
+          <li>Odmawiający Różaniec są moimi umiłowanymi dziećmi, a ja ich Matką.</li>
+          <li>Różaniec to znak zbawienia: kto go nosi i modli się z wiarą, będzie bezpieczny w godzinie śmierci.</li>
+        </ol>
+      </div>
+    </section>
 
   </main>
-<!-- Pasek nawigacyjny -->
-<nav class="nav-bar">
-  <a href="index.html" class="nav-btn">🏠 Strona główna</a>
-  <a href="rozaniec.html" class="nav-btn">📿 Różaniec</a>
-  <a href="modlitwy.html" class="nav-btn">🙏 Modlitwy</a>
-  <a href="kontakt.html" class="nav-btn">📬 Kontakt</a>
-</nav>
 
-<style>
-.nav-bar {
-  text-align: center;
-  margin: 30px 0;
-}
-
-.nav-btn {
-  display: inline-block;
-  margin: 8px;
-  padding: 10px 20px;
-  background: var(--blue, #0a4fa3); /* korzysta z Twojej zmiennej koloru */
-  color: #fff;
-  font-size: 16px;
-  border-radius: 12px;
-  text-decoration: none;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  transition: background 0.3s, transform 0.2s;
-}
-
-.nav-btn:hover {
-  background: #083d80;
-  transform: translateY(-2px);
-}
-</style>
+  <!-- Pasek nawigacyjny (dół) -->
+  <nav class="nav-bar">
+    <a href="index.html" class="nav-btn">🏠 Strona główna</a>
+    <a href="rozaniec.html" class="nav-btn">📿 Różaniec</a>
+    <a href="modlitwy.html" class="nav-btn">🙏 Modlitwy</a>
+    <a href="kontakt.html" class="nav-btn">📬 Kontakt</a>
+  </nav>
 
   <script>
     // Tryb Dzień/Noc z pamięcią
     (function(){
       const key = 'theme-preference';
       const btn = document.getElementById('modeBtn');
-
-      function applyTheme(val){
-        document.documentElement.classList.toggle('dark', val === 'dark');
-      }
-      function currentTheme(){
-        return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
-      }
-
+      function applyTheme(val){ document.documentElement.classList.toggle('dark', val === 'dark'); }
+      function current(){ return document.documentElement.classList.contains('dark') ? 'dark' : 'light'; }
       const saved = localStorage.getItem(key);
       if(saved){ applyTheme(saved); }
-      else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
-        applyTheme('dark');
-      }
-
+      else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){ applyTheme('dark'); }
       btn.addEventListener('click', ()=>{
-        const next = currentTheme() === 'dark' ? 'light' : 'dark';
-        applyTheme(next);
-        localStorage.setItem(key, next);
+        const next = current()==='dark' ? 'light' : 'dark';
+        applyTheme(next); localStorage.setItem(key, next);
       });
     })();
-
-
   </script>
 </body>
 </html>
