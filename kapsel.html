@@ -1,43 +1,281 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <title>kapsel</title>
-    <style>
-        body {
-            background-color: #fef4d1;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: black;
-            color: white;
-            padding: 20px;
-            font-size: 28px;
-        }
-        main {
-            padding: 40px 20px;
-        }
-        footer {
-            margin-top: 40px;
-            padding: 10px;
-            color: gray;
-        }
-        img.qr {
-            margin-top: 30px;
-            width: 200px;
-            height: 200px;
-        }
-    </style>
+  <link rel="icon" type="image/png" href="aplikacje.png">
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TAJEMNICE RÓŻAŃCA ŚWIĘTEGO</title>
+  <style>
+
+    /* Zmiennie i bazowe style */
+    :root{
+      --bg:#fbfaf7;
+      --card:#ffffff;
+      --ink:#1f2430;
+      --muted:#667085;
+      --blue:#0a4fa3;          /* tło niebieskiego bloku */
+      --border:#e6e6ea;
+      --radius:16px;
+      --shadow:0 8px 28px rgba(0,0,0,.08);
+      --accent:#1f5fbf;
+    }
+    .dark{
+      --bg:#10131a;
+      --card:#141824;
+      --ink:#e7ecf6;
+      --muted:#aab3c6;
+      --blue:#0b3d7a;
+      --border:#263049;
+      --shadow:0 8px 28px rgba(0,0,0,.45);
+      --accent:#7fb0ff;
+    }
+
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-serif, Georgia, "Times New Roman", serif;
+      background:var(--bg);
+      color:var(--ink);
+      line-height:1.6;
+    }
+
+    /* Jedyny nagłówek */
+    .topbar{
+      position:sticky; top:0; z-index:10;
+      background:var(--card);
+      border-bottom:1px solid var(--border);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 18px;
+    }
+    .topbar h1{
+      font-size: clamp(18px, 2.6vw, 28px);
+      margin:0;
+      letter-spacing:.2px;
+    }
+    .mode-btn{
+      border:1px solid var(--border);
+      background:transparent;
+      color:var(--ink);
+      border-radius:999px;
+      padding:8px 12px;
+      cursor:pointer;
+    }
+
+    .wrap{
+      max-width: 1050px;
+      margin: 28px auto;
+      padding: 0 16px 56px;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding: 18px;
+      margin: 18px 0 28px;
+    }
+
+    .section-title{
+      font-size: clamp(18px, 2.2vw, 24px);
+      margin: 0 0 14px;
+      border-left:6px solid var(--accent);
+      padding-left:10px;
+    }
+
+    /* Niebieski blok z listą */
+    .list-box{
+      background: var(--blue);
+      color: #fff;
+      border-radius: calc(var(--radius) - 4px);
+      padding: clamp(14px, 3vw, 24px);
+    }
+    .list-box ul{
+      margin:0;
+      padding-left: 1.2rem;
+      list-style: disc inside;   /* punktor w środku pola */
+    }
+    .list-box li{
+      font-size: clamp(16px, 2.1vw, 20px);
+      margin: .35rem 0;
+    }
+    .list-box p{
+      margin: .35rem 0;
+      font-size: clamp(16px, 2.1vw, 20px);
+    }
+    .list-box li::marker{ color:#fff; }
+
+    /* Modlitwa – węższa, wyśrodkowana */
+    .prayer-box{
+      background: var(--blue);
+      color: #fff;
+      border-radius: calc(var(--radius) - 4px);
+      padding: clamp(14px, 3vw, 24px);
+      font-size: 1.15rem;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+
+  </style>
 </head>
 <body>
-    <header>Hejka 👋</header>
-    <main>
-        <h2>Tutaj pojawi się Twoja wiadomość od Ramziego</h2>
-        <img class="qr" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZoAAAGaAQAAAAAefbjOAAAC9klEQVR4nO2cQW6kMBBFX40tZQnSHCBHgRvMkXKmuQE+Sh8gkr0H1SxcBjozm0wiOoFi0QLhJ9nq0nfVd3WL8u4r/Xg/Aw455JBDDjnk0DkhsSsiIhFSDzIWEZF+EShtwPiQ6Tl0IISqqjKoqmoOCp092l0G1Rx0N2764mty6DOgYgKgUxEh9Ysw5EWgU5URTDweNT2HDoPim2cZFGSYFjT1WYXyc1bKo6bn0OHQ24jQJPYhw01QmJHh96Om59DhUIuITqFKQZcRugwwRxkmUArsnawvviaHPgFKIiLSg7zcIgy3iIzlSaFEZGSppcajpufQ0RqxE4D0PAPd3O5YRO8V4suvyaGPQzIWEZKIqGYzIKzqeJ6RsURI/eJ+xAUg04j0PEfoXiNpDCrpWZFBlwglopRFlPKkcvT0HDocqhEhw81yBiypBCAo6ddrFAChe/U84gJQ8yxzaMZltSZnVDPtQ2d06uY62D3LU0MWEXQzOhHsTnPQLQQYtGWb7mKfHmIvCqoWBxNgsbG+ndpgj4grQHbYaX6VvKhqNSVEIjqVJzv4etD0HDp+1wDqvgBBq0ZUZejUHsEOQF0jTg21jYCwnnxTMwrVvI0KNfn0iDg/ZBGhmZo2bmWGNUnUy1JOzyyvAskI6NTyCFLf3g85KLAIwy22lPNbrMmhj+0aTQCga4/b27V9yjXi/NDdrpHZF54T0EJlbrmFR8TZoTuHqlu/+GyJ5s6w0tXW9Ig4M7TTiC0Oas25iUdNKjOeWV4AWqvPLWeY2fRgd9bBGiUeEWeG7rvzoVmToUVJXkd69XkJaFdNmBRwn0/eFyGuEaeH7lxsgp1zrpLRipD9WblHxKmhf/+myyqMNmZYxcMj4jLQ+psuzeZPtoMvaqc2QzZv89usyaHPgGpPfuqB1Afd91AR/DT8ilDqF9k2DJE+qDVObK00321NDr3nepNHtF46a6OzO8DPNS4C/V1rZMyf3JsS3h9xGUj8n8kccsghhxxyyKH/hP4AMYDIAC0rO+4AAAAASUVORK5CYII=" alt="Kod QR do tej strony">
-    </main>
-    <footer>Ramzi – przyjaciele</footer>
+  <!-- Nagłówek -->
+<header class="topbar">
+    <h1>Głębokie znaczenie modlitwy „Zdrowaś Maryjo”</h1>
+    <button class="mode-btn" id="modeBtn" aria-label="Przełącz tryb">🌓 Dzień / Noc</button>
+  </header>
+
+<!-- Pasek nawigacyjny (drugi, u góry) -->
+<nav class="nav-bar">
+  <a href="https://majstered.github.io/strazopis.github.io/" class="nav-btn">📿 Różaniec</a>
+  <a href="nowa2.html" class="nav-btn">Nowenna 2</a>
+</nav>
+
+  
+  <main class="wrap">
+
+
+
+
+
+    <!-- MODLITWA FATIMSKA -->
+    <section class="card" id="modlitwa-fatimska">
+      <h2 class="section-title">(Pozdrowienie anielskie)</h2>
+      <div class="prayer-box" aria-label="Modlitwa fatimska">
+ Wielu ludzi zna na pamięć treść modlitwy „Zdrowaś Maryjo”. Wypowiada ją codziennie, czasem dziesiątki razy. 
+        Ale niewielu do końca rozumie jej głębię i niewyobrażalną moc, która płynie z jej treści i znaczenia.       
+      </div>
+    </section>
+
+<section class="card" id="modlitwa-fatimska">
+      <h2 class="section-title">„Zdrowaś, łaski pełna, Pan z Tobą”</h2>
+      <div class="prayer-box" aria-label="Modlitwa fatimska">
+– słowa anioła Gabriela (Łk 1,28)
+Bóg sam posyła swego posłańca, by ogłosił Maryi, że jest pełna łaski i że Jego obecność będzie zawsze przy Niej.
+      </div>
+    </section>  
+
+
+    <section class="card" id="modlitwa-fatimska">
+      <h2 class="section-title">„Błogosławiona jesteś między niewiastami”</h2>
+      <div class="prayer-box" aria-label="Modlitwa fatimska">
+– słowa Elżbiety, napełnionej Duchem Świętym (Łk 1,42)
+To okrzyk radości wobec Tej, która niesie w sobie Boga.
+      </div>
+    </section> 
+
+    <section class="card" id="modlitwa-fatimska">
+      <h2 class="section-title">„Błogosławiony owoc żywota Twojego – Jezus”</h2>
+      <div class="prayer-box" aria-label="Modlitwa fatimska">
+W samym sercu modlitwy wypowiadamy imię Zbawiciela. To jak pocałunek złożony na Jego imieniu w łonie Maryi, 
+        tak jakbyśmy stali obok Elżbiety, która z uniesieniem wołała:
+„A skądże mi to, że Matka mojego Pana przychodzi do mnie?” (Łk 1,43)
+      </div>
+    </section>
+
+    
+    <!-- CHWALEBNE -->
+    <section class="card" id="chwalebne">
+      <h2 class="section-title">Tajemnice chwalebne (środy i niedziele)</h2>
+      <div class="list-box" aria-label="Tajemnice chwalebne — lista">
+        <ul>
+          <li>Zmartwychwstanie Pana Jezusa</li>
+          <li>Wniebowstąpienie</li>
+          <li>Zesłanie Ducha Świętego</li>
+          <li>Wniebowzięcie Maryi</li>
+          <li>Ukoronowanie Matki Bożej na Królową nieba i ziemi</li>
+        </ul>
+      </div>
+    </section>
+
+<!-- RADOSNE -->
+<section class="card" id="radosne">
+  <div class="list-box" aria-label="Tajemnice radosne — lista">
+    <!-- puste wnętrze -->
+  </div>
+</section>
+
+<style>
+#radosne {
+  border: 2px solid #001a44; /* granatowa ramka */
+  border-radius: 12px;
+  padding: 40px;             /* odstęp wewnątrz ramki */
+  margin: 20px 0;
+  background: none;
+}
+
+#radosne .list-box {
+  all: unset;                /* usuwa style niebieskiego paska */
+  display: block;
+}
+</style>
+
+
+
+
+  </main>
+<!-- Pasek nawigacyjny -->
+<nav class="nav-bar">
+  <a href="index.html" class="nav-btn">🏠 Strona główna</a>
+  <a href="rozaniec.html" class="nav-btn">📿 Różaniec</a>
+  <a href="modlitwy.html" class="nav-btn">🙏 Modlitwy</a>
+  <a href="kontakt.html" class="nav-btn">📬 Kontakt</a>
+</nav>
+
+<style>
+.nav-bar {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.nav-btn {
+  display: inline-block;
+  margin: 8px;
+  padding: 10px 20px;
+  background: var(--blue, #0a4fa3); /* korzysta z Twojej zmiennej koloru */
+  color: #fff;
+  font-size: 16px;
+  border-radius: 12px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: background 0.3s, transform 0.2s;
+}
+
+.nav-btn:hover {
+  background: #083d80;
+  transform: translateY(-2px);
+}
+</style>
+
+  <script>
+    // Tryb Dzień/Noc z pamięcią
+    (function(){
+      const key = 'theme-preference';
+      const btn = document.getElementById('modeBtn');
+
+      function applyTheme(val){
+        document.documentElement.classList.toggle('dark', val === 'dark');
+      }
+      function currentTheme(){
+        return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+      }
+
+      const saved = localStorage.getItem(key);
+      if(saved){ applyTheme(saved); }
+      else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+        applyTheme('dark');
+      }
+
+      btn.addEventListener('click', ()=>{
+        const next = currentTheme() === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+        localStorage.setItem(key, next);
+      });
+    })();
+
+
+  </script>
 </body>
 </html>
