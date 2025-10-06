@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Wybór drogi • Start</title>
-  <meta name="description" content="Strona startowa z trzema ścieżkami: A, B i C – w naszym niebieskim stylu."/>
+  <meta name="description" content="Strona startowa z czterema ścieżkami: A, B, C i D – w naszym niebieskim stylu."/>
   <style>
     /* ===== ZMIENNE / MOTYW ===== */
     :root{
@@ -57,7 +57,7 @@
     /* ===== SEKCJE PASKÓW ===== */
     main{flex:1; display:grid; place-items:stretch}
     .tiles{ display:grid; gap:clamp(36px, 6vh, 80px); height:100%;}
-    /* Na dużych wysokościach trzy równe pasy wypełniają ekran */
+    /* Na dużych wysokościach cztery równe pasy wypełniają ekran */
     @media (min-height:700px){
       .tiles{ grid-template-rows: 1fr 1fr 1fr 1fr; }
     }
@@ -85,6 +85,7 @@
 
     /* Cały kafel klikalny */
     .tile a.stretch{ position:absolute; inset:0; z-index:2; }
+    .tile a.stretch:focus{ outline:3px solid #fff8; outline-offset:-3px; }
 
     footer{ color:var(--muted); font-size:.9rem; margin-top:18px; text-align:center; }
   </style>
@@ -101,9 +102,6 @@
     <main class="wrap" aria-label="Wybór ścieżki">
       <div class="tiles" role="list">
 
-
-
-        
         <!-- A -->
         <section class="tile" role="listitem" aria-labelledby="hA">
           <a class="stretch" href="A.html" aria-label="Przejdź do ścieżki A: Wierzę w jednego Boga"></a>
@@ -136,11 +134,11 @@
 
         <!-- D -->
         <section class="tile" role="listitem" aria-labelledby="hD">
-          <a class="stretch" href="#" onclick="return exitNow(event)" aria-label="Wyjście: to nie dla mnie"></a>
+          <a class="stretch" href="#" role="button" tabindex="0" onclick="return exitNow(event)" aria-label="Wyjście: to nie dla mnie"></a>
           <div class="tile-content">
             <div class="kicker">- D -</div>
             <h2 id="hD">Wychodzę, to pomyłka – sorry, to nie dla mnie</h2>
-            <p>Rozumiem, że każdy ma swoją drogę i tempo dojrzewania duchowego. 
+            <p>Rozumiem, że każdy ma swoją drogę i tempo dojrzewania duchowego.
               <span class="note">(Jeśli chcesz wrócić później, drzwi są zawsze otwarte)</span>
             </p>
           </div>
@@ -148,56 +146,80 @@
 
       </div>
 
-<footer>
-Podlinkuj docelowe strony pod A.html, B.html i C.html. Teksty i ciekawostki możesz edytować bez zmiany układu.
-</footer>
-</main>
-</div>
+      <footer>
+        Podlinkuj docelowe strony pod A.html, B.html i C.html. Teksty i ciekawostki możesz edytować bez zmiany układu.
+      </footer>
+    </main>
+  </div>
 
+  <script>
+    // ===== Tryb dzień/noc z pamięcią w localStorage =====
+    const modeBtn = document.getElementById('modeBtn');
+    const LS_KEY = 'theme-pref';
+    const apply = (m)=>{
+      document.body.classList.toggle('dark', m==='dark');
+      modeBtn.setAttribute('aria-pressed', m==='dark');
+    }
+    const saved = localStorage.getItem(LS_KEY);
+    if(saved){ apply(saved); }
+    modeBtn.addEventListener('click', ()=>{
+      const now = document.body.classList.contains('dark') ? 'light' : 'dark';
+      localStorage.setItem(LS_KEY, now);
+      apply(now);
+    });
 
-<script>
-// ===== Tryb dzień/noc z pamięcią w localStorage =====
-const modeBtn = document.getElementById('modeBtn');
-const LS_KEY = 'theme-pref';
-const apply = (m)=>{
-document.body.classList.toggle('dark', m==='dark');
-modeBtn.setAttribute('aria-pressed', m==='dark');
-}
-const saved = localStorage.getItem(LS_KEY);
-if(saved){ apply(saved); }
-modeBtn.addEventListener('click', ()=>{
-const now = document.body.classList.contains('dark') ? 'light' : 'dark';
-localStorage.setItem(LS_KEY, now);
-apply(now);
-});
-</script>
-<script>
-// Funkcja zamykania karty z kilkoma próbami i miękkim fallbackiem
-function exitNow(e){
-if(e && e.preventDefault) e.preventDefault();
-let closed = false;
+    // Dostępność: Enter/Space na kafelku D
+    document.addEventListener('keydown', (e)=>{
+      if(e.target && e.target.getAttribute && e.target.getAttribute('role')==='button' && (e.key==='Enter' || e.key===' ')){
+        e.preventDefault(); exitNow(e);
+      }
+    });
+  </script>
+  <script>
+    // Funkcja zamykania karty z kilkoma próbami i miękkim fallbackiem
+    function exitNow(e){
+      if(e && e.preventDefault) e.preventDefault();
+      let closed = false;
 
+      // 1) Jeśli karta została otwarta przez skrypt (ma opener) – zamknij
+      try{
+        if(window.opener){ window.close(); closed = true; }
+      }catch(_){ }
 
-// 1) Jeśli karta została otwarta przez skrypt (ma opener) – zamknij
-try{
-if(window.opener){ window.close(); closed = true; }
-}catch(_){ }
+      // 2) Safari/Chrome czasem pozwalają na self-open + close
+      if(!closed){
+        try{ window.open('', '_self'); window.close(); closed = true; }catch(_){ }
+      }
 
+      // 3) Jeśli jest historia – wróć (np. weszli z innej podstrony), a po chwili wyczyść
+      if(!closed && history.length > 1){
+        history.back();
+        setTimeout(()=>{ try{ location.replace('about:blank'); }catch(_){} }, 250);
+        return false;
+      }
 
-// 2) Safari/Chrome czasem pozwalają na self-open + close
-if(!closed){
-try{ window.open('', '_self'); window.close(); closed = true; }catch(_){ }
-}
-
-
-// 3) Jeśli jest historia – wróć (np. weszli z innej podstrony), a po chwili wyczyść
-if(!closed && history.length > 1){
-history.back();
-setTimeout(()=>{ try{ location.replace('about:blank'); }catch(_){} }, 250);
-return false;
-}
-
-
-// 4) Wyczyść kartę: zamień treść na lekką stronę do zamknięcia
-if(!closed){
-const goodbye = `data:text/html;charset=utf-8,`+
+      // 4) Wyczyść kartę: zamień treść na lekką stronę do zamknięcia
+      if(!closed){
+        const goodbye = `data:text/html;charset=utf-8,`+
+          encodeURIComponent(`<!doctype html><meta name=viewport content='width=device-width,initial-scale=1' />
+            <title>Do zobaczenia 👋</title>
+            <style>
+              html,body{height:100%}
+              body{margin:0;display:grid;place-items:center;font:16px system-ui;background:#fff;color:#222}
+              .box{max-width:660px;padding:24px;border:1px solid #e6e6ea;border-radius:16px;box-shadow:0 10px 32px rgba(0,0,0,.08);text-align:center}
+              h1{margin:0 0 .4em;font-size:22px}
+              p{margin:.3em 0;color:#444}
+              button{margin-top:12px;padding:10px 14px;border-radius:10px;border:1px solid #ddd;cursor:pointer;background:#fff}
+            </style>
+            <div class='box'>
+              <h1>Dzięki za wizytę!</h1>
+              <p>Przeglądarka nie pozwoliła zamknąć karty automatycznie. Możesz ją teraz bezpiecznie zamknąć.</p>
+              <button onclick='window.close()'>Zamknij kartę</button>
+            </div>`);
+        location.href = goodbye;
+      }
+      return false;
+    }
+  </script>
+</body>
+</html>
