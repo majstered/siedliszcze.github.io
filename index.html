@@ -56,10 +56,10 @@
 
     /* ===== SEKCJE PASKÓW ===== */
     main{flex:1; display:grid; place-items:stretch}
-    .tiles{ display:grid; gap:16px; height:100%;}
+    .tiles{ display:grid; gap:clamp(36px, 6vh, 80px); height:100%;}
     /* Na dużych wysokościach trzy równe pasy wypełniają ekran */
     @media (min-height:700px){
-      .tiles{ grid-template-rows: 1fr 1fr 1fr; }
+      .tiles{ grid-template-rows: 1fr 1fr 1fr 1fr; }
     }
 
     .tile{
@@ -77,10 +77,10 @@
     }
     .tile:hover{ transform:translateY(-1px); }
 
-    .tile-content{ width:min(100%,820px); padding:clamp(18px,3vw,36px); text-align:center; }
+    .tile-content{ width:min(100%,820px); padding:clamp(16px,2.5vw,28px); text-align:center; }
     .kicker{ font-size:.95rem; letter-spacing:.08em; opacity:.9; text-transform:uppercase; }
-    .tile h2{ margin:.2em 0 .4em; font-size:clamp(1.6rem, 2.8vw + .6rem, 2.4rem); line-height:1.15; }
-    .tile p{ margin:0 auto; max-width:70ch; font-size:clamp(1rem, .7vw + .8rem, 1.2rem); opacity:.98; }
+    .tile h2{ margin:.2em 0 .4em; font-size:clamp(1.4rem, 2vw + .5rem, 2rem); line-height:1.15; }
+    .tile p{ margin:0 auto; max-width:70ch; font-size:clamp(.95rem, .6vw + .7rem, 1.05rem); opacity:.98; }
     .note{ display:block; margin-top:.6rem; font-size:.95rem; opacity:.85; font-style:italic; }
 
     /* Cały kafel klikalny */
@@ -93,7 +93,7 @@
   <div class="wrap">
     <header aria-label="Nagłówek">
       <div class="bar">
-        <div class="title">🌿 Start • Trzy ścieżki</div>
+        <div class="title">Znajdź dla siebie opcję i zapraszam do środka 👇</div>
         <button class="mode-btn" id="modeBtn" type="button" aria-pressed="false" title="Przełącz: dzień / noc">☀️ Dzień / 🌙 Noc</button>
       </div>
     </header>
@@ -101,6 +101,18 @@
     <main class="wrap" aria-label="Wybór ścieżki">
       <div class="tiles" role="list">
 
+<!-- Wstępne zaproszenie -->
+<div class="intro" style="
+  text-align:center;
+  margin-bottom:clamp(28px,4vh,60px);
+  font-size:clamp(1.2rem,1vw + 1rem,1.6rem);
+  font-weight:600;
+  color:var(--ink);
+">
+  Znajdź dla siebie opcję i zapraszam do środka 👇
+</div>
+
+        
         <!-- A -->
         <section class="tile" role="listitem" aria-labelledby="hA">
           <a class="stretch" href="A.html" aria-label="Przejdź do ścieżki A: Wierzę w jednego Boga"></a>
@@ -123,145 +135,23 @@
 
         <!-- C -->
         <section class="tile" role="listitem" aria-labelledby="hC">
-          <a class="stretch" href="C.html" aria-label="Przejdź do ścieżki C: Wierzę w inne religie"></a>
+          <a class="stretch" href="C.html" aria-label="Przejdź do ścieżki C: Wierzę w inne religie niż katolickie"></a>
           <div class="tile-content">
             <div class="kicker">C</div>
             <h2 id="hC">Wierzę w inne religie niż katolickie</h2>
-            <p>Wierzę w Ufo, kota i lalkę Barbie. <span class="note">(miejsce na Twoje doprecyzowanie tej ścieżki)</span></p>
+            <p>Wierzę w Ufo, kota i lalkę Barbie.</p>
           </div>
         </section>
 
-      </div>
-<!doctype html>
-<html lang="pl">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Wybór drogi • Start</title>
-  <meta name="description" content="Strona startowa z trzema ścieżkami: A, B i C – w naszym niebieskim stylu."/>
-  <style>
-    /* ===== ZMIENNE / MOTYW ===== */
-    :root{
-      --bg:#fbfaf7;
-      --ink:#1f2430;
-      --muted:#667085;
-      --blue:#0a4fa3;           /* nasz maryjny niebieski */
-      --blue-ink:#ffffff;       /* tekst na niebieskim */
-      --card:#ffffff;
-      --border:#e6e6ea;
-      --radius:20px;
-      --shadow:0 10px 32px rgba(0,0,0,.08);
-      --maxw:1100px;
-    }
-    .dark{
-      --bg:#0f1420;
-      --ink:#e7ecf6;
-      --muted:#aab3c6;
-      --blue:#0b3d7a;
-      --blue-ink:#ffffff;
-      --card:#141824;
-      --border:#263049;
-      --shadow:0 10px 40px rgba(0,0,0,.4);
-    }
-
-    /* ===== RESET / BAZA ===== */
-    *,*::before,*::after{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial,"Apple Color Emoji","Segoe UI Emoji";
-      background:var(--bg); color:var(--ink); line-height:1.5;
-      display:flex; flex-direction:column; min-height:100vh;
-    }
-    a{color:inherit; text-decoration:none}
-    .wrap{width:min(100%,var(--maxw)); margin-inline:auto; padding:clamp(12px,2vw,24px)}
-
-    /* ===== NAGŁÓWEK ===== */
-    header{position:sticky; top:0; z-index:20; backdrop-filter:saturate(180%) blur(6px)}
-    .bar{
-      display:flex; align-items:center; justify-content:space-between;
-      background:color-mix(in oklab, var(--card) 80%, transparent);
-      border:1px solid var(--border); border-radius:16px; padding:10px 14px; box-shadow:var(--shadow);
-    }
-    .title{font-weight:700; letter-spacing:.2px}
-    .mode-btn{
-      appearance:none; border:1px solid var(--border); background:var(--card); color:var(--ink);
-      padding:8px 12px; border-radius:12px; cursor:pointer; font-weight:600;
-    }
-
-    /* ===== SEKCJE PASKÓW ===== */
-    main{flex:1; display:grid; place-items:stretch}
-    .tiles{ display:grid; gap:16px; height:100%;}
-    /* Na dużych wysokościach trzy równe pasy wypełniają ekran */
-    @media (min-height:700px){
-      .tiles{ grid-template-rows: 1fr 1fr 1fr; }
-    }
-
-    .tile{
-      position:relative; overflow:hidden; border-radius:var(--radius);
-      background:var(--blue); color:var(--blue-ink);
-      box-shadow:var(--shadow);
-      display:flex; align-items:center; justify-content:center;
-      isolation:isolate; /* dla bezpiecznego overlay */
-    }
-    .tile::after{ /* subtelny dekor falowy */
-      content:""; position:absolute; inset:auto -20% -35% -20%; height:60%;
-      background:linear-gradient( to top, rgba(255,255,255,.18), rgba(255,255,255,0) 60% );
-      transform:skewY(-6deg);
-      pointer-events:none;
-    }
-    .tile:hover{ transform:translateY(-1px); }
-
-    .tile-content{ width:min(100%,820px); padding:clamp(18px,3vw,36px); text-align:center; }
-    .kicker{ font-size:.95rem; letter-spacing:.08em; opacity:.9; text-transform:uppercase; }
-    .tile h2{ margin:.2em 0 .4em; font-size:clamp(1.6rem, 2.8vw + .6rem, 2.4rem); line-height:1.15; }
-    .tile p{ margin:0 auto; max-width:70ch; font-size:clamp(1rem, .7vw + .8rem, 1.2rem); opacity:.98; }
-    .note{ display:block; margin-top:.6rem; font-size:.95rem; opacity:.85; font-style:italic; }
-
-    /* Cały kafel klikalny */
-    .tile a.stretch{ position:absolute; inset:0; z-index:2; }
-
-    footer{ color:var(--muted); font-size:.9rem; margin-top:18px; text-align:center; }
-  </style>
-</head>
-<body>
-  <div class="wrap">
-    <header aria-label="Nagłówek">
-      <div class="bar">
-        <div class="title">🌿 Start • Trzy ścieżki</div>
-        <button class="mode-btn" id="modeBtn" type="button" aria-pressed="false" title="Przełącz: dzień / noc">☀️ Dzień / 🌙 Noc</button>
-      </div>
-    </header>
-
-    <main class="wrap" aria-label="Wybór ścieżki">
-      <div class="tiles" role="list">
-
-        <!-- A -->
-        <section class="tile" role="listitem" aria-labelledby="hA">
-          <a class="stretch" href="A.html" aria-label="Przejdź do ścieżki A: Wierzę w jednego Boga"></a>
+        <!-- D -->
+        <section class="tile" role="listitem" aria-labelledby="hD">
+          <a class="stretch" href="#" onclick="return exitNow(event)" aria-label="Wyjście: to nie dla mnie"></a>
           <div class="tile-content">
-            <div class="kicker">A</div>
-            <h2 id="hA">Wierzę w jednego Boga</h2>
-            <p>Uważam się za katolika i chcę zgłębiać swoją duchową wiedzę, aby dostać się do nieba. <span class="note">(ciekawostka dla niewierzących)</span></p>
-          </div>
-        </section>
-
-        <!-- B -->
-        <section class="tile" role="listitem" aria-labelledby="hB">
-          <a class="stretch" href="B.html" aria-label="Przejdź do ścieżki B: W nic nie wierzę"></a>
-          <div class="tile-content">
-            <div class="kicker">B</div>
-            <h2 id="hB">W nic nie wierzę</h2>
-            <p>Wierzę, że nic nie ma, wszystkie siły nadprzyrodzone są wymyślone. <span class="note">(ciekawostka dla wierzących)</span></p>
-          </div>
-        </section>
-
-        <!-- C -->
-        <section class="tile" role="listitem" aria-labelledby="hC">
-          <a class="stretch" href="C.html" aria-label="Przejdź do ścieżki C: Wierzę w inne religie"></a>
-          <div class="tile-content">
-            <div class="kicker">C</div>
-            <h2 id="hC">Wierzę w inne religie niż katolickie</h2>
-            <p>Wierzę w Ufo, kota i lalkę Barbie. <span class="note">(miejsce na Twoje doprecyzowanie tej ścieżki)</span></p>
+            <div class="kicker">D</div>
+            <h2 id="hD">Wychodzę, to pomyłka – sorry, to nie dla mnie</h2>
+            <p>Rozumiem, że każdy ma swoją drogę i tempo dojrzewania duchowego. 
+              <span class="note">(Jeśli chcesz wrócić później, drzwi są zawsze otwarte)</span>
+            </p>
           </div>
         </section>
 
@@ -289,30 +179,33 @@
       apply(now);
     });
   </script>
-</body>
-</html>
-
-      <footer>
-        Podlinkuj docelowe strony pod A.html, B.html i C.html. Teksty i ciekawostki możesz edytować bez zmiany układu.
-      </footer>
-    </main>
-  </div>
-
   <script>
-    // ===== Tryb dzień/noc z pamięcią w localStorage =====
-    const modeBtn = document.getElementById('modeBtn');
-    const LS_KEY = 'theme-pref';
-    const apply = (m)=>{
-      document.body.classList.toggle('dark', m==='dark');
-      modeBtn.setAttribute('aria-pressed', m==='dark');
+    // Funkcja zamykania karty z kilkoma próbami i miękkim fallbackiem
+    function exitNow(e){
+      if(e && e.preventDefault) e.preventDefault();
+      let closed = false;
+      try{ window.open('', '_self'); window.close(); closed = true; }catch(_){ }
+      if(!closed){
+        try{ location.replace('about:blank'); closed = true; }catch(_){ }
+      }
+      if(!closed){
+        const overlay = document.createElement('div');
+        overlay.setAttribute('role','dialog');
+        overlay.style.position='fixed';
+        overlay.style.inset='0';
+        overlay.style.display='grid';
+        overlay.style.placeItems='center';
+        overlay.style.background='var(--bg)';
+        overlay.style.color='var(--ink)';
+        overlay.innerHTML = '<div class="wrap" style="text-align:center">\
+          <h2>Dzięki za wizytę! 👋</h2>\
+          <p>Ta karta mogła nie zamknąć się automatycznie. Zamknij ją proszę ręcznie.</p>\
+        </div>';
+        document.body.innerHTML = '';
+        document.body.appendChild(overlay);
+      }
+      return false;
     }
-    const saved = localStorage.getItem(LS_KEY);
-    if(saved){ apply(saved); }
-    modeBtn.addEventListener('click', ()=>{
-      const now = document.body.classList.contains('dark') ? 'light' : 'dark';
-      localStorage.setItem(LS_KEY, now);
-      apply(now);
-    });
   </script>
 </body>
 </html>
