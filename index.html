@@ -108,7 +108,7 @@
         <section class="tile" role="listitem" aria-labelledby="hA">
           <a class="stretch" href="A.html" aria-label="Przejdź do ścieżki A: Wierzę w jednego Boga"></a>
           <div class="tile-content">
-            <div class="kicker">A</div>
+            <div class="kicker">- A -</div>
             <h2 id="hA">Wierzę w jednego Boga</h2>
             <p>Uważam się za katolika i chcę zgłębiać swoją duchową wiedzę, aby dostać się do nieba. <span class="note">(Zapraszamy też niewierzących)</span></p>
           </div>
@@ -118,7 +118,7 @@
         <section class="tile" role="listitem" aria-labelledby="hB">
           <a class="stretch" href="B.html" aria-label="Przejdź do ścieżki B: W nic nie wierzę"></a>
           <div class="tile-content">
-            <div class="kicker">B</div>
+            <div class="kicker">- B -</div>
             <h2 id="hB">W nic nie wierzę</h2>
             <p>Wierzę, że nic nie ma, wszystkie siły nadprzyrodzone są wymyślone. <span class="note">(ciekawostka dla wierzących)</span></p>
           </div>
@@ -128,7 +128,7 @@
         <section class="tile" role="listitem" aria-labelledby="hC">
           <a class="stretch" href="C.html" aria-label="Przejdź do ścieżki C: Wierzę w inne religie niż katolickie"></a>
           <div class="tile-content">
-            <div class="kicker">C</div>
+            <div class="kicker">- C -</div>
             <h2 id="hC">Wierzę w inne religie niż katolickie</h2>
             <p>Wierzę w Ufo, kota i lalkę Barbie.</p>
           </div>
@@ -138,7 +138,7 @@
         <section class="tile" role="listitem" aria-labelledby="hD">
           <a class="stretch" href="#" onclick="return exitNow(event)" aria-label="Wyjście: to nie dla mnie"></a>
           <div class="tile-content">
-            <div class="kicker">D</div>
+            <div class="kicker">- D -</div>
             <h2 id="hD">Wychodzę, to pomyłka – sorry, to nie dla mnie</h2>
             <p>Rozumiem, że każdy ma swoją drogę i tempo dojrzewania duchowego. 
               <span class="note">(Jeśli chcesz wrócić później, drzwi są zawsze otwarte)</span>
@@ -148,55 +148,56 @@
 
       </div>
 
-      <footer>
-        Podlinkuj docelowe strony pod A.html, B.html i C.html. Teksty i ciekawostki możesz edytować bez zmiany układu.
-      </footer>
-    </main>
-  </div>
+<footer>
+Podlinkuj docelowe strony pod A.html, B.html i C.html. Teksty i ciekawostki możesz edytować bez zmiany układu.
+</footer>
+</main>
+</div>
 
-  <script>
-    // ===== Tryb dzień/noc z pamięcią w localStorage =====
-    const modeBtn = document.getElementById('modeBtn');
-    const LS_KEY = 'theme-pref';
-    const apply = (m)=>{
-      document.body.classList.toggle('dark', m==='dark');
-      modeBtn.setAttribute('aria-pressed', m==='dark');
-    }
-    const saved = localStorage.getItem(LS_KEY);
-    if(saved){ apply(saved); }
-    modeBtn.addEventListener('click', ()=>{
-      const now = document.body.classList.contains('dark') ? 'light' : 'dark';
-      localStorage.setItem(LS_KEY, now);
-      apply(now);
-    });
-  </script>
-  <script>
-    // Funkcja zamykania karty z kilkoma próbami i miękkim fallbackiem
-    function exitNow(e){
-      if(e && e.preventDefault) e.preventDefault();
-      let closed = false;
-      try{ window.open('', '_self'); window.close(); closed = true; }catch(_){ }
-      if(!closed){
-        try{ location.replace('about:blank'); closed = true; }catch(_){ }
-      }
-      if(!closed){
-        const overlay = document.createElement('div');
-        overlay.setAttribute('role','dialog');
-        overlay.style.position='fixed';
-        overlay.style.inset='0';
-        overlay.style.display='grid';
-        overlay.style.placeItems='center';
-        overlay.style.background='var(--bg)';
-        overlay.style.color='var(--ink)';
-        overlay.innerHTML = '<div class="wrap" style="text-align:center">\
-          <h2>Dzięki za wizytę! 👋</h2>\
-          <p>Ta karta mogła nie zamknąć się automatycznie. Zamknij ją proszę ręcznie.</p>\
-        </div>';
-        document.body.innerHTML = '';
-        document.body.appendChild(overlay);
-      }
-      return false;
-    }
-  </script>
-</body>
-</html>
+
+<script>
+// ===== Tryb dzień/noc z pamięcią w localStorage =====
+const modeBtn = document.getElementById('modeBtn');
+const LS_KEY = 'theme-pref';
+const apply = (m)=>{
+document.body.classList.toggle('dark', m==='dark');
+modeBtn.setAttribute('aria-pressed', m==='dark');
+}
+const saved = localStorage.getItem(LS_KEY);
+if(saved){ apply(saved); }
+modeBtn.addEventListener('click', ()=>{
+const now = document.body.classList.contains('dark') ? 'light' : 'dark';
+localStorage.setItem(LS_KEY, now);
+apply(now);
+});
+</script>
+<script>
+// Funkcja zamykania karty z kilkoma próbami i miękkim fallbackiem
+function exitNow(e){
+if(e && e.preventDefault) e.preventDefault();
+let closed = false;
+
+
+// 1) Jeśli karta została otwarta przez skrypt (ma opener) – zamknij
+try{
+if(window.opener){ window.close(); closed = true; }
+}catch(_){ }
+
+
+// 2) Safari/Chrome czasem pozwalają na self-open + close
+if(!closed){
+try{ window.open('', '_self'); window.close(); closed = true; }catch(_){ }
+}
+
+
+// 3) Jeśli jest historia – wróć (np. weszli z innej podstrony), a po chwili wyczyść
+if(!closed && history.length > 1){
+history.back();
+setTimeout(()=>{ try{ location.replace('about:blank'); }catch(_){} }, 250);
+return false;
+}
+
+
+// 4) Wyczyść kartę: zamień treść na lekką stronę do zamknięcia
+if(!closed){
+const goodbye = `data:text/html;charset=utf-8,`+
