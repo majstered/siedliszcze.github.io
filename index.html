@@ -3,300 +3,316 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TAJEMNICE RÓŻAŃCA ŚWIĘTEGO</title>
-  <link rel="icon" type="image/png" href="aplikacje.png">
+  <title>Wybór drogi • Start</title>
+  <meta name="description" content="Strona startowa z trzema ścieżkami: A, B i C – w naszym niebieskim stylu."/>
   <style>
-    /* Zmiennie i bazowe style */
+    /* ===== ZMIENNE / MOTYW ===== */
     :root{
       --bg:#fbfaf7;
-      --card:#ffffff;
       --ink:#1f2430;
       --muted:#667085;
-      --blue:#0a4fa3;          /* tło niebieskiego bloku */
+      --blue:#0a4fa3;           /* nasz maryjny niebieski */
+      --blue-ink:#ffffff;       /* tekst na niebieskim */
+      --card:#ffffff;
       --border:#e6e6ea;
-      --radius:16px;
-      --shadow:0 8px 28px rgba(0,0,0,.08);
-      --accent:#1f5fbf;
+      --radius:20px;
+      --shadow:0 10px 32px rgba(0,0,0,.08);
+      --maxw:1100px;
     }
     .dark{
-      --bg:#10131a;
-      --card:#141824;
+      --bg:#0f1420;
       --ink:#e7ecf6;
       --muted:#aab3c6;
       --blue:#0b3d7a;
+      --blue-ink:#ffffff;
+      --card:#141824;
       --border:#263049;
-      --shadow:0 8px 28px rgba(0,0,0,.45);
-      --accent:#7fb0ff;
+      --shadow:0 10px 40px rgba(0,0,0,.4);
     }
 
+    /* ===== RESET / BAZA ===== */
+    *,*::before,*::after{box-sizing:border-box}
     html,body{height:100%}
     body{
-      margin:0;
-      font-family: ui-serif, Georgia, "Times New Roman", serif;
-      background:var(--bg);
-      color:var(--ink);
-      line-height:1.6;
+      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial,"Apple Color Emoji","Segoe UI Emoji";
+      background:var(--bg); color:var(--ink); line-height:1.5;
+      display:flex; flex-direction:column; min-height:100vh;
     }
+    a{color:inherit; text-decoration:none}
+    .wrap{width:min(100%,var(--maxw)); margin-inline:auto; padding:clamp(12px,2vw,24px)}
 
-    /* Topbar */
-    .topbar{
-      position:sticky; top:0; z-index:10;
-      background:var(--card);
-      border-bottom:1px solid var(--border);
+    /* ===== NAGŁÓWEK ===== */
+    header{position:sticky; top:0; z-index:20; backdrop-filter:saturate(180%) blur(6px)}
+    .bar{
       display:flex; align-items:center; justify-content:space-between;
-      padding:14px 18px;
+      background:color-mix(in oklab, var(--card) 80%, transparent);
+      border:1px solid var(--border); border-radius:16px; padding:10px 14px; box-shadow:var(--shadow);
     }
-    .topbar h1{
-      font-size: clamp(18px, 2.6vw, 28px);
-      margin:0;
-      letter-spacing:.2px;
-    }
+    .title{font-weight:700; letter-spacing:.2px}
     .mode-btn{
-      border:1px solid var(--border);
-      background:transparent;
-      color:var(--ink);
-      border-radius:999px;
-      padding:8px 12px;
-      cursor:pointer;
+      appearance:none; border:1px solid var(--border); background:var(--card); color:var(--ink);
+      padding:8px 12px; border-radius:12px; cursor:pointer; font-weight:600;
     }
 
-    /* Wrapper */
-    .wrap{
-      max-width: 1050px;
-      margin: 28px auto;
-      padding: 0 16px 56px;
+    /* ===== SEKCJE PASKÓW ===== */
+    main{flex:1; display:grid; place-items:stretch}
+    .tiles{ display:grid; gap:16px; height:100%;}
+    /* Na dużych wysokościach trzy równe pasy wypełniają ekran */
+    @media (min-height:700px){
+      .tiles{ grid-template-rows: 1fr 1fr 1fr; }
     }
 
-    /* Karty */
-    .card{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
+    .tile{
+      position:relative; overflow:hidden; border-radius:var(--radius);
+      background:var(--blue); color:var(--blue-ink);
       box-shadow:var(--shadow);
-      padding: 18px;
-      margin: 18px 0 28px;
+      display:flex; align-items:center; justify-content:center;
+      isolation:isolate; /* dla bezpiecznego overlay */
     }
-    .section-title{
-      font-size: clamp(18px, 2.2vw, 24px);
-      margin: 0 0 14px;
-      border-left:6px solid var(--accent);
-      padding-left:10px;
+    .tile::after{ /* subtelny dekor falowy */
+      content:""; position:absolute; inset:auto -20% -35% -20%; height:60%;
+      background:linear-gradient( to top, rgba(255,255,255,.18), rgba(255,255,255,0) 60% );
+      transform:skewY(-6deg);
+      pointer-events:none;
     }
+    .tile:hover{ transform:translateY(-1px); }
 
-    /* Niebieskie pole na treść/listy */
-    .list-box,
-    .prayer-box{
-      background: var(--blue);
-      color: #fff;
-      border-radius: calc(var(--radius) - 4px);
-      padding: clamp(14px, 3vw, 24px);
-    }
-    .list-box ul{
-      margin:0;
-      padding-left: 1.2rem;
-      list-style: disc inside;
-    }
-    .list-box li,
-    .list-box p,
-    .prayer-box p{
-      font-size: clamp(16px, 2.1vw, 20px);
-      margin:.35rem 0;
-    }
-    .list-box li::marker{ color:#fff; }
+    .tile-content{ width:min(100%,820px); padding:clamp(18px,3vw,36px); text-align:center; }
+    .kicker{ font-size:.95rem; letter-spacing:.08em; opacity:.9; text-transform:uppercase; }
+    .tile h2{ margin:.2em 0 .4em; font-size:clamp(1.6rem, 2.8vw + .6rem, 2.4rem); line-height:1.15; }
+    .tile p{ margin:0 auto; max-width:70ch; font-size:clamp(1rem, .7vw + .8rem, 1.2rem); opacity:.98; }
+    .note{ display:block; margin-top:.6rem; font-size:.95rem; opacity:.85; font-style:italic; }
 
-    /* Cytat/lead i drobne akcenty */
-    .lead{ font-size: clamp(18px, 2.3vw, 22px); line-height:1.75; }
-    blockquote{
-      margin:12px 0; padding:8px 12px;
-      border-left:4px solid rgba(255,255,255,.6);
-      opacity:.95;
-    }
-    .note{ font-size:.95rem; color:var(--muted); }
+    /* Cały kafel klikalny */
+    .tile a.stretch{ position:absolute; inset:0; z-index:2; }
 
-    /* Separator – tylko ramka (bez wypełnienia) */
-    #radosne{
-      border: 2px solid #001a44;  /* granatowa ramka */
-      border-radius: 12px;
-      padding: 40px;
-      margin: 28px 0;
-      background: none;
-    }
-    #radosne .list-box{
-      all: unset;
-      display:block;
-    }
-
-    /* Pasek nawigacyjny (dół i góra) */
-    .nav-bar { text-align:center; margin: 30px 0; }
-    .nav-btn{
-      display:inline-block; margin:8px; padding:10px 20px;
-      background: var(--blue, #0a4fa3); color:#fff; font-size:16px;
-      border-radius: 12px; text-decoration:none;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      transition: background .3s, transform .2s;
-    }
-    .nav-btn:hover{ background:#083d80; transform: translateY(-2px); }
+    footer{ color:var(--muted); font-size:.9rem; margin-top:18px; text-align:center; }
   </style>
 </head>
 <body>
-  <!-- Nagłówek -->
-  <header class="topbar">
-    <h1>Głębokie znaczenie modlitwy „Zdrowaś Maryjo”</h1>
-    <button class="mode-btn" id="modeBtn" aria-label="Przełącz tryb">🌓 Dzień / Noc</button>
-  </header>
-
-  <!-- Pasek nawigacyjny (góra) -->
-  <nav class="nav-bar">
-    <a href="https://majstered.github.io/strazopis.github.io/" class="nav-btn">📿 Różaniec</a>
-    <a href="https://majstered.github.io/odpady.github.io/" class="nav-btn">Nowenna</a>
-    <a href="https://majstered.github.io/yanopis.github.io/" class="nav-btn">🙏Różne Modlitwy Maryjne</a>
-
-  </nav>
-
-  <main class="wrap">
-
-    <!-- Wprowadzenie -->
-    <section class="card" id="wprowadzenie">
-      <h2 class="section-title">Wielu ludzi zna na pamięć treść modlitwy „Zdrowaś Maryjo”. Wypowiada ją codziennie, czasem dziesiątki razy.
-          A jednak niewielu do końca przeczuwa jej głębię i <strong>niewyobrażalną moc</strong>, która płynie z jej treści.</h2>
-      <div class="prayer-box" aria-label="Wprowadzenie">
-        <p class="lead">
-        </p>
+  <div class="wrap">
+    <header aria-label="Nagłówek">
+      <div class="bar">
+        <div class="title">🌿 Start • Trzy ścieżki</div>
+        <button class="mode-btn" id="modeBtn" type="button" aria-pressed="false" title="Przełącz: dzień / noc">☀️ Dzień / 🌙 Noc</button>
       </div>
-    </section>
+    </header>
 
-    <!-- Zdrowaś – frazy -->
-    <section class="card" id="fraza-1">
-      <h2 class="section-title">„Zdrowaś, łaski pełna, Pan z Tobą”</h2>
-      <div class="prayer-box">
-        <p>— słowa anioła Gabriela (Łk 1,28). Bóg sam posyła swego posłańca, by ogłosił Maryi, że jest pełna łaski i że Jego obecność będzie zawsze przy Niej.</p>
+    <main class="wrap" aria-label="Wybór ścieżki">
+      <div class="tiles" role="list">
+
+        <!-- A -->
+        <section class="tile" role="listitem" aria-labelledby="hA">
+          <a class="stretch" href="A.html" aria-label="Przejdź do ścieżki A: Wierzę w jednego Boga"></a>
+          <div class="tile-content">
+            <div class="kicker">A</div>
+            <h2 id="hA">Wierzę w jednego Boga</h2>
+            <p>Uważam się za katolika i chcę zgłębiać swoją duchową wiedzę, aby dostać się do nieba. <span class="note">(ciekawostka dla niewierzących)</span></p>
+          </div>
+        </section>
+
+        <!-- B -->
+        <section class="tile" role="listitem" aria-labelledby="hB">
+          <a class="stretch" href="B.html" aria-label="Przejdź do ścieżki B: W nic nie wierzę"></a>
+          <div class="tile-content">
+            <div class="kicker">B</div>
+            <h2 id="hB">W nic nie wierzę</h2>
+            <p>Wierzę, że nic nie ma, wszystkie siły nadprzyrodzone są wymyślone. <span class="note">(ciekawostka dla wierzących)</span></p>
+          </div>
+        </section>
+
+        <!-- C -->
+        <section class="tile" role="listitem" aria-labelledby="hC">
+          <a class="stretch" href="C.html" aria-label="Przejdź do ścieżki C: Wierzę w inne religie"></a>
+          <div class="tile-content">
+            <div class="kicker">C</div>
+            <h2 id="hC">Wierzę w inne religie niż katolickie</h2>
+            <p>Wierzę w Ufo, kota i lalkę Barbie. <span class="note">(miejsce na Twoje doprecyzowanie tej ścieżki)</span></p>
+          </div>
+        </section>
+
       </div>
-    </section>
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wybór drogi • Start</title>
+  <meta name="description" content="Strona startowa z trzema ścieżkami: A, B i C – w naszym niebieskim stylu."/>
+  <style>
+    /* ===== ZMIENNE / MOTYW ===== */
+    :root{
+      --bg:#fbfaf7;
+      --ink:#1f2430;
+      --muted:#667085;
+      --blue:#0a4fa3;           /* nasz maryjny niebieski */
+      --blue-ink:#ffffff;       /* tekst na niebieskim */
+      --card:#ffffff;
+      --border:#e6e6ea;
+      --radius:20px;
+      --shadow:0 10px 32px rgba(0,0,0,.08);
+      --maxw:1100px;
+    }
+    .dark{
+      --bg:#0f1420;
+      --ink:#e7ecf6;
+      --muted:#aab3c6;
+      --blue:#0b3d7a;
+      --blue-ink:#ffffff;
+      --card:#141824;
+      --border:#263049;
+      --shadow:0 10px 40px rgba(0,0,0,.4);
+    }
 
-    <section class="card" id="fraza-2">
-      <h2 class="section-title">„Błogosławiona jesteś między niewiastami”</h2>
-      <div class="prayer-box">
-        <p>— słowa Elżbiety, napełnionej Duchem Świętym (Łk 1,42). To okrzyk radości wobec Tej, która niesie w sobie Boga.</p>
+    /* ===== RESET / BAZA ===== */
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial,"Apple Color Emoji","Segoe UI Emoji";
+      background:var(--bg); color:var(--ink); line-height:1.5;
+      display:flex; flex-direction:column; min-height:100vh;
+    }
+    a{color:inherit; text-decoration:none}
+    .wrap{width:min(100%,var(--maxw)); margin-inline:auto; padding:clamp(12px,2vw,24px)}
+
+    /* ===== NAGŁÓWEK ===== */
+    header{position:sticky; top:0; z-index:20; backdrop-filter:saturate(180%) blur(6px)}
+    .bar{
+      display:flex; align-items:center; justify-content:space-between;
+      background:color-mix(in oklab, var(--card) 80%, transparent);
+      border:1px solid var(--border); border-radius:16px; padding:10px 14px; box-shadow:var(--shadow);
+    }
+    .title{font-weight:700; letter-spacing:.2px}
+    .mode-btn{
+      appearance:none; border:1px solid var(--border); background:var(--card); color:var(--ink);
+      padding:8px 12px; border-radius:12px; cursor:pointer; font-weight:600;
+    }
+
+    /* ===== SEKCJE PASKÓW ===== */
+    main{flex:1; display:grid; place-items:stretch}
+    .tiles{ display:grid; gap:16px; height:100%;}
+    /* Na dużych wysokościach trzy równe pasy wypełniają ekran */
+    @media (min-height:700px){
+      .tiles{ grid-template-rows: 1fr 1fr 1fr; }
+    }
+
+    .tile{
+      position:relative; overflow:hidden; border-radius:var(--radius);
+      background:var(--blue); color:var(--blue-ink);
+      box-shadow:var(--shadow);
+      display:flex; align-items:center; justify-content:center;
+      isolation:isolate; /* dla bezpiecznego overlay */
+    }
+    .tile::after{ /* subtelny dekor falowy */
+      content:""; position:absolute; inset:auto -20% -35% -20%; height:60%;
+      background:linear-gradient( to top, rgba(255,255,255,.18), rgba(255,255,255,0) 60% );
+      transform:skewY(-6deg);
+      pointer-events:none;
+    }
+    .tile:hover{ transform:translateY(-1px); }
+
+    .tile-content{ width:min(100%,820px); padding:clamp(18px,3vw,36px); text-align:center; }
+    .kicker{ font-size:.95rem; letter-spacing:.08em; opacity:.9; text-transform:uppercase; }
+    .tile h2{ margin:.2em 0 .4em; font-size:clamp(1.6rem, 2.8vw + .6rem, 2.4rem); line-height:1.15; }
+    .tile p{ margin:0 auto; max-width:70ch; font-size:clamp(1rem, .7vw + .8rem, 1.2rem); opacity:.98; }
+    .note{ display:block; margin-top:.6rem; font-size:.95rem; opacity:.85; font-style:italic; }
+
+    /* Cały kafel klikalny */
+    .tile a.stretch{ position:absolute; inset:0; z-index:2; }
+
+    footer{ color:var(--muted); font-size:.9rem; margin-top:18px; text-align:center; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header aria-label="Nagłówek">
+      <div class="bar">
+        <div class="title">🌿 Start • Trzy ścieżki</div>
+        <button class="mode-btn" id="modeBtn" type="button" aria-pressed="false" title="Przełącz: dzień / noc">☀️ Dzień / 🌙 Noc</button>
       </div>
-    </section>
+    </header>
 
-    <section class="card" id="fraza-3">
-      <h2 class="section-title">„Błogosławiony owoc żywota Twojego – Jezus”</h2>
-      <div class="prayer-box">
-        <p>W samym sercu modlitwy wypowiadamy imię Zbawiciela. To jak pocałunek złożony na Jego imieniu w łonie Maryi, tak jakbyśmy stali obok Elżbiety, która wołała: „A skądże mi to, że Matka mojego Pana przychodzi do mnie?” (Łk 1,43).</p>
+    <main class="wrap" aria-label="Wybór ścieżki">
+      <div class="tiles" role="list">
+
+        <!-- A -->
+        <section class="tile" role="listitem" aria-labelledby="hA">
+          <a class="stretch" href="A.html" aria-label="Przejdź do ścieżki A: Wierzę w jednego Boga"></a>
+          <div class="tile-content">
+            <div class="kicker">A</div>
+            <h2 id="hA">Wierzę w jednego Boga</h2>
+            <p>Uważam się za katolika i chcę zgłębiać swoją duchową wiedzę, aby dostać się do nieba. <span class="note">(ciekawostka dla niewierzących)</span></p>
+          </div>
+        </section>
+
+        <!-- B -->
+        <section class="tile" role="listitem" aria-labelledby="hB">
+          <a class="stretch" href="B.html" aria-label="Przejdź do ścieżki B: W nic nie wierzę"></a>
+          <div class="tile-content">
+            <div class="kicker">B</div>
+            <h2 id="hB">W nic nie wierzę</h2>
+            <p>Wierzę, że nic nie ma, wszystkie siły nadprzyrodzone są wymyślone. <span class="note">(ciekawostka dla wierzących)</span></p>
+          </div>
+        </section>
+
+        <!-- C -->
+        <section class="tile" role="listitem" aria-labelledby="hC">
+          <a class="stretch" href="C.html" aria-label="Przejdź do ścieżki C: Wierzę w inne religie"></a>
+          <div class="tile-content">
+            <div class="kicker">C</div>
+            <h2 id="hC">Wierzę w inne religie niż katolickie</h2>
+            <p>Wierzę w Ufo, kota i lalkę Barbie. <span class="note">(miejsce na Twoje doprecyzowanie tej ścieżki)</span></p>
+          </div>
+        </section>
+
       </div>
-    </section>
 
-        <section class="card" id="fraza-4">
-      <h2 class="section-title">„Módl się za nami, grzesznymi”</h2>
-      <div class="prayer-box">
-        <p>To nasza pokorna prośba, by Ta, która nosiła Boga, zaniosła nasz szept przed Jego tron.
-
-Wypowiadając „Zdrowaś Maryjo”, stajemy się uczestnikami tamtego spotkania: z Aniołem zwiastującym cud, z Maryją, która słucha i wierzy, z Elżbietą, która rozpoznaje swego Pana, a przede wszystkim — z Jezusem, który przychodzi do nas cicho, ale naprawdę.</p>
-      </div>
-    </section>
-
-    <!-- Separator – tylko ramka -->
-    <section class="card" id="radosne">
-      <div class="list-box" aria-hidden="true"><!-- czysta ramka, bez treści --></div>
-    </section>
-
-    <!-- Obietnice Maryi -->
-    <section class="card" id="obietnice">
-      <h2 class="section-title">🌹 Obietnice Maryi dla odmawiających różaniec</h2>
-      <div class="list-box">
-        <blockquote>„Ja was nie opuszczę. Wasza Matka.”</blockquote>
-        <p>Jak powiedziała s. Fernanda z Fatimy: „Różaniec jest jak mleko dla dziecka – pierwszy pokarm dla duszy. Gdy zaczynasz go pić, zaczynasz rosnąć duchowo, a Maryja bierze cię za rękę i prowadzi do Jezusa.”</p>
-        <p>Maryja powtarzała to we wszystkich miejscach objawień: <em>„Odmawiajcie codziennie różaniec.”</em></p>
-        <blockquote>„Różaniec odmawiany z wiarą i pobożnością jest wielkim ratunkiem dla dusz i środkiem do zwycięstwa nad szatanem.”</blockquote>
-        <blockquote>„Jedno Zdrowaś Maryjo świadomie i uważnie odmówione ma większą wartość niż setki mechanicznie wypowiedzianych słów.” — św. Ludwik Maria Grignion de Montfort</blockquote>
-        <blockquote>„Różaniec to modlitwa tych, którzy kochają, ale nie wiedzą, jak mówić.” — św. Jan Paweł II</blockquote>
-        <blockquote>„Różaniec to łańcuch, który łączy nas z Bogiem.” — św. Teresa z Lisieux</blockquote>
-        <blockquote>„Jeśli chcesz nawrócić grzesznika, odmów za niego różaniec.” — św. Jan Maria Vianney</blockquote>
-        <blockquote>„Gdy mówisz różaniec, Maryja jest tuż obok ciebie.” — św. Alfons Maria Liguori</blockquote>
-
-        <p class="lead">Z modlitwy Kościoła, z przekazów objawień oraz świadectw świętych i zwykłych ludzi wyłania się pewna, cicha obietnica Maryi: wytrwały różaniec przynosi wielkie łaski.</p>
-
-        <ul>
-          <li><strong>Szczególna opieka w życiu i przy śmierci.</strong></li>
-          <li><strong>Nawrócenie największych grzeszników</strong> — wytrwała modlitwa kruszy najtwardsze serca.</li>
-          <li><strong>Ochrona przed pokusami i złem</strong> — każde „Zdrowaś” jest ciosem w szatana i tarczą dla duszy.</li>
-          <li><strong>Pokój w rodzinach.</strong></li>
-          <li><strong>Uzdrowienia duszy i ciała</strong> — świadectwa z Lourdes, Fatimy, Gietrzwałdu.</li>
-          <li><strong>Wysłuchanie próśb</strong> zgodnie z wolą Bożą i dla zbawienia.</li>
-          <li><strong>Pomoc w trudnościach</strong> — „Odmawiajcie różaniec, a otrzymacie łaski potrzebne w życiu.”</li>
-          <li><strong>Przygotowanie na trudne czasy</strong> — kto trzyma się różańca, nie zginie.</li>
-        </ul>
-      </div>
-      <p class="note">Uwaga: poniższe treści mają charakter pobożnej tradycji i świadectw, zgodnej z nauczaniem Kościoła, ale nie stanowią dogmatu.</p>
-    </section>
-
-    <!-- Nowenna Pompejańska -->
-    <section class="card" id="nowenna-pompejanska">
-      <h2 class="section-title">🌹 Nowenna Pompejańska — „Modlitwa nie do odparcia”</h2>
-      <div class="list-box">
-        <p>— Bartolo Longo, 1879</p>
-        <p>54 dni modlitwy bez przerwy: trzy nowenny błagalne i trzy dziękczynne. Świadectwa mówią o szczególnych łaskach:</p>
-        <ul>
-          <li>uzdrowienia z chorób uznanych za nieuleczalne,</li>
-          <li>uratowanie małżeństw i rodzin,</li>
-          <li>uwolnienie od nałogów,</li>
-          <li>łaska wiary dla osób niewierzących,</li>
-          <li>pokój serca w sytuacjach bez wyjścia.</li>
-        </ul>
-        <p>Wielu nazywa ją „modlitwą nie do odparcia” — Maryja odpowiada na nią szczególnie hojnie.</p>
-      </div>
-    </section>
-
-    <!-- 15 obietnic różańcowych -->
-    <section class="card" id="15-obietnic">
-      <h2 class="section-title">🌹 15 obietnic różańcowych — „Różaniec będzie ocaleniem świata.”</h2>
-      <div class="list-box">
-        <p><strong>Wprowadzenie historyczne:</strong> bł. Alan de la Roche (XV w.) odnowił praktykę różańca; tradycja przypisuje mu przekaz 15 obietnic dla wiernie odmawiających różaniec.</p>
-        <p><em>„Te obietnice nie są kontraktem. To odpowiedź Miłości na modlitwę serca.”</em></p>
-        <ol>
-          <li>Tym, którzy wiernie będą odmawiać mój Różaniec, obiecuję szczególną opiekę i wielkie łaski.</li>
-          <li>Otrzymają szczególną ochronę i wielkich orędowników w niebie.</li>
-          <li>Różaniec będzie potężną bronią przeciw piekłu; zniszczy grzech, umniejszy winę i zwycięży herezje.</li>
-          <li>Spowoduje rozkwit cnót i dobrych uczynków; wyprosi wiele miłosierdzia dla dusz.</li>
-          <li>Dusza, która poleca się mnie przez Różaniec, nie zginie.</li>
-          <li>Wierny różańcowi nie zostanie pokonany przez nieszczęścia.</li>
-          <li>Sprawiedliwy — wytrwa w łasce; grzesznik — nawróci się.</li>
-          <li>Miłujący Różaniec otrzymają w życiu i przy śmierci światło Boże i pełnię łaski.</li>
-          <li>Wybawię z czyśćca tych, którzy odmawiali mój Różaniec z miłością.</li>
-          <li>Wierni tej modlitwie osiągną wysoki stopień chwały w niebie.</li>
-          <li>Otrzymacie wszystko, o co prosicie przez Różaniec, jeśli zgodne z wolą Syna.</li>
-          <li>Szerzącym mój Różaniec pomogę we wszystkich potrzebach.</li>
-          <li>Wpiszę odmawiających Różaniec w moje Niepokalane Serce.</li>
-          <li>Odmawiający Różaniec są moimi umiłowanymi dziećmi, a ja ich Matką.</li>
-          <li>Różaniec to znak zbawienia: kto go nosi i modli się z wiarą, będzie bezpieczny w godzinie śmierci.</li>
-        </ol>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Pasek nawigacyjny (dół) -->
-  <nav class="nav-bar">
-    <a href="index.html" class="nav-btn">🏠 Do góry</a>
-    <a href="kontakt.html" class="nav-btn">📬 Kontakt</a>
-  </nav>
+      <footer>
+        Podlinkuj docelowe strony pod A.html, B.html i C.html. Teksty i ciekawostki możesz edytować bez zmiany układu.
+      </footer>
+    </main>
+  </div>
 
   <script>
-    // Tryb Dzień/Noc z pamięcią
-    (function(){
-      const key = 'theme-preference';
-      const btn = document.getElementById('modeBtn');
-      function applyTheme(val){ document.documentElement.classList.toggle('dark', val === 'dark'); }
-      function current(){ return document.documentElement.classList.contains('dark') ? 'dark' : 'light'; }
-      const saved = localStorage.getItem(key);
-      if(saved){ applyTheme(saved); }
-      else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){ applyTheme('dark'); }
-      btn.addEventListener('click', ()=>{
-        const next = current()==='dark' ? 'light' : 'dark';
-        applyTheme(next); localStorage.setItem(key, next);
-      });
-    })();
+    // ===== Tryb dzień/noc z pamięcią w localStorage =====
+    const modeBtn = document.getElementById('modeBtn');
+    const LS_KEY = 'theme-pref';
+    const apply = (m)=>{
+      document.body.classList.toggle('dark', m==='dark');
+      modeBtn.setAttribute('aria-pressed', m==='dark');
+    }
+    const saved = localStorage.getItem(LS_KEY);
+    if(saved){ apply(saved); }
+    modeBtn.addEventListener('click', ()=>{
+      const now = document.body.classList.contains('dark') ? 'light' : 'dark';
+      localStorage.setItem(LS_KEY, now);
+      apply(now);
+    });
+  </script>
+</body>
+</html>
+
+      <footer>
+        Podlinkuj docelowe strony pod A.html, B.html i C.html. Teksty i ciekawostki możesz edytować bez zmiany układu.
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // ===== Tryb dzień/noc z pamięcią w localStorage =====
+    const modeBtn = document.getElementById('modeBtn');
+    const LS_KEY = 'theme-pref';
+    const apply = (m)=>{
+      document.body.classList.toggle('dark', m==='dark');
+      modeBtn.setAttribute('aria-pressed', m==='dark');
+    }
+    const saved = localStorage.getItem(LS_KEY);
+    if(saved){ apply(saved); }
+    modeBtn.addEventListener('click', ()=>{
+      const now = document.body.classList.contains('dark') ? 'light' : 'dark';
+      localStorage.setItem(LS_KEY, now);
+      apply(now);
+    });
   </script>
 </body>
 </html>
