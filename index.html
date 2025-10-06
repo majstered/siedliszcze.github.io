@@ -4,15 +4,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Wybór drogi • Start</title>
-  <meta name="description" content="Strona startowa z czterema ścieżkami: A, B, C i D – w naszym niebieskim stylu."/>
+  <meta name="description" content="Strona startowa z trzema ścieżkami: A, B i C – w naszym niebieskim stylu."/>
   <style>
     /* ===== ZMIENNE / MOTYW ===== */
     :root{
       --bg:#fbfaf7;
       --ink:#1f2430;
       --muted:#667085;
-      --blue:#0a4fa3;           /* nasz maryjny niebieski */
-      --blue-ink:#ffffff;       /* tekst na niebieskim */
+      --blue:#0a4fa3;
+      --blue-ink:#ffffff;
       --card:#ffffff;
       --border:#e6e6ea;
       --radius:20px;
@@ -34,9 +34,11 @@
     *,*::before,*::after{box-sizing:border-box}
     html,body{height:100%}
     body{
-      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial,"Apple Color Emoji","Segoe UI Emoji";
-      background:var(--bg); color:var(--ink); line-height:1.5;
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial,"Apple Color Emoji","Segoe UI Emoji";
+      background:var(--bg); color:var(--ink);
       display:flex; flex-direction:column; min-height:100vh;
+      line-height:1.5;
     }
     a{color:inherit; text-decoration:none}
     .wrap{width:min(100%,var(--maxw)); margin-inline:auto; padding:clamp(12px,2vw,24px)}
@@ -56,10 +58,9 @@
 
     /* ===== SEKCJE PASKÓW ===== */
     main{flex:1; display:grid; place-items:stretch}
-    .tiles{ display:grid; gap:clamp(36px, 6vh, 80px); height:100%;}
-    /* Na dużych wysokościach cztery równe pasy wypełniają ekran */
+    .tiles{ display:grid; gap:clamp(36px,6vh,80px); height:100%; }
     @media (min-height:700px){
-      .tiles{ grid-template-rows: 1fr 1fr 1fr 1fr; }
+      .tiles{ grid-template-rows: 1fr 1fr 1fr; }
     }
 
     .tile{
@@ -67,25 +68,23 @@
       background:var(--blue); color:var(--blue-ink);
       box-shadow:var(--shadow);
       display:flex; align-items:center; justify-content:center;
-      isolation:isolate; /* dla bezpiecznego overlay */
+      isolation:isolate;
+      transition:transform .2s;
     }
-    .tile::after{ /* subtelny dekor falowy */
+    .tile:hover{ transform:translateY(-1px); }
+    .tile::after{
       content:""; position:absolute; inset:auto -20% -35% -20%; height:60%;
-      background:linear-gradient( to top, rgba(255,255,255,.18), rgba(255,255,255,0) 60% );
+      background:linear-gradient(to top, rgba(255,255,255,.18), rgba(255,255,255,0) 60%);
       transform:skewY(-6deg);
       pointer-events:none;
     }
-    .tile:hover{ transform:translateY(-1px); }
-
     .tile-content{ width:min(100%,820px); padding:clamp(16px,2.5vw,28px); text-align:center; }
     .kicker{ font-size:.95rem; letter-spacing:.08em; opacity:.9; text-transform:uppercase; }
-    .tile h2{ margin:.2em 0 .4em; font-size:clamp(1.4rem, 2vw + .5rem, 2rem); line-height:1.15; }
-    .tile p{ margin:0 auto; max-width:70ch; font-size:clamp(.95rem, .6vw + .7rem, 1.05rem); opacity:.98; }
+    .tile h2{ margin:.2em 0 .4em; font-size:clamp(1.4rem,2vw + .5rem,2rem); line-height:1.15; }
+    .tile p{ margin:0 auto; max-width:70ch; font-size:clamp(.95rem,.6vw + .7rem,1.05rem); opacity:.98; }
     .note{ display:block; margin-top:.6rem; font-size:.95rem; opacity:.85; font-style:italic; }
 
-    /* Cały kafel klikalny */
     .tile a.stretch{ position:absolute; inset:0; z-index:2; }
-    .tile a.stretch:focus{ outline:3px solid #fff8; outline-offset:-3px; }
 
     footer{ color:var(--muted); font-size:.9rem; margin-top:18px; text-align:center; }
   </style>
@@ -132,18 +131,6 @@
           </div>
         </section>
 
-        <!-- D -->
-        <section class="tile" role="listitem" aria-labelledby="hD">
-          <a class="stretch" href="#" role="button" tabindex="0" onclick="return exitNow(event)" aria-label="Wyjście: to nie dla mnie"></a>
-          <div class="tile-content">
-            <div class="kicker">- D -</div>
-            <h2 id="hD">Wychodzę, to pomyłka – sorry, to nie dla mnie</h2>
-            <p>Rozumiem, że każdy ma swoją drogę i tempo dojrzewania duchowego.
-              <span class="note">(Jeśli chcesz wrócić później, drzwi są zawsze otwarte)</span>
-            </p>
-          </div>
-        </section>
-
       </div>
 
       <footer>
@@ -167,59 +154,6 @@
       localStorage.setItem(LS_KEY, now);
       apply(now);
     });
-
-    // Dostępność: Enter/Space na kafelku D
-    document.addEventListener('keydown', (e)=>{
-      if(e.target && e.target.getAttribute && e.target.getAttribute('role')==='button' && (e.key==='Enter' || e.key===' ')){
-        e.preventDefault(); exitNow(e);
-      }
-    });
-  </script>
-  <script>
-    // Funkcja zamykania karty z kilkoma próbami i miękkim fallbackiem
-    function exitNow(e){
-      if(e && e.preventDefault) e.preventDefault();
-      let closed = false;
-
-      // 1) Jeśli karta została otwarta przez skrypt (ma opener) – zamknij
-      try{
-        if(window.opener){ window.close(); closed = true; }
-      }catch(_){ }
-
-      // 2) Safari/Chrome czasem pozwalają na self-open + close
-      if(!closed){
-        try{ window.open('', '_self'); window.close(); closed = true; }catch(_){ }
-      }
-
-      // 3) Jeśli jest historia – wróć (np. weszli z innej podstrony), a po chwili wyczyść
-      if(!closed && history.length > 1){
-        history.back();
-        setTimeout(()=>{ try{ location.replace('about:blank'); }catch(_){} }, 250);
-        return false;
-      }
-
-      // 4) Wyczyść kartę: zamień treść na lekką stronę do zamknięcia
-      if(!closed){
-        const goodbye = `data:text/html;charset=utf-8,`+
-          encodeURIComponent(`<!doctype html><meta name=viewport content='width=device-width,initial-scale=1' />
-            <title>Do zobaczenia 👋</title>
-            <style>
-              html,body{height:100%}
-              body{margin:0;display:grid;place-items:center;font:16px system-ui;background:#fff;color:#222}
-              .box{max-width:660px;padding:24px;border:1px solid #e6e6ea;border-radius:16px;box-shadow:0 10px 32px rgba(0,0,0,.08);text-align:center}
-              h1{margin:0 0 .4em;font-size:22px}
-              p{margin:.3em 0;color:#444}
-              button{margin-top:12px;padding:10px 14px;border-radius:10px;border:1px solid #ddd;cursor:pointer;background:#fff}
-            </style>
-            <div class='box'>
-              <h1>Dzięki za wizytę!</h1>
-              <p>Przeglądarka nie pozwoliła zamknąć karty automatycznie. Możesz ją teraz bezpiecznie zamknąć.</p>
-              <button onclick='window.close()'>Zamknij kartę</button>
-            </div>`);
-        location.href = goodbye;
-      }
-      return false;
-    }
   </script>
 </body>
 </html>
